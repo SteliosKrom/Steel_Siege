@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameState currentGameState;
     #endregion
 
-    public GameState CurrentGameState { get; set; }
+    public GameState CurrentGameState { get => currentGameState; set => currentGameState = value; }
 
     private void Awake()
     {
