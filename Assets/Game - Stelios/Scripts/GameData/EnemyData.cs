@@ -8,5 +8,4 @@ public class EnemyData : GameData
     [SerializeField] private float speed;
     [SerializeField] private int damage;
     [SerializeField] private int scoreValue;
-    [SerializeField] private Sprite[] animationFrames;
 } 

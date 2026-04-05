@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewPlayerData", menuName = "Game Data/Player")]
@@ -7,5 +8,9 @@ public class PlayerData : GameData
     [SerializeField] private int maxLives;
     [SerializeField] private float speed;
     [SerializeField] private int damage;
-    [SerializeField] private Sprite[] animationFrame;
+
+    public string DisplayName => displayName;
+    public int MaxLives => maxLives;
+    public float Speed => speed; 
+    public int Damage => damage;
 }
