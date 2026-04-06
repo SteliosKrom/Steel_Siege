@@ -1,5 +1,3 @@
-using System.Net;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -40,6 +38,6 @@ public class PlayerController : MonoBehaviour
         else if (movementDirection.y > 0) playerRb.SetRotation(0f);
         else if (movementDirection.y < 0) playerRb.SetRotation(180f);
 
-        playerRb.linearVelocity = movementDirection * playerData.Speed;
+        playerRb.linearVelocity = movementDirection * playerData.MoveSpeed;
     }
 }
