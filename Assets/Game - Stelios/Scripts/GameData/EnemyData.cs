@@ -5,7 +5,8 @@ public class EnemyData : GameData
 {
     [SerializeField] private string displayName;
     [SerializeField] private int maxLives;
-    [SerializeField] private float speed;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float bulletSpeed;
     [SerializeField] private int damage;
     [SerializeField] private int scoreValue;
 } 
