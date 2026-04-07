@@ -4,22 +4,21 @@ public class Bullet : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D other)
     {
+        IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
+
         if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Obstacle"))
         {
-            DeactivateBullet();
+            ReturnBullet();
         }
 
-        if (other.gameObject.CompareTag("Player_1"))
+        if (damageable != null)
         {
-            DeactivateBullet();
-        }
-        else if (other.gameObject.CompareTag("Player_2"))
-        {
-            DeactivateBullet();
+            damageable.TakeDamage();
+            ReturnBullet();
         }
     }
 
-    public void DeactivateBullet()
+    public void ReturnBullet()
     {
         ObjectPoolManager.Instance.ReturnObject("Bullet", gameObject);
     }

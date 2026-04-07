@@ -2,11 +2,13 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class TitleSceneUIManager : MonoBehaviour
 {
-    public static UIManager Instance;
+    public static TitleSceneUIManager Instance;
 
     private float enterCreditDelay = 2f;
+    private int creditCounter = 0;
+    private bool isWaiting = false;
 
     #region UI
     [Header("UI")]
@@ -15,7 +17,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI creditText;
     #endregion
 
-    public int CreditCounter { get; set; }
+    public int CreditCounter { get => creditCounter; set => creditCounter = value; }
+    public bool IsWaiting => isWaiting;
 
     private void Awake()
     {
@@ -33,7 +36,7 @@ public class UIManager : MonoBehaviour
     {
         insertCoinText.enabled = true;
         pressStartText.enabled = false;
-        creditText.text = CreditCounter.ToString("00");
+        creditText.text = creditCounter.ToString("00");
     }
 
     public void InsertCoin()
@@ -43,12 +46,14 @@ public class UIManager : MonoBehaviour
 
     public IEnumerator EnterCreditDelay()
     {
+        isWaiting = true;
         insertCoinText.enabled = false;
         CreditCounter++;
-        creditText.text = CreditCounter.ToString("00");
+        creditText.text = creditCounter.ToString("00");
 
         yield return new WaitForSeconds(enterCreditDelay);
 
         pressStartText.enabled = true;
+        isWaiting = false;
     }
 }
