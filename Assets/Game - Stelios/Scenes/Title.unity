@@ -1095,6 +1095,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892957592}
   m_CullTransparentMesh: 1
+--- !u!1 &935507858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 935507859}
+  - component: {fileID: 935507860}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &935507859
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935507858}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 998299028}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &935507860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935507858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16f362c3b84209040a60780c27afae9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  insertCoinText: {fileID: 28447618}
+  pressStartText: {fileID: 2049682764}
+  creditText: {fileID: 1635410830}
+  gameEvents: {fileID: 11400000, guid: 667ee07dfebd0c145a4169d9210287c2, type: 2}
+  gameOverPanel: {fileID: 6300462120607797421, guid: abb36a1fbda37a94cb9635bd87f3117a, type: 3}
 --- !u!1 &939070625
 GameObject:
   m_ObjectHideFlags: 0
@@ -1426,9 +1475,40 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 336929024}
-  - {fileID: 1804393819}
   - {fileID: 1973720838}
   - {fileID: 1949194141}
+  - {fileID: 935507859}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1345058639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1345058640}
+  m_Layer: 0
+  m_Name: ------------------------------------------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1345058640
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345058639}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.3777193, y: 0.44564927, z: 2491.704}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1635410828
@@ -2006,7 +2086,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1733825756}
   m_CullTransparentMesh: 1
---- !u!1 &1804393818
+--- !u!1 &1834897745
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2014,45 +2094,29 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1804393819}
-  - component: {fileID: 1804393820}
+  - component: {fileID: 1834897746}
   m_Layer: 0
-  m_Name: TitleSceneUIManager
+  m_Name: AUDIO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1804393819
+--- !u!4 &1834897746
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804393818}
+  m_GameObject: {fileID: 1834897745}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.3777193, y: 0.44564927, z: 2491.704}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 998299028}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1804393820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804393818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb76279b5ef2a994c8a78311e17b8e63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  insertCoinText: {fileID: 28447618}
-  pressStartText: {fileID: 2049682764}
-  creditText: {fileID: 1635410830}
 --- !u!1 &1949194140
 GameObject:
   m_ObjectHideFlags: 0
@@ -2097,6 +2161,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cee0f58acc9e2f40add8b9e7b6c5a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioItems:
+  - type: 0
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 5e38914317f6e1447ad607d44ac2b094, type: 3}
 --- !u!1 &1973720837
 GameObject:
   m_ObjectHideFlags: 0
@@ -2286,3 +2354,5 @@ SceneRoots:
   - {fileID: 562353186}
   - {fileID: 297670699}
   - {fileID: 998299028}
+  - {fileID: 1345058640}
+  - {fileID: 1834897746}

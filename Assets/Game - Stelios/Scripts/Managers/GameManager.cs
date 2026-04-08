@@ -51,17 +51,17 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (TitleSceneUIManager.Instance.IsWaiting) return;
+        if (UIManager.Instance.IsWaiting) return;
 
         // Change to Joystick button 7 later
         if (currentGameState == GameState.Title)
         {
             if (Input.anyKeyDown)
             {
-                switch (TitleSceneUIManager.Instance.CreditCounter)
+                switch (UIManager.Instance.CreditCounter)
                 {
                     case 0:
-                        TitleSceneUIManager.Instance.InsertCoin();
+                        UIManager.Instance.InsertCoin();
                         break;
                     case 1:
                         SceneManager.LoadScene("Main");
