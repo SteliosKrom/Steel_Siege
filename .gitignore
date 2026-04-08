@@ -28,6 +28,7 @@
 # ================= #
 .vscode/
 .idea/
+.vs/                 # Added this line to ignore all Visual Studio temp/index files
 *.booproj
 *.user
 *.userosscache
@@ -54,6 +55,6 @@ Thumbs.db
 *.tga filter=lfs diff=lfs merge=lfs -text
 *.fbx filter=lfs diff=lfs merge=lfs -text
 *.anim filter=lfs diff=lfs merge=lfs -text
-*.controller filter=lfs diff=lfs merge=lfs -text
+*.controller filter=lfs diff/lfs merge=lfs -text
 *.prefab filter=lfs diff=lfs merge=lfs -text
 *.mat filter=lfs diff=lfs merge=lfs -text
