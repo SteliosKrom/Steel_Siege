@@ -1,9 +1,10 @@
-using NUnit.Framework.Internal.Filters;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
+    public enum PlayerID { P1, P2 }
+
+    [SerializeField] private PlayerID playerID;
     [SerializeField] private int currentLives;
 
     #region SCRIPTABLE OBJECTS
@@ -12,8 +13,12 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField] private GameEvents gameEvents;
     #endregion
 
+    #region OBJECTS
+    [Header("OBJECTS")]
     [SerializeField] private GameObject[] playerLives;
+    #endregion
 
+    public int CurrentLives { get => currentLives; set => currentLives = value; }
     private void Start()
     {
         currentLives = playerData.MaxLives;
@@ -26,23 +31,12 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         if (currentLives <= 0)
         {
-            GameManager.Instance.CurrentGameState = GameState.GameOver;
-            gameEvents.RaiseGameOver();
+            GameManager.Instance.PlayerDied(playerID, gameObject);
         }
     }
 
     public void UpdateLivesUI()
     {
-        for (int i = 0; i < playerLives.Length; i++)
-        {
-            if (i < currentLives)
-            {
-                playerLives[i].SetActive(true);
-            }
-            else
-            {
-                playerLives[i].SetActive(false);
-            }
-        }
+        UIManager.Instance.ManageLivesUI(playerLives, currentLives);
     }
 }
