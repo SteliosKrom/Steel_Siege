@@ -6,21 +6,20 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
+    [SerializeField] private MainSceneUIRefs mainSceneUIRefs;
+    [SerializeField] private TitleSceneUIRefs titleSceneUIRefs;
+
     private float enterCreditDelay = 2f;
     private int creditCounter = 0;
     private bool isWaiting = false;
 
-    #region UI
-    [Header("UI")]
-    [SerializeField] private TextMeshProUGUI insertCoinText;
-    [SerializeField] private TextMeshProUGUI pressStartText;
-    [SerializeField] private TextMeshProUGUI creditText;
+    #region SCRIPTABLE OBJECTS
+    [Header("SCRIPTABLE OBJECTS")]
+    [SerializeField] private GameEvents gameEvents;
     #endregion
 
-    [SerializeField] private GameEvents gameEvents;
-    [SerializeField] private GameObject gameOverPanel;
-
-    public GameObject GameOverPanel { get => gameOverPanel; set => gameOverPanel = value; }
+    public TitleSceneUIRefs TitleSceneUIRefs { get => titleSceneUIRefs; }
+    public MainSceneUIRefs MainSceneUIRefs { get => mainSceneUIRefs; } 
     public int CreditCounter { get => creditCounter; set => creditCounter = value; }
     public bool IsWaiting => isWaiting;
 
@@ -51,9 +50,9 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        insertCoinText.enabled = true;
-        pressStartText.enabled = false;
-        creditText.text = creditCounter.ToString("00");
+        titleSceneUIRefs.insertCoinText.enabled = true;
+        titleSceneUIRefs.pressStartText.enabled = false;
+        titleSceneUIRefs.creditCoinText.text = creditCounter.ToString("00");
     }
 
     public void InsertCoin()
@@ -64,18 +63,43 @@ public class UIManager : MonoBehaviour
     public IEnumerator EnterCreditDelay()
     {
         isWaiting = true;
-        insertCoinText.enabled = false;
+        titleSceneUIRefs.insertCoinText.enabled = false;
         CreditCounter++;
-        creditText.text = creditCounter.ToString("00");
+        titleSceneUIRefs.creditCoinText.text = creditCounter.ToString("00");
 
         yield return new WaitForSeconds(enterCreditDelay);
 
-        pressStartText.enabled = true;
+        titleSceneUIRefs.pressStartText.enabled = true;
         isWaiting = false;
+    }
+
+    public void ManageLivesUI(GameObject[] playerLives, int currentLives)
+    {
+        for (int i = 0; i < playerLives.Length; i++)
+        {
+            if (i < currentLives)
+            {
+                playerLives[i].SetActive(true);
+            }
+            else
+            {
+                playerLives[i].SetActive(false);
+            }
+        }
     }
 
     public void ShowGameOver()
     {
-        gameOverPanel.SetActive(true);
+        mainSceneUIRefs.gameOverPanel.SetActive(true);
+    }
+
+    public void AssignMainSceneUIRefsAtRuntime(MainSceneUIRefs localMainSceneUIRefs)
+    {
+        mainSceneUIRefs = localMainSceneUIRefs;
+    }
+
+    public void AssignTitleSceneUIRefsAtRuntime(TitleSceneUIRefs localTitleSceneUIRefs)
+    {
+        titleSceneUIRefs = localTitleSceneUIRefs;
     }
 }

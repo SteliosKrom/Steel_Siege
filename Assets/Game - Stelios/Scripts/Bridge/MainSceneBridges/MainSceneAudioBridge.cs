@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainSceneAudioBridge : MonoBehaviour
@@ -10,6 +9,6 @@ public class MainSceneAudioBridge : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.Instance.UpdateSource(soundTypes, localSources);
+        AudioManager.Instance.AssignSourcesAtRuntime(soundTypes, localSources);
     }
 }

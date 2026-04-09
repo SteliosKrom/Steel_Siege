@@ -57,7 +57,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void UpdateSource(SoundType[] types, AudioSource[] sources)
+    public void AssignSourcesAtRuntime(SoundType[] types, AudioSource[] sources)
     {
         for (int i = 0; i < types.Length; i++)
         {
