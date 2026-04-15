@@ -2,27 +2,27 @@ using TMPro;
 using UnityEngine;
 
 [System.Serializable]
-public class TitleSceneUIRefs
+public class TitleSceneRefs
 {
     public TextMeshProUGUI insertCoinText;
     public TextMeshProUGUI pressStartText;
     public TextMeshProUGUI creditCoinText;
 }
 
-public class TitleSceneUIBridge : MonoBehaviour
+public class TitleSceneBridge : MonoBehaviour
 {
-    [SerializeField] private TitleSceneUIRefs titleSceneUIRefs;
+    [SerializeField] private TitleSceneRefs titleSceneRefs;
 
     private void Start()
     {
-        UIManager.Instance.AssignTitleSceneUIRefsAtRuntime(titleSceneUIRefs);
+        UIManager.Instance.AssignTitleSceneRefsAtRuntime(titleSceneRefs);
         ResetMachineValues();
     }
 
     public void ResetMachineValues()
     {
-        titleSceneUIRefs.insertCoinText.enabled = true;
-        titleSceneUIRefs.creditCoinText.text = "00";
+        titleSceneRefs.insertCoinText.enabled = true;
+        titleSceneRefs.creditCoinText.text = "00";
         UIManager.Instance.CreditCounter = 0;
     }
 }

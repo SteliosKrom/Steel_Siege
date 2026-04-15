@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.Instance.CurrentGameState != GameState.Playing) return;
 
-        // Player Movement...
+        // Player Movement. Change to Arcade Machine inputs later...
         movementDirection = Vector2.zero;
 
         if (Input.GetKey(upKey)) Move(Vector2.up, 0f);
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.Instance.CurrentGameState != GameState.Playing) return;
 
-        // Player Shooting...
+        // Player Shooting. Change to Arcade Machine inputs later...
         if (Input.GetKeyDown(shootKey) && canShoot)
         {
             ShootBullet();
