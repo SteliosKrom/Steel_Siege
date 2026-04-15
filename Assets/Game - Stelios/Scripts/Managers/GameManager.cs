@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     private float checkGameResultDelay = 0.1f;
     private float returnBackToMainTitleDelay = 3f;
+    private float assignPlayerRefsDelay = 1f;
 
     private bool player1Dead = false;
     private bool player2Dead = false;
@@ -171,7 +172,7 @@ public class GameManager : MonoBehaviour
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVP;
         SceneManager.LoadScene("Main");
-        mainSceneRefs.player_1.SetActive(true);
+        StartCoroutine(AssignPlayerRefsDelay());
     }
 
     public void LoadPVEMode()
@@ -237,13 +238,20 @@ public class GameManager : MonoBehaviour
         mainSceneRefs = localMainSceneRefs;
     }
 
+    public IEnumerator AssignPlayerRefsDelay()
+    {
+        yield return new WaitForSeconds(assignPlayerRefsDelay);
+        mainSceneRefs.player_1.SetActive(true);
+        mainSceneRefs.player_2.SetActive(true);
+    }
+
     public IEnumerator ReturnToMainTitleDelay()
     {
         yield return new WaitForSeconds(returnBackToMainTitleDelay);
         SceneManager.LoadScene("Title");
         player1Dead = false;
         player2Dead = false;
-        CurrentGameState = GameState.Title;
+        currentGameState = GameState.Title;
     }
 
     public IEnumerator CheckGameResultDelay()

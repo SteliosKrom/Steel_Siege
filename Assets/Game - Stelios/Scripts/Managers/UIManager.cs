@@ -6,8 +6,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    [SerializeField] private MainSceneRefs mainSceneRefs;
-    [SerializeField] private TitleSceneRefs titleSceneRefs;
+    [SerializeField] private MainSceneRefs mainSceneUIRefs;
+    [SerializeField] private TitleSceneRefs titleSceneUIRefs;
 
     private float enterCreditDelay = 2f;
     private int creditCounter = 0;
@@ -31,8 +31,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI pveSelectionArrow;
     #endregion
 
-    public TitleSceneRefs TitleSceneRefs { get => titleSceneRefs; }
-    public MainSceneRefs MainSceneUIRefs { get => mainSceneRefs; } 
+    public TitleSceneRefs TitleSceneRefs { get => titleSceneUIRefs; }
+    public MainSceneRefs MainSceneUIRefs { get => mainSceneUIRefs; } 
     public TextMeshProUGUI PVPText { get => pvpText; }
     public TextMeshProUGUI PVEText { get => pveText; }
     public TextMeshProUGUI PVPSelectionArrow { get => pvpSelectionArrow; }
@@ -67,9 +67,9 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        titleSceneRefs.insertCoinText.enabled = true;
-        titleSceneRefs.pressStartText.enabled = false;
-        titleSceneRefs.creditCoinText.text = creditCounter.ToString("00");
+        titleSceneUIRefs.insertCoinText.enabled = true;
+        titleSceneUIRefs.pressStartText.enabled = false;
+        titleSceneUIRefs.creditCoinText.text = creditCounter.ToString("00");
     }
 
     public void EnableGameModes()
@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
         PVPText.enabled = true;
         PVEText.enabled = true;
         PVPSelectionArrow.enabled = true;
-        titleSceneRefs.pressStartText.enabled = false;
+        titleSceneUIRefs.pressStartText.enabled = false;
     }
 
     public void InsertCoin()
@@ -89,13 +89,13 @@ public class UIManager : MonoBehaviour
     public IEnumerator EnterCreditDelay()
     {
         isWaiting = true;
-        titleSceneRefs.insertCoinText.enabled = false;
+        titleSceneUIRefs.insertCoinText.enabled = false;
         CreditCounter++;
-        titleSceneRefs.creditCoinText.text = creditCounter.ToString("00");
+        titleSceneUIRefs.creditCoinText.text = creditCounter.ToString("00");
 
         yield return new WaitForSeconds(enterCreditDelay);
 
-        titleSceneRefs.pressStartText.enabled = true;
+        titleSceneUIRefs.pressStartText.enabled = true;
         isWaiting = false;
     }
 
@@ -116,16 +116,16 @@ public class UIManager : MonoBehaviour
 
     public void ShowGameOver()
     {
-        mainSceneRefs.gameOverPanel.SetActive(true);
+        mainSceneUIRefs.gameOverPanel.SetActive(true);
     }
 
-    public void AssignMainSceneRefsAtRuntime(MainSceneRefs localMainSceneUIRefs)
+    public void AssignMainSceneUIRefsAtRuntime(MainSceneRefs localMainSceneUIRefs)
     {
-        mainSceneRefs = localMainSceneUIRefs;
+        mainSceneUIRefs = localMainSceneUIRefs;
     }
 
-    public void AssignTitleSceneRefsAtRuntime(TitleSceneRefs localTitleSceneUIRefs)
+    public void AssignTitleSceneUIRefsAtRuntime(TitleSceneRefs localTitleSceneRefs)
     {
-        titleSceneRefs = localTitleSceneUIRefs;
+        titleSceneUIRefs = localTitleSceneRefs;
     }
 }
