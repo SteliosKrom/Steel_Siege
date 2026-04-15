@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 998099bc8f21d984797364d5d4d4d744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleSceneRefs:
+  localTitleSceneRefs:
     insertCoinText: {fileID: 28447618}
     pressStartText: {fileID: 2049682764}
     creditCoinText: {fileID: 1635410830}

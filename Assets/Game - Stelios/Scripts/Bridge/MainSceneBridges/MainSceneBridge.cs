@@ -28,6 +28,6 @@ public class MainSceneBridge : MonoBehaviour
     {
         GameManager.Instance.AssignMainSceneObjectsAtRuntime(localMainSceneRefs);
         AudioManager.Instance.AssignSourcesAtRuntime(soundTypes, localSources);
-        UIManager.Instance.AssignMainSceneRefsAtRuntime(localMainSceneRefs);
+        UIManager.Instance.AssignMainSceneUIRefsAtRuntime(localMainSceneRefs);
     }
 }

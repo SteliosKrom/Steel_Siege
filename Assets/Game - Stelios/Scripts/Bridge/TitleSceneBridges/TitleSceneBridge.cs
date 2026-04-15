@@ -11,18 +11,18 @@ public class TitleSceneRefs
 
 public class TitleSceneBridge : MonoBehaviour
 {
-    [SerializeField] private TitleSceneRefs titleSceneRefs;
+    [SerializeField] private TitleSceneRefs localTitleSceneRefs;
 
     private void Start()
     {
-        UIManager.Instance.AssignTitleSceneRefsAtRuntime(titleSceneRefs);
+        UIManager.Instance.AssignTitleSceneUIRefsAtRuntime(localTitleSceneRefs);
         ResetMachineValues();
     }
 
     public void ResetMachineValues()
     {
-        titleSceneRefs.insertCoinText.enabled = true;
-        titleSceneRefs.creditCoinText.text = "00";
+        localTitleSceneRefs.insertCoinText.enabled = true;
+        localTitleSceneRefs.creditCoinText.text = "00";
         UIManager.Instance.CreditCounter = 0;
     }
 }
