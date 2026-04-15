@@ -1,13 +1,13 @@
-using NUnit.Framework.Internal.Filters;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum GameState
 {
-    Title, 
-    Playing, 
-    GameOver, 
+    Title,
+    SelectModes,
+    Playing,
+    GameOver,
     Player1Wins,
     Player2Wins,
     Draw,
@@ -20,9 +20,20 @@ public enum PlayerState
     Moving
 }
 
+public enum GameMode
+{
+    None,
+    PVP,
+    PVE
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    [SerializeField] private MainSceneRefs mainSceneRefs;
+
+    private int currentModeIndex;
 
     private float checkGameResultDelay = 0.1f;
     private float returnBackToMainTitleDelay = 3f;
@@ -30,17 +41,27 @@ public class GameManager : MonoBehaviour
     private bool player1Dead = false;
     private bool player2Dead = false;
 
+    #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
+    private UIEvents uiEvents;
+    #endregion
+
     #region STATES
     [Header("STATES")]
     [SerializeField] private GameState currentGameState;
     [SerializeField] private PlayerState currentPlayerState;
+    [SerializeField] private GameMode currentGameMode;
     #endregion
 
+    public int CurrentModeIndex { get => currentModeIndex; }
     public GameState CurrentGameState { get => currentGameState; set => currentGameState = value; }
     public PlayerState CurrentPlayerState { get => currentPlayerState; set => currentPlayerState = value; }
+    public GameMode CurrentGameMode { get => currentGameMode; set => currentGameMode = value; }
 
     private void Awake()
     {
+        uiEvents = GameObject.Find("UIEvents").GetComponent<UIEvents>();
+
         transform.SetParent(null);
 
         if (Instance == null)
@@ -56,20 +77,25 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        currentModeIndex = 0;
         currentGameState = GameState.Title;
         currentPlayerState = PlayerState.Idle;
+        currentGameMode = GameMode.None;
     }
 
     private void Update()
     {
         JoinGame();
+        InputForGameModeSelection();
+        EnterGameMode();
     }
 
     public void JoinGame()
     {
         if (UIManager.Instance.IsWaiting) return;
+        if (currentGameState == GameState.SelectModes) return;
 
-        // Change to Joystick button 7 later
+        // Change later to Arcade Machine input...
         if (currentGameState == GameState.Title)
         {
             if (Input.anyKeyDown)
@@ -80,12 +106,79 @@ public class GameManager : MonoBehaviour
                         UIManager.Instance.InsertCoin();
                         break;
                     case 1:
-                        SceneManager.LoadScene("Main");
-                        currentGameState = GameState.Playing;
+                        currentGameState = GameState.SelectModes;
+                        UIManager.Instance.EnableGameModes();
+                        uiEvents.OnPVPModeStay();
                         break;
                 }
             }
         }
+    }
+
+    public void EnterGameMode()
+    {
+        if (currentGameState == GameState.Title) return;
+        if (currentGameState == GameState.Playing) return;
+
+        if (currentGameState == GameState.SelectModes)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                if (currentModeIndex == 0)
+                    LoadPVPMode();
+                else
+                    LoadPVEMode();
+            }
+        }
+    }
+
+    public void InputForGameModeSelection()
+    {
+        if (currentGameState == GameState.Title) return;
+        if (currentGameState == GameState.Playing) return;
+
+        // Change later to Arcade Machine inputs...
+        if (Input.GetKeyDown(KeyCode.S) && currentModeIndex == 0)
+        {
+            SelectPVEMode();
+        }
+        else if (Input.GetKeyDown(KeyCode.W) && currentModeIndex == 1)
+        {
+            SelectPVPMode();
+        }
+    }
+
+    public void SelectPVPMode()
+    {
+        uiEvents.OnPVEModeExit();
+        UIManager.Instance.PVPSelectionArrow.enabled = true;
+        UIManager.Instance.PVESelectionArrow.enabled = false;
+        uiEvents.OnPVPModeStay();
+        currentModeIndex = 0;
+    }
+
+    public void SelectPVEMode()
+    {
+        uiEvents.OnPVPModeExit();
+        UIManager.Instance.PVPSelectionArrow.enabled = false;
+        UIManager.Instance.PVESelectionArrow.enabled = true;
+        uiEvents.OnPVEModeStay();
+        currentModeIndex = 1;
+    }
+
+    public void LoadPVPMode()
+    {
+        currentGameState = GameState.Playing;
+        currentGameMode = GameMode.PVP;
+        SceneManager.LoadScene("Main");
+        mainSceneRefs.player_1.SetActive(true);
+    }
+
+    public void LoadPVEMode()
+    {
+        currentGameState = GameState.Playing;
+        currentGameMode = GameMode.PVE;
+        SceneManager.LoadScene("Main");
     }
 
     public void PlayerDied(PlayerHealth.PlayerID id, GameObject obj)
@@ -137,6 +230,11 @@ public class GameManager : MonoBehaviour
     public void ReturnToMainTitle()
     {
         StartCoroutine(ReturnToMainTitleDelay());
+    }
+
+    public void AssignMainSceneObjectsAtRuntime(MainSceneRefs localMainSceneRefs)
+    {
+        mainSceneRefs = localMainSceneRefs;
     }
 
     public IEnumerator ReturnToMainTitleDelay()
