@@ -4676,13 +4676,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d65379196888d49bf0753ae7690fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localMainSceneRefs:
+  mainUI:
     gameOverPanel: {fileID: 296547084779873110}
     player1WinsPanel: {fileID: 1702257915}
     player2WinsPanel: {fileID: 1485613596}
     drawPanel: {fileID: 39215271}
-    player_1: {fileID: 3478434357855649886}
-    player_2: {fileID: 6195269278291155433}
+    player1: {fileID: 3478434357855649886}
+    player2: {fileID: 6195269278291155433}
   soundTypes: 00000000
   localSources:
   - {fileID: 1496151162}
@@ -6697,7 +6697,7 @@ GameObject:
   - component: {fileID: 1485613599}
   - component: {fileID: 1485613598}
   m_Layer: 0
-  m_Name: Player_2WinsPanel
+  m_Name: Player2WinsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6933,7 +6933,7 @@ GameObject:
   - component: {fileID: 1702257918}
   - component: {fileID: 1702257917}
   m_Layer: 0
-  m_Name: Player_1WinsPanel
+  m_Name: Player1WinsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

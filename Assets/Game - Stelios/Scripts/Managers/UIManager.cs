@@ -6,11 +6,14 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    [SerializeField] private MainSceneRefs mainSceneUIRefs;
-    [SerializeField] private TitleSceneRefs titleSceneUIRefs;
+    [SerializeField] private MainSceneRefs mainUI;
+    [SerializeField] private TitleSceneRefs titleUI;
 
     private float enterCreditDelay = 2f;
+    private float assignPlayerRefsDelay = 0.1f;
+
     private int creditCounter = 0;
+
     private bool isWaiting = false;
 
     #region SCRIPTABLE OBJECTS
@@ -18,25 +21,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameEvents gameEvents;
     #endregion
 
-    #region OBJECTS
-    [Header("OBJECTS")]
-    [SerializeField] private GameObject modesMenu;
-    #endregion
-
-    #region UI
-    [Header("TEXT")]
-    [SerializeField] private TextMeshProUGUI pvpText;
-    [SerializeField] private TextMeshProUGUI pveText;
-    [SerializeField] private TextMeshProUGUI pvpSelectionArrow;
-    [SerializeField] private TextMeshProUGUI pveSelectionArrow;
-    #endregion
-
-    public TitleSceneRefs TitleSceneRefs { get => titleSceneUIRefs; }
-    public MainSceneRefs MainSceneUIRefs { get => mainSceneUIRefs; } 
-    public TextMeshProUGUI PVPText { get => pvpText; }
-    public TextMeshProUGUI PVEText { get => pveText; }
-    public TextMeshProUGUI PVPSelectionArrow { get => pvpSelectionArrow; }
-    public TextMeshProUGUI PVESelectionArrow { get => pveSelectionArrow; }
+    public TitleSceneRefs TitleUI { get => titleUI; }
+    public MainSceneRefs MainUI{ get => mainUI; } 
     public int CreditCounter { get => creditCounter; set => creditCounter = value; }
     public bool IsWaiting => isWaiting;
 
@@ -67,18 +53,20 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        titleSceneUIRefs.insertCoinText.enabled = true;
-        titleSceneUIRefs.pressStartText.enabled = false;
-        titleSceneUIRefs.creditCoinText.text = creditCounter.ToString("00");
+        if (titleUI == null) return;
+
+        titleUI.insertCoinText.enabled = true;
+        titleUI.pressStartText.enabled = false;
+        titleUI.creditCoinText.text = creditCounter.ToString("00");
     }
 
     public void EnableGameModes()
     {
-        modesMenu.SetActive(true);
-        PVPText.enabled = true;
-        PVEText.enabled = true;
-        PVPSelectionArrow.enabled = true;
-        titleSceneUIRefs.pressStartText.enabled = false;
+        titleUI.modesMenu.SetActive(true);
+        titleUI.PVPText.enabled = true;
+        titleUI.PVEText.enabled = true;
+        titleUI.PVPSelectionArrow.enabled = true;
+        titleUI.pressStartText.enabled = false;
     }
 
     public void InsertCoin()
@@ -89,13 +77,13 @@ public class UIManager : MonoBehaviour
     public IEnumerator EnterCreditDelay()
     {
         isWaiting = true;
-        titleSceneUIRefs.insertCoinText.enabled = false;
+        titleUI.insertCoinText.enabled = false;
         CreditCounter++;
-        titleSceneUIRefs.creditCoinText.text = creditCounter.ToString("00");
+        titleUI.creditCoinText.text = creditCounter.ToString("00");
 
         yield return new WaitForSeconds(enterCreditDelay);
 
-        titleSceneUIRefs.pressStartText.enabled = true;
+        titleUI.pressStartText.enabled = true;
         isWaiting = false;
     }
 
@@ -114,18 +102,77 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void OnPVPSelected()
+    {
+        titleUI.PVPSelectionArrow.enabled = true;
+        titleUI.PVESelectionArrow.enabled = false;
+    }
+
+    public void OnPVESelected()
+    {
+        titleUI.PVPSelectionArrow.enabled = false;
+        titleUI.PVESelectionArrow.enabled = true;
+    }
+
+    public void TriggerPVPStay()
+    {
+        titleUI.uiEvents.OnPVPModeStay();
+    }
+
+    public void TriggerPVPExit()
+    {
+        titleUI.uiEvents.OnPVPModeExit();
+    }
+
+    public void TriggerPVEStay()
+    {
+        titleUI.uiEvents.OnPVEModeStay();
+    }
+
+    public void TriggerPVEExit()
+    {
+        titleUI.uiEvents.OnPVEModeExit();
+    }
+
+    public void ShowDraw()
+    {
+        mainUI.drawPanel.SetActive(true);
+    }
+
+    public void ShowP1Win()
+    {
+        mainUI.player1WinsPanel.SetActive(true);
+    }
+
+    public void ShowP2Win()
+    {
+        mainUI.player2WinsPanel.SetActive(true);
+    }
+
     public void ShowGameOver()
     {
-        mainSceneUIRefs.gameOverPanel.SetActive(true);
+        mainUI.gameOverPanel.SetActive(true);
     }
 
-    public void AssignMainSceneUIRefsAtRuntime(MainSceneRefs localMainSceneUIRefs)
+    public void EnablePlayers()
     {
-        mainSceneUIRefs = localMainSceneUIRefs;
+        StartCoroutine(EnablePlayersDelay());
     }
 
-    public void AssignTitleSceneUIRefsAtRuntime(TitleSceneRefs localTitleSceneRefs)
+    public IEnumerator EnablePlayersDelay()
     {
-        titleSceneUIRefs = localTitleSceneRefs;
+        yield return new WaitForSeconds(assignPlayerRefsDelay);
+        mainUI.player1.SetActive(true);
+        mainUI.player2.SetActive(true);
+    }
+
+    public void SetMainUI(MainSceneRefs localMainUI)
+    {
+        mainUI = localMainUI;
+    }
+
+    public void SetTitleUI(TitleSceneRefs localTitleUI)
+    {
+        titleUI = localTitleUI;
     }
 }

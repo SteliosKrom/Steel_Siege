@@ -31,21 +31,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [SerializeField] private MainSceneRefs mainSceneRefs;
-
     private int currentModeIndex;
 
     private float checkGameResultDelay = 0.1f;
     private float returnBackToMainTitleDelay = 3f;
-    private float assignPlayerRefsDelay = 1f;
 
     private bool player1Dead = false;
     private bool player2Dead = false;
-
-    #region SCRIPT REFERENCES
-    [Header("SCRIPT REFERENCES")]
-    private UIEvents uiEvents;
-    #endregion
 
     #region STATES
     [Header("STATES")]
@@ -61,8 +53,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        uiEvents = GameObject.Find("UIEvents").GetComponent<UIEvents>();
-
         transform.SetParent(null);
 
         if (Instance == null)
@@ -109,7 +99,7 @@ public class GameManager : MonoBehaviour
                     case 1:
                         currentGameState = GameState.SelectModes;
                         UIManager.Instance.EnableGameModes();
-                        uiEvents.OnPVPModeStay();
+                        UIManager.Instance.TriggerPVPStay();
                         break;
                 }
             }
@@ -118,8 +108,7 @@ public class GameManager : MonoBehaviour
 
     public void EnterGameMode()
     {
-        if (currentGameState == GameState.Title) return;
-        if (currentGameState == GameState.Playing) return;
+        if (IsOnAnyGameState()) return;
 
         if (currentGameState == GameState.SelectModes)
         {
@@ -135,8 +124,7 @@ public class GameManager : MonoBehaviour
 
     public void InputForGameModeSelection()
     {
-        if (currentGameState == GameState.Title) return;
-        if (currentGameState == GameState.Playing) return;
+        if (IsOnAnyGameState()) return;
 
         // Change later to Arcade Machine inputs...
         if (Input.GetKeyDown(KeyCode.S) && currentModeIndex == 0)
@@ -151,19 +139,17 @@ public class GameManager : MonoBehaviour
 
     public void SelectPVPMode()
     {
-        uiEvents.OnPVEModeExit();
-        UIManager.Instance.PVPSelectionArrow.enabled = true;
-        UIManager.Instance.PVESelectionArrow.enabled = false;
-        uiEvents.OnPVPModeStay();
+        UIManager.Instance.TriggerPVEExit();
+        UIManager.Instance.OnPVPSelected();
+        UIManager.Instance.TriggerPVPStay();
         currentModeIndex = 0;
     }
 
     public void SelectPVEMode()
     {
-        uiEvents.OnPVPModeExit();
-        UIManager.Instance.PVPSelectionArrow.enabled = false;
-        UIManager.Instance.PVESelectionArrow.enabled = true;
-        uiEvents.OnPVEModeStay();
+        UIManager.Instance.TriggerPVPExit();
+        UIManager.Instance.OnPVESelected();
+        UIManager.Instance.TriggerPVEStay();
         currentModeIndex = 1;
     }
 
@@ -172,7 +158,7 @@ public class GameManager : MonoBehaviour
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVP;
         SceneManager.LoadScene("Main");
-        StartCoroutine(AssignPlayerRefsDelay());
+        UIManager.Instance.EnablePlayers();
     }
 
     public void LoadPVEMode()
@@ -212,19 +198,19 @@ public class GameManager : MonoBehaviour
 
     public void Draw()
     {
-        UIManager.Instance.MainSceneUIRefs.drawPanel.SetActive(true);
+        UIManager.Instance.ShowDraw();
         currentGameState = GameState.Draw;
     }
 
     public void Player1Wins()
     {
-        UIManager.Instance.MainSceneUIRefs.player1WinsPanel.SetActive(true);
+        UIManager.Instance.ShowP1Win();
         currentGameState = GameState.Player1Wins;
     }
 
     public void Player2Wins()
     {
-        UIManager.Instance.MainSceneUIRefs.player2WinsPanel.SetActive(true);
+        UIManager.Instance.ShowP2Win();
         currentGameState = GameState.Player2Wins;
     }
 
@@ -233,16 +219,15 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ReturnToMainTitleDelay());
     }
 
-    public void AssignMainSceneObjectsAtRuntime(MainSceneRefs localMainSceneRefs)
+    public bool IsOnAnyGameState()
     {
-        mainSceneRefs = localMainSceneRefs;
-    }
-
-    public IEnumerator AssignPlayerRefsDelay()
-    {
-        yield return new WaitForSeconds(assignPlayerRefsDelay);
-        mainSceneRefs.player_1.SetActive(true);
-        mainSceneRefs.player_2.SetActive(true);
+        return currentGameState == GameState.Title
+            || currentGameState == GameState.Playing
+            || currentGameState == GameState.Player1Wins
+            || currentGameState == GameState.Player2Wins
+            || currentGameState == GameState.Draw
+            || currentGameState == GameState.GameOver
+            || currentGameState == GameState.Leaderboard;
     }
 
     public IEnumerator ReturnToMainTitleDelay()

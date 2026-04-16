@@ -1,28 +1,41 @@
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
 
 [System.Serializable]
 public class TitleSceneRefs
 {
+    public GameObject modesMenu;
+    public List<TextMeshProUGUI> textElements;
     public TextMeshProUGUI insertCoinText;
     public TextMeshProUGUI pressStartText;
     public TextMeshProUGUI creditCoinText;
+    public TextMeshProUGUI PVPText;
+    public TextMeshProUGUI PVEText;
+    public TextMeshProUGUI PVPSelectionArrow;
+    public TextMeshProUGUI PVESelectionArrow;
+    public UIEvents uiEvents;
 }
 
 public class TitleSceneBridge : MonoBehaviour
 {
-    [SerializeField] private TitleSceneRefs localTitleSceneRefs;
+    #region LOCAL REFERENCES
+    [Header("LOCAL REFERENCES")]
+    [SerializeField] private TitleSceneRefs titleRefs;
+    #endregion
 
-    private void Start()
+    private IEnumerator Start()
     {
-        UIManager.Instance.AssignTitleSceneUIRefsAtRuntime(localTitleSceneRefs);
-        ResetMachineValues();
+        yield return null;
+        UIManager.Instance.SetTitleUI(titleRefs);
+        ResetCreditsUI();
     }
 
-    public void ResetMachineValues()
+    public void ResetCreditsUI()
     {
-        localTitleSceneRefs.insertCoinText.enabled = true;
-        localTitleSceneRefs.creditCoinText.text = "00";
+        titleRefs.insertCoinText.enabled = true;
+        titleRefs.creditCoinText.text = "00";
         UIManager.Instance.CreditCounter = 0;
     }
 }
