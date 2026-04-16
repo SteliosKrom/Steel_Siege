@@ -4,21 +4,21 @@ public class UIEvents : MonoBehaviour
 {
     public void OnPVPModeStay()
     {
-        UIManager.Instance.PVPSelectionArrow.color = Color.red;
+        UIManager.Instance.TitleUI.PVPSelectionArrow.color = Color.red;
     }
 
     public void OnPVPModeExit()
     {
-        UIManager.Instance.PVPSelectionArrow.color = Color.white;
+        UIManager.Instance.TitleUI.PVPSelectionArrow.color = Color.white;
     }
 
     public void OnPVEModeStay()
     {
-        UIManager.Instance.PVESelectionArrow.color = Color.red;
+        UIManager.Instance.TitleUI.PVESelectionArrow.color = Color.red;
     }
 
     public void OnPVEModeExit()
     {
-        UIManager.Instance.PVESelectionArrow.color = Color.white;
+        UIManager.Instance.TitleUI.PVESelectionArrow.color = Color.white;
     }
 }

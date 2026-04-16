@@ -15,10 +15,10 @@ public class AudioManager : MonoBehaviour
         public AudioClip clip;
     }
 
-    [SerializeField] private List<AudioItem> audioItems;
-    private Dictionary<SoundType, AudioItem> soundFXDict;
+    [SerializeField] private List<AudioItem> audioItemsList;
+    private Dictionary<SoundType, AudioItem> audioItemsByType;
 
-    public Dictionary<SoundType, AudioItem> SoundFXDict { get => soundFXDict; set => soundFXDict = value; }
+    public Dictionary<SoundType, AudioItem> AudioItemsByType => audioItemsByType;
 
     private void Awake()
     {
@@ -34,16 +34,17 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        soundFXDict = new Dictionary<SoundType, AudioItem>();
-        foreach (var items in audioItems)
+        audioItemsByType = new Dictionary<SoundType, AudioItem>();
+
+        foreach (var item in audioItemsList)
         {
-            soundFXDict[items.type] = items;
+            audioItemsByType[item.type] = item;
         }
     }
 
     public void PlaySFX(SoundType type)
     {
-        if (soundFXDict.TryGetValue(type, out var item))
+        if (audioItemsByType.TryGetValue(type, out var item))
         {
             item.source.PlayOneShot(item.clip);
         }
@@ -51,17 +52,20 @@ public class AudioManager : MonoBehaviour
 
     public void StopSFX(SoundType type)
     {
-        if (soundFXDict.TryGetValue(type, out var item))
+        if (audioItemsByType.TryGetValue(type, out var item))
         {
             item.source.Stop();
         }
     }
 
-    public void AssignSourcesAtRuntime(SoundType[] types, AudioSource[] sources)
+    public void SetAudioSources(SoundType[] types, AudioSource[] sources)
     {
         for (int i = 0; i < types.Length; i++)
         {
-            SoundFXDict[types[i]].source = sources[i];
+            if (audioItemsByType.TryGetValue(types[i], out var item))
+            {
+                item.source = sources[i];
+            }
         }
     }
 }

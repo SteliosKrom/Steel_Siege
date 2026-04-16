@@ -7,15 +7,15 @@ public class MainSceneRefs
     public GameObject player1WinsPanel;
     public GameObject player2WinsPanel;
     public GameObject drawPanel;
-    public GameObject player_1;
-    public GameObject player_2;
+    public GameObject player1;
+    public GameObject player2;
 }
 
 public class MainSceneBridge : MonoBehaviour
 {
     #region LOCAL REFERENCES
     [Header("LOCAL REFERENCES")]
-    [SerializeField] private MainSceneRefs localMainSceneRefs;
+    [SerializeField] private MainSceneRefs mainUI;
     #endregion
 
     #region AUDIO
@@ -24,10 +24,9 @@ public class MainSceneBridge : MonoBehaviour
     [SerializeField] private AudioSource[] localSources;
     #endregion
 
-    private void Start()
+    private void Awake()
     {
-        GameManager.Instance.AssignMainSceneObjectsAtRuntime(localMainSceneRefs);
-        AudioManager.Instance.AssignSourcesAtRuntime(soundTypes, localSources);
-        UIManager.Instance.AssignMainSceneUIRefsAtRuntime(localMainSceneRefs);
+        AudioManager.Instance.SetAudioSources(soundTypes, localSources);
+        UIManager.Instance.SetMainUI(mainUI);
     }
 }

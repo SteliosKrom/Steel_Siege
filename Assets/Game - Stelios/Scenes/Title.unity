@@ -153,8 +153,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.8, y: -35.7}
-  m_SizeDelta: {x: 145.3551, y: 18.6285}
+  m_AnchoredPosition: {x: 0.1, y: -35.7}
+  m_SizeDelta: {x: 124.1, y: 18.63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &28447618
 MonoBehaviour:
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28447616}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: INSERT A COIN
+  m_text: INSERT COIN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0ec19ac54133cab4fb9c84097204ae3e, type: 2}
   m_sharedMaterial: {fileID: -5615162002120788405, guid: 0ec19ac54133cab4fb9c84097204ae3e, type: 2}
@@ -299,10 +299,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 998099bc8f21d984797364d5d4d4d744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localTitleSceneRefs:
+  titleRefs:
+    modesMenu: {fileID: 2035222779}
     insertCoinText: {fileID: 28447618}
     pressStartText: {fileID: 2049682764}
     creditCoinText: {fileID: 1635410830}
+    PVPText: {fileID: 1043159753}
+    PVEText: {fileID: 210103502}
+    PVPSelectionArrow: {fileID: 1507163590}
+    PVESelectionArrow: {fileID: 1905629168}
+    uiEvents: {fileID: 1781720310}
 --- !u!1 &210103500
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,13 +521,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73d6156e29343474fa9f10ae78a0fc5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainSceneRefs:
-    gameOverPanel: {fileID: 0}
-    player1WinsPanel: {fileID: 0}
-    player2WinsPanel: {fileID: 0}
-    drawPanel: {fileID: 0}
-    player_1: {fileID: 0}
-    player_2: {fileID: 0}
   currentGameState: 0
   currentPlayerState: 0
   currentGameMode: 0
@@ -1395,23 +1394,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f362c3b84209040a60780c27afae9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainSceneRefs:
+  mainUI:
     gameOverPanel: {fileID: 0}
     player1WinsPanel: {fileID: 0}
     player2WinsPanel: {fileID: 0}
     drawPanel: {fileID: 0}
-    player_1: {fileID: 0}
-    player_2: {fileID: 0}
-  titleSceneRefs:
-    insertCoinText: {fileID: 0}
-    pressStartText: {fileID: 0}
-    creditCoinText: {fileID: 0}
+    player1: {fileID: 0}
+    player2: {fileID: 0}
+  titleUI:
+    modesMenu: {fileID: 2035222779}
+    insertCoinText: {fileID: 28447618}
+    pressStartText: {fileID: 2049682764}
+    creditCoinText: {fileID: 1635410830}
+    PVPText: {fileID: 1043159753}
+    PVEText: {fileID: 210103502}
+    PVPSelectionArrow: {fileID: 1507163590}
+    PVESelectionArrow: {fileID: 1905629168}
+    uiEvents: {fileID: 1781720310}
   gameEvents: {fileID: 11400000, guid: 667ee07dfebd0c145a4169d9210287c2, type: 2}
-  modesMenu: {fileID: 2035222779}
-  pvpText: {fileID: 1043159753}
-  pveText: {fileID: 210103502}
-  pvpSelectionArrow: {fileID: 1507163590}
-  pveSelectionArrow: {fileID: 1905629168}
 --- !u!1 &939070625
 GameObject:
   m_ObjectHideFlags: 0
@@ -2987,7 +2987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cee0f58acc9e2f40add8b9e7b6c5a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioItems:
+  audioItemsList:
   - type: 0
     source: {fileID: 0}
     clip: {fileID: 8300000, guid: 5e38914317f6e1447ad607d44ac2b094, type: 3}
