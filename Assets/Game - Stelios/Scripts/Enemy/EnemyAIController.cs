@@ -13,8 +13,6 @@ public class EnemyAIController : MonoBehaviour
     [SerializeField] private Transform shootingPoint;
 
     private Vector2 moveDirection;
-    private LayerMask obstacle;
-    private LayerMask wall;
 
     private void Start()
     {
