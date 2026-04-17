@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerData playerData;
     [SerializeField] private Rigidbody2D playerRb;
     [SerializeField] private Transform shootingPoint;
-    private Vector2 movementDirection;
+    private Vector2 moveDirection;
 
     private void Update()
     {
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.CurrentGameState != GameState.Playing) return;
 
         // Player Movement. Change to Arcade Machine inputs later...
-        movementDirection = Vector2.zero;
+        moveDirection = Vector2.zero;
 
         if (Input.GetKey(upKey)) Move(Vector2.up, 0f);
         else if (Input.GetKey(downKey)) Move(Vector2.down, 180f);
@@ -55,13 +55,13 @@ public class PlayerController : MonoBehaviour
 
     public void Move(Vector2 dir, float rotation)
     {
-        movementDirection += dir;
+        moveDirection += dir;
         playerRb.SetRotation(rotation);
     }
 
     public void ApplyMovement()
     {
-        Vector2 targetPos = playerRb.position + movementDirection.normalized * playerData.MoveSpeed * Time.fixedDeltaTime;
+        Vector2 targetPos = playerRb.position + moveDirection.normalized * playerData.MoveSpeed * Time.fixedDeltaTime;
         playerRb.MovePosition(targetPos);
     }
 

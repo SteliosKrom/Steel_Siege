@@ -9,7 +9,6 @@ public class PlayerData : GameData
     [SerializeField] private float bulletSpeed;
     [SerializeField] private int damage;
 
-    public string DisplayName => displayName;
     public int MaxLives => maxLives;
     public float MoveSpeed => moveSpeed;
     public float BulletSpeed => bulletSpeed;

@@ -39,6 +39,11 @@ public class GameManager : MonoBehaviour
     private bool player1Dead = false;
     private bool player2Dead = false;
 
+    #region SCRIPTABLE OBJECTS
+    [Header("SCRIPTABLE OBJECTS")]
+    [SerializeField] private GameEvents gameEvents;
+    #endregion
+
     #region STATES
     [Header("STATES")]
     [SerializeField] private GameState currentGameState;
@@ -108,7 +113,7 @@ public class GameManager : MonoBehaviour
 
     public void EnterGameMode()
     {
-        if (IsOnAnyGameState()) return;
+        if (currentGameState != GameState.SelectModes) return;
 
         if (currentGameState == GameState.SelectModes)
         {
@@ -124,7 +129,7 @@ public class GameManager : MonoBehaviour
 
     public void InputForGameModeSelection()
     {
-        if (IsOnAnyGameState()) return;
+        if (currentGameState != GameState.SelectModes) return;
 
         // Change later to Arcade Machine inputs...
         if (Input.GetKeyDown(KeyCode.S) && currentModeIndex == 0)
@@ -158,7 +163,7 @@ public class GameManager : MonoBehaviour
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVP;
         SceneManager.LoadScene("Main");
-        UIManager.Instance.EnablePlayers();
+        UIManager.Instance.EnableBothPlayers();
     }
 
     public void LoadPVEMode()
@@ -166,6 +171,8 @@ public class GameManager : MonoBehaviour
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVE;
         SceneManager.LoadScene("Main");
+        UIManager.Instance.EnablePlayerAndEnemy();
+        UIManager.Instance.DisableRedLives();
     }
 
     public void PlayerDied(PlayerHealth.PlayerID id, GameObject obj)
@@ -181,37 +188,53 @@ public class GameManager : MonoBehaviour
 
     public void CheckGameResult()
     {
-        if (player1Dead && player2Dead)
+        if (currentGameMode == GameMode.PVP)
         {
-            Draw();
+            if (player1Dead && player2Dead)
+            {
+                Draw();
+            }
+            else if (player1Dead)
+            {
+                Player2Wins();
+            }
+            else if (player2Dead)
+            {
+                Player1Wins();
+            }
         }
-        else if (player1Dead)
+        else if (currentGameMode == GameMode.PVE)
         {
-            Player2Wins();
-        }
-        else if (player2Dead)
-        {
-            Player1Wins();
+            if (player1Dead)
+            {
+                GameOver();
+            }
         }
         ReturnToMainTitle();
     }
 
     public void Draw()
     {
-        UIManager.Instance.ShowDraw();
+        gameEvents.RaiseDraw();
         currentGameState = GameState.Draw;
     }
 
     public void Player1Wins()
     {
-        UIManager.Instance.ShowP1Win();
+        gameEvents.RaiseP1Win();
         currentGameState = GameState.Player1Wins;
     }
 
     public void Player2Wins()
     {
-        UIManager.Instance.ShowP2Win();
+        gameEvents.RaiseP2Win();
         currentGameState = GameState.Player2Wins;
+    }
+
+    public void GameOver()
+    {
+        gameEvents.RaiseGameOver();
+        currentGameState = GameState.GameOver;
     }
 
     public void ReturnToMainTitle()
@@ -219,23 +242,17 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ReturnToMainTitleDelay());
     }
 
-    public bool IsOnAnyGameState()
+    public void ResetMatchState()
     {
-        return currentGameState == GameState.Title
-            || currentGameState == GameState.Playing
-            || currentGameState == GameState.Player1Wins
-            || currentGameState == GameState.Player2Wins
-            || currentGameState == GameState.Draw
-            || currentGameState == GameState.GameOver
-            || currentGameState == GameState.Leaderboard;
+        player1Dead = false;
+        player2Dead = false;
     }
 
     public IEnumerator ReturnToMainTitleDelay()
     {
         yield return new WaitForSeconds(returnBackToMainTitleDelay);
         SceneManager.LoadScene("Title");
-        player1Dead = false;
-        player2Dead = false;
+        ResetMatchState();
         currentGameState = GameState.Title;
     }
 

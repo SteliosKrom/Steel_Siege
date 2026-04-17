@@ -7,7 +7,6 @@ using System.Collections;
 public class TitleSceneRefs
 {
     public GameObject modesMenu;
-    public List<TextMeshProUGUI> textElements;
     public TextMeshProUGUI insertCoinText;
     public TextMeshProUGUI pressStartText;
     public TextMeshProUGUI creditCoinText;
@@ -25,9 +24,8 @@ public class TitleSceneBridge : MonoBehaviour
     [SerializeField] private TitleSceneRefs titleRefs;
     #endregion
 
-    private IEnumerator Start()
+    private void Start()
     {
-        yield return null;
         UIManager.Instance.SetTitleUI(titleRefs);
         ResetCreditsUI();
     }
