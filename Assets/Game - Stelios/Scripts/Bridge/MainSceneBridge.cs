@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 [System.Serializable]
@@ -11,6 +12,8 @@ public class MainSceneRefs
     public GameObject player1;
     public GameObject player2;
     public GameObject enemyTank;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI scoreTextValue;
 }
 
 public class MainSceneBridge : MonoBehaviour

@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -22,7 +23,7 @@ public class UIManager : MonoBehaviour
     #endregion
 
     public TitleSceneRefs TitleUI { get => titleUI; }
-    public MainSceneRefs MainUI{ get => mainUI; } 
+    public MainSceneRefs MainUI{ get => mainUI; }
     public int CreditCounter { get => creditCounter; set => creditCounter = value; }
     public bool IsWaiting => isWaiting;
 
@@ -160,14 +161,19 @@ public class UIManager : MonoBehaviour
         mainUI.gameOverPanel.SetActive(true);
     }
 
-    public void EnableBothPlayers()
+    public void EnablePVEScoreText()
     {
-        StartCoroutine(EnablePlayersDelay());
+        StartCoroutine(EnableScoreTextDelay());
     }
 
-    public void EnablePlayerAndEnemy()
+    public void EnablePVPTanks()
     {
-        StartCoroutine(EnableEnemyDelay());
+        StartCoroutine(EnablePVPTanksDelay());
+    }
+
+    public void EnablePVETanks()
+    {
+        StartCoroutine(EnablePVETanksDelay());
     }
 
     public void DisableRedLives()
@@ -175,24 +181,32 @@ public class UIManager : MonoBehaviour
         StartCoroutine(DisableRedLivesDelay());
     }
 
+
     public IEnumerator DisableRedLivesDelay()
     {
         yield return new WaitForSeconds(assignRefsDelay);
         mainUI.redLives.SetActive(false);
     }
 
-    public IEnumerator EnableEnemyDelay()
+    public IEnumerator EnablePVETanksDelay()
     {
         yield return new WaitForSeconds(assignRefsDelay);
         mainUI.enemyTank.SetActive(true);
         mainUI.player1.SetActive(true);
     }
 
-    public IEnumerator EnablePlayersDelay()
+    public IEnumerator EnablePVPTanksDelay()
     {
         yield return new WaitForSeconds(assignRefsDelay);
         mainUI.player1.SetActive(true);
         mainUI.player2.SetActive(true);
+    }
+
+    public IEnumerator EnableScoreTextDelay()
+    {
+        yield return new WaitForSeconds(assignRefsDelay);
+        mainUI.scoreText.enabled = true;
+        mainUI.scoreTextValue.enabled = true;
     }
 
     public void SetMainUI(MainSceneRefs localMainUI)
