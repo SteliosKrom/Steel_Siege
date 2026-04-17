@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVP;
         SceneManager.LoadScene("Main");
-        UIManager.Instance.EnableBothPlayers();
+        UIManager.Instance.EnablePVPTanks();
     }
 
     public void LoadPVEMode()
@@ -171,8 +171,9 @@ public class GameManager : MonoBehaviour
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVE;
         SceneManager.LoadScene("Main");
-        UIManager.Instance.EnablePlayerAndEnemy();
+        UIManager.Instance.EnablePVETanks();
         UIManager.Instance.DisableRedLives();
+        UIManager.Instance.EnablePVEScoreText();
     }
 
     public void PlayerDied(PlayerHealth.PlayerID id, GameObject obj)
