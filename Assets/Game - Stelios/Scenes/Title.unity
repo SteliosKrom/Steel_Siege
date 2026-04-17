@@ -301,6 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleRefs:
     modesMenu: {fileID: 2035222779}
+    textElements: []
     insertCoinText: {fileID: 28447618}
     pressStartText: {fileID: 2049682764}
     creditCoinText: {fileID: 1635410830}
@@ -521,6 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73d6156e29343474fa9f10ae78a0fc5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameEvents: {fileID: 11400000, guid: 667ee07dfebd0c145a4169d9210287c2, type: 2}
   currentGameState: 0
   currentPlayerState: 0
   currentGameMode: 0
@@ -1403,6 +1405,7 @@ MonoBehaviour:
     player2: {fileID: 0}
   titleUI:
     modesMenu: {fileID: 2035222779}
+    textElements: []
     insertCoinText: {fileID: 28447618}
     pressStartText: {fileID: 2049682764}
     creditCoinText: {fileID: 1635410830}

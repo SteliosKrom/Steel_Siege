@@ -18,7 +18,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField] private GameObject[] playerLives;
     #endregion
 
-    public int CurrentLives { get => currentLives; set => currentLives = value; }
     private void Start()
     {
         currentLives = playerData.MaxLives;

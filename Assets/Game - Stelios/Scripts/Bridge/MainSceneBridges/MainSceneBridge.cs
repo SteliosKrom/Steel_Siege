@@ -7,8 +7,10 @@ public class MainSceneRefs
     public GameObject player1WinsPanel;
     public GameObject player2WinsPanel;
     public GameObject drawPanel;
+    public GameObject redLives;
     public GameObject player1;
     public GameObject player2;
+    public GameObject enemyTank;
 }
 
 public class MainSceneBridge : MonoBehaviour

@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TitleSceneRefs titleUI;
 
     private float enterCreditDelay = 2f;
-    private float assignPlayerRefsDelay = 0.1f;
+    private float assignRefsDelay = 0.1f;
 
     private int creditCounter = 0;
 
@@ -44,11 +44,17 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         gameEvents.OnGameOver.AddListener(ShowGameOver);
+        gameEvents.OnP1Win.AddListener(ShowP1Win);
+        gameEvents.OnP2Win.AddListener(ShowP2Win);
+        gameEvents.OnDraw.AddListener(ShowDraw);
     }
 
     private void OnDisable()
     {
         gameEvents.OnGameOver.RemoveListener(ShowGameOver);
+        gameEvents.OnP1Win.RemoveListener(ShowP1Win);
+        gameEvents.OnP2Win.RemoveListener(ShowP2Win);
+        gameEvents.OnDraw.RemoveListener(ShowDraw);
     }
 
     private void Start()
@@ -154,14 +160,37 @@ public class UIManager : MonoBehaviour
         mainUI.gameOverPanel.SetActive(true);
     }
 
-    public void EnablePlayers()
+    public void EnableBothPlayers()
     {
         StartCoroutine(EnablePlayersDelay());
     }
 
+    public void EnablePlayerAndEnemy()
+    {
+        StartCoroutine(EnableEnemyDelay());
+    }
+
+    public void DisableRedLives()
+    {
+        StartCoroutine(DisableRedLivesDelay());
+    }
+
+    public IEnumerator DisableRedLivesDelay()
+    {
+        yield return new WaitForSeconds(assignRefsDelay);
+        mainUI.redLives.SetActive(false);
+    }
+
+    public IEnumerator EnableEnemyDelay()
+    {
+        yield return new WaitForSeconds(assignRefsDelay);
+        mainUI.enemyTank.SetActive(true);
+        mainUI.player1.SetActive(true);
+    }
+
     public IEnumerator EnablePlayersDelay()
     {
-        yield return new WaitForSeconds(assignPlayerRefsDelay);
+        yield return new WaitForSeconds(assignRefsDelay);
         mainUI.player1.SetActive(true);
         mainUI.player2.SetActive(true);
     }
