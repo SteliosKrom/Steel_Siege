@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     #region SCRIPTABLE OBJECTS
     [Header("SCRIPTABLE OBJECTS")]
     [SerializeField] private PlayerData playerData;
-    [SerializeField] private GameEvents gameEvents;
+    [SerializeField] private GameEventsSO gameEvents;
     #endregion
 
     #region OBJECTS

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EnemyAIController : MonoBehaviour
 {
+    [SerializeField] private string bulletTag;
+
     private float changeDirectionDelay;
     private float changeDirectionDelayVariation;
     private float shootDelay;
@@ -81,7 +83,7 @@ public class EnemyAIController : MonoBehaviour
         if (GameManager.Instance.CurrentGameState == GameState.GameOver)
             return;
 
-        GameObject bullet = ObjectPoolManager.Instance.GetObject("Bullet");
+        GameObject bullet = ObjectPoolManager.Instance.GetObject(bulletTag);
         bullet.transform.position = shootingPoint.transform.position;
         bullet.transform.rotation = shootingPoint.transform.rotation;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();

@@ -1,14 +1,12 @@
 using System.Collections;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    [SerializeField] private MainSceneRefs mainUI;
-    [SerializeField] private TitleSceneRefs titleUI;
+    [SerializeField] private MainSceneRefs mainRefs;
+    [SerializeField] private TitleSceneRefs titleRefs;
 
     private float enterCreditDelay = 2f;
     private float assignRefsDelay = 0.1f;
@@ -19,11 +17,12 @@ public class UIManager : MonoBehaviour
 
     #region SCRIPTABLE OBJECTS
     [Header("SCRIPTABLE OBJECTS")]
-    [SerializeField] private GameEvents gameEvents;
+    [SerializeField] private GameEventsSO gameEvents;
+    [SerializeField] private UIEventsSO uiEvents;
     #endregion
 
-    public TitleSceneRefs TitleUI { get => titleUI; }
-    public MainSceneRefs MainUI{ get => mainUI; }
+    public TitleSceneRefs TitleRefs { get => titleRefs; }
+    public MainSceneRefs MainRefs{ get => mainRefs; }
     public int CreditCounter { get => creditCounter; set => creditCounter = value; }
     public bool IsWaiting => isWaiting;
 
@@ -44,36 +43,66 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        gameEvents.OnGameOver.AddListener(ShowGameOver);
-        gameEvents.OnP1Win.AddListener(ShowP1Win);
-        gameEvents.OnP2Win.AddListener(ShowP2Win);
-        gameEvents.OnDraw.AddListener(ShowDraw);
+        // Subscribe Game Events...
+        gameEvents.OnGameOver += ShowGameOver;
+        gameEvents.OnP1Win += ShowP1Win;
+        gameEvents.OnP2Win += ShowP2Win;
+        gameEvents.OnDraw += ShowDraw;
+
+        // Subscribe UI Events...
+        uiEvents.OnHideRedLives += DisableRedLives;
+        uiEvents.OnShowPVEScore += EnablePVEScoreText;
+        uiEvents.OnEnableGameModes += EnableGameModes;
+        uiEvents.OnInsertCoin += InsertCoin;
+
+        uiEvents.OnPVPExit += OnPVPModeExit;
+        uiEvents.OnPVPStay += OnPVPModeStay;
+        uiEvents.OnPVEExit += OnPVEModeExit;
+        uiEvents.OnPVEStay += OnPVEModeStay;
+
+        uiEvents.OnPVPSelected += OnPVPSelected;
+        uiEvents.OnPVESelected += OnPVESelected;
     }
 
     private void OnDisable()
     {
-        gameEvents.OnGameOver.RemoveListener(ShowGameOver);
-        gameEvents.OnP1Win.RemoveListener(ShowP1Win);
-        gameEvents.OnP2Win.RemoveListener(ShowP2Win);
-        gameEvents.OnDraw.RemoveListener(ShowDraw);
+        // Un-Subscribe Game Events...
+        gameEvents.OnGameOver -= ShowGameOver;
+        gameEvents.OnP1Win -= ShowP1Win;
+        gameEvents.OnP2Win -= ShowP2Win;
+        gameEvents.OnDraw -= ShowDraw;
+
+        // Un-Subscribe UI Events...
+        uiEvents.OnHideRedLives -= DisableRedLives;
+        uiEvents.OnShowPVEScore -= EnablePVEScoreText;
+        uiEvents.OnEnableGameModes -= EnableGameModes;
+        uiEvents.OnInsertCoin -= InsertCoin;
+
+        uiEvents.OnPVPExit -= OnPVPModeExit;
+        uiEvents.OnPVPStay -= OnPVPModeStay;
+        uiEvents.OnPVEExit -= OnPVEModeExit;
+        uiEvents.OnPVEStay -= OnPVEModeStay;
+
+        uiEvents.OnPVPSelected -= OnPVPSelected;
+        uiEvents.OnPVESelected -= OnPVESelected;
     }
 
     private void Start()
     {
-        if (titleUI == null) return;
+        if (titleRefs == null) return;
 
-        titleUI.insertCoinText.enabled = true;
-        titleUI.pressStartText.enabled = false;
-        titleUI.creditCoinText.text = creditCounter.ToString("00");
+        titleRefs.insertCoinText.enabled = true;
+        titleRefs.pressStartText.enabled = false;
+        titleRefs.creditCoinText.text = creditCounter.ToString("00");
     }
 
     public void EnableGameModes()
     {
-        titleUI.modesMenu.SetActive(true);
-        titleUI.PVPText.enabled = true;
-        titleUI.PVEText.enabled = true;
-        titleUI.PVPSelectionArrow.enabled = true;
-        titleUI.pressStartText.enabled = false;
+        titleRefs.modesMenu.SetActive(true);
+        titleRefs.PVPText.enabled = true;
+        titleRefs.PVEText.enabled = true;
+        titleRefs.PVPSelectionArrow.enabled = true;
+        titleRefs.pressStartText.enabled = false;
     }
 
     public void InsertCoin()
@@ -84,13 +113,13 @@ public class UIManager : MonoBehaviour
     public IEnumerator EnterCreditDelay()
     {
         isWaiting = true;
-        titleUI.insertCoinText.enabled = false;
+        titleRefs.insertCoinText.enabled = false;
         CreditCounter++;
-        titleUI.creditCoinText.text = creditCounter.ToString("00");
+        titleRefs.creditCoinText.text = creditCounter.ToString("00");
 
         yield return new WaitForSeconds(enterCreditDelay);
 
-        titleUI.pressStartText.enabled = true;
+        titleRefs.pressStartText.enabled = true;
         isWaiting = false;
     }
 
@@ -111,54 +140,54 @@ public class UIManager : MonoBehaviour
 
     public void OnPVPSelected()
     {
-        titleUI.PVPSelectionArrow.enabled = true;
-        titleUI.PVESelectionArrow.enabled = false;
+        titleRefs.PVPSelectionArrow.enabled = true;
+        titleRefs.PVESelectionArrow.enabled = false;
     }
 
     public void OnPVESelected()
     {
-        titleUI.PVPSelectionArrow.enabled = false;
-        titleUI.PVESelectionArrow.enabled = true;
+        titleRefs.PVPSelectionArrow.enabled = false;
+        titleRefs.PVESelectionArrow.enabled = true;
     }
 
-    public void TriggerPVPStay()
+    public void OnPVPModeStay()
     {
-        titleUI.uiEvents.OnPVPModeStay();
+        titleRefs.PVPSelectionArrow.color = Color.red;
     }
 
-    public void TriggerPVPExit()
+    public void OnPVPModeExit()
     {
-        titleUI.uiEvents.OnPVPModeExit();
+        titleRefs.PVPSelectionArrow.color = Color.white;
     }
 
-    public void TriggerPVEStay()
+    public void OnPVEModeStay()
     {
-        titleUI.uiEvents.OnPVEModeStay();
+        titleRefs.PVESelectionArrow.color = Color.red;
     }
 
-    public void TriggerPVEExit()
+    public void OnPVEModeExit()
     {
-        titleUI.uiEvents.OnPVEModeExit();
+        titleRefs.PVESelectionArrow.color = Color.white;
     }
 
     public void ShowDraw()
     {
-        mainUI.drawPanel.SetActive(true);
+        mainRefs.drawPanel.SetActive(true);
     }
 
     public void ShowP1Win()
     {
-        mainUI.player1WinsPanel.SetActive(true);
+        mainRefs.player1WinsPanel.SetActive(true);
     }
 
     public void ShowP2Win()
     {
-        mainUI.player2WinsPanel.SetActive(true);
+        mainRefs.player2WinsPanel.SetActive(true);
     }
 
     public void ShowGameOver()
     {
-        mainUI.gameOverPanel.SetActive(true);
+        mainRefs.gameOverPanel.SetActive(true);
     }
 
     public void EnablePVEScoreText()
@@ -166,56 +195,31 @@ public class UIManager : MonoBehaviour
         StartCoroutine(EnableScoreTextDelay());
     }
 
-    public void EnablePVPTanks()
-    {
-        StartCoroutine(EnablePVPTanksDelay());
-    }
-
-    public void EnablePVETanks()
-    {
-        StartCoroutine(EnablePVETanksDelay());
-    }
-
     public void DisableRedLives()
     {
         StartCoroutine(DisableRedLivesDelay());
     }
 
-
     public IEnumerator DisableRedLivesDelay()
     {
         yield return new WaitForSeconds(assignRefsDelay);
-        mainUI.redLives.SetActive(false);
-    }
-
-    public IEnumerator EnablePVETanksDelay()
-    {
-        yield return new WaitForSeconds(assignRefsDelay);
-        mainUI.enemyTank.SetActive(true);
-        mainUI.player1.SetActive(true);
-    }
-
-    public IEnumerator EnablePVPTanksDelay()
-    {
-        yield return new WaitForSeconds(assignRefsDelay);
-        mainUI.player1.SetActive(true);
-        mainUI.player2.SetActive(true);
+        mainRefs.redLives.SetActive(false);
     }
 
     public IEnumerator EnableScoreTextDelay()
     {
         yield return new WaitForSeconds(assignRefsDelay);
-        mainUI.scoreText.enabled = true;
-        mainUI.scoreTextValue.enabled = true;
+        mainRefs.scoreText.enabled = true;
+        mainRefs.scoreTextValue.enabled = true;
     }
 
-    public void SetMainUI(MainSceneRefs localMainUI)
+    public void SetMainUI(MainSceneRefs localMainRefs)
     {
-        mainUI = localMainUI;
+        mainRefs = localMainRefs;
     }
 
-    public void SetTitleUI(TitleSceneRefs localTitleUI)
+    public void SetTitleUI(TitleSceneRefs localTitleRefs)
     {
-        titleUI = localTitleUI;
+        titleRefs = localTitleRefs;
     }
 }

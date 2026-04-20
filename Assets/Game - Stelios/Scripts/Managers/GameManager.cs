@@ -41,7 +41,8 @@ public class GameManager : MonoBehaviour
 
     #region SCRIPTABLE OBJECTS
     [Header("SCRIPTABLE OBJECTS")]
-    [SerializeField] private GameEvents gameEvents;
+    [SerializeField] private GameEventsSO gameEvents;
+    [SerializeField] private UIEventsSO uiEvents;
     #endregion
 
     #region STATES
@@ -99,12 +100,12 @@ public class GameManager : MonoBehaviour
                 switch (UIManager.Instance.CreditCounter)
                 {
                     case 0:
-                        UIManager.Instance.InsertCoin();
+                        uiEvents.RaiseInsertCoin();
                         break;
                     case 1:
                         currentGameState = GameState.SelectModes;
-                        UIManager.Instance.EnableGameModes();
-                        UIManager.Instance.TriggerPVPStay();
+                        uiEvents.RaiseEnableGameModes();
+                        uiEvents.RaisePVPStay();
                         break;
                 }
             }
@@ -144,17 +145,17 @@ public class GameManager : MonoBehaviour
 
     public void SelectPVPMode()
     {
-        UIManager.Instance.TriggerPVEExit();
-        UIManager.Instance.OnPVPSelected();
-        UIManager.Instance.TriggerPVPStay();
+        uiEvents.RaisePVEExit();
+        uiEvents.RaisePVPStay();
+        uiEvents.RaisePVPSelected();
         currentModeIndex = 0;
     }
 
     public void SelectPVEMode()
     {
-        UIManager.Instance.TriggerPVPExit();
-        UIManager.Instance.OnPVESelected();
-        UIManager.Instance.TriggerPVEStay();
+        uiEvents.RaisePVPExit();
+        uiEvents.RaisePVEStay();
+        uiEvents.RaisePVESelected();
         currentModeIndex = 1;
     }
 
@@ -163,17 +164,16 @@ public class GameManager : MonoBehaviour
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVP;
         SceneManager.LoadScene("Main");
-        UIManager.Instance.EnablePVPTanks();
+        StartCoroutine(RaiseAfterLoad(true));
     }
 
     public void LoadPVEMode()
     {
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVE;
-        SceneManager.LoadScene("Main");
-        UIManager.Instance.EnablePVETanks();
-        UIManager.Instance.DisableRedLives();
-        UIManager.Instance.EnablePVEScoreText();
+        StartCoroutine(RaiseAfterLoad(false));
+        uiEvents.RaiseShowPVEScore();
+        uiEvents.RaiseHideRedLives();
     }
 
     public void PlayerDied(PlayerHealth.PlayerID id, GameObject obj)
@@ -247,6 +247,17 @@ public class GameManager : MonoBehaviour
     {
         player1Dead = false;
         player2Dead = false;
+    }
+
+    public IEnumerator RaiseAfterLoad(bool isPVP)
+    {
+        SceneManager.LoadScene("Main");
+        yield return null;
+
+        if (isPVP)
+            gameEvents.RaisePVPLoad();
+        else
+            gameEvents.RaisePVELoad();
     }
 
     public IEnumerator ReturnToMainTitleDelay()

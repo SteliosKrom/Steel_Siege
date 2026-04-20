@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] private string bulletTag;
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
@@ -20,6 +22,6 @@ public class Bullet : MonoBehaviour
 
     public void ReturnBullet()
     {
-        ObjectPoolManager.Instance.ReturnObject("Bullet", gameObject);
+        ObjectPoolManager.Instance.ReturnObject(bulletTag, gameObject);
     }
 }

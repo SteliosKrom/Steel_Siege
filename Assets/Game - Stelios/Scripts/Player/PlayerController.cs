@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private string bulletTag;
+
     [SerializeField] private KeyCode upKey;
     [SerializeField] private KeyCode downKey;
     [SerializeField] private KeyCode leftKey;
@@ -67,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
     public void ShootBullet()
     {
-        GameObject bullet = ObjectPoolManager.Instance.GetObject("Bullet");
+        GameObject bullet = ObjectPoolManager.Instance.GetObject(bulletTag);
         bullet.transform.position = shootingPoint.position;
         bullet.transform.rotation = shootingPoint.rotation;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();

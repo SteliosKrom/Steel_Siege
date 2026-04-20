@@ -20,7 +20,7 @@ public class MainSceneBridge : MonoBehaviour
 {
     #region LOCAL REFERENCES
     [Header("LOCAL REFERENCES")]
-    [SerializeField] private MainSceneRefs mainUI;
+    [SerializeField] private MainSceneRefs mainRefs;
     #endregion
 
     #region AUDIO
@@ -32,6 +32,6 @@ public class MainSceneBridge : MonoBehaviour
     private void Awake()
     {
         AudioManager.Instance.SetAudioSources(soundTypes, localSources);
-        UIManager.Instance.SetMainUI(mainUI);
+        UIManager.Instance.SetMainUI(mainRefs);
     }
 }
