@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 4c4351c909a74af4599ffd5ad2a3712b
+guid: 6a39cbe04af02ff4e9adbf731e5c2a23
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6144695337109493344
-    second: EnemyTank_0
-  - first:
-      213: 2443607275182032588
-    second: EnemyTank_1
-  - first:
-      213: 851520262072309185
-    second: EnemyTank_2
+      213: 8325053587360769723
+    second: RoadBaseTile_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -78,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -119,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EnemyTank_0
+      name: RoadBaseTile_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 2
-        width: 24
-        height: 30
+        x: 0
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,52 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0a9e69a9528a9baa0800000000000000
-      internalID: -6144695337109493344
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EnemyTank_1
-      rect:
-        serializedVersion: 2
-        x: 36
-        y: 2
-        width: 24
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cc609c7bedf69e120800000000000000
-      internalID: 2443607275182032588
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EnemyTank_2
-      rect:
-        serializedVersion: 2
-        x: 68
-        y: 2
-        width: 24
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1c51ed3ba2531db00800000000000000
-      internalID: 851520262072309185
+      spriteID: bb6eab23128888370800000000000000
+      internalID: 8325053587360769723
       vertices: []
       indices: 
       edges: []
@@ -188,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -198,9 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      EnemyTank_0: -6144695337109493344
-      EnemyTank_1: 2443607275182032588
-      EnemyTank_2: 851520262072309185
+      RoadBaseTile_0: 8325053587360769723
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
