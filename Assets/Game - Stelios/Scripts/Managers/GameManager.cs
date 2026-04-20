@@ -165,6 +165,7 @@ public class GameManager : MonoBehaviour
         currentGameMode = GameMode.PVP;
         SceneManager.LoadScene("Main");
         StartCoroutine(RaiseAfterLoad(true));
+        uiEvents.RaiseEnablePVPLives();
     }
 
     public void LoadPVEMode()
@@ -172,6 +173,7 @@ public class GameManager : MonoBehaviour
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVE;
         StartCoroutine(RaiseAfterLoad(false));
+        uiEvents.RaiseEnablePVELives();
         uiEvents.RaiseShowPVEScore();
         uiEvents.RaiseHideRedLives();
     }

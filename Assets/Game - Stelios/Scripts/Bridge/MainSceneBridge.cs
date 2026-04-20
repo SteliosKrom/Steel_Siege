@@ -9,6 +9,7 @@ public class MainSceneRefs
     public GameObject player2WinsPanel;
     public GameObject drawPanel;
     public GameObject redLives;
+    public GameObject greenLives;
     public GameObject player1;
     public GameObject player2;
     public GameObject enemyTank;

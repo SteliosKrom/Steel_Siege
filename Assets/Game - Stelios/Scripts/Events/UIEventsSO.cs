@@ -5,6 +5,8 @@ using UnityEngine;
 public class UIEventsSO : ScriptableObject
 {
     public event Action OnHideRedLives;
+    public event Action OnEnablePVPLives;
+    public event Action OnEnablePVELives;
     public event Action OnShowPVEScore;
     public event Action OnInsertCoin;
     public event Action OnEnableGameModes;
@@ -16,6 +18,8 @@ public class UIEventsSO : ScriptableObject
     public event Action OnPVESelected;
 
     public void RaiseHideRedLives() => OnHideRedLives?.Invoke();
+    public void RaiseEnablePVPLives() => OnEnablePVPLives?.Invoke();
+    public void RaiseEnablePVELives() => OnEnablePVELives?.Invoke();
     public void RaiseShowPVEScore() => OnShowPVEScore?.Invoke();
     public void RaiseInsertCoin() => OnInsertCoin?.Invoke();
     public void RaiseEnableGameModes() => OnEnableGameModes?.Invoke();

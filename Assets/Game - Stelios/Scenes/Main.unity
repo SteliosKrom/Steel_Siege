@@ -4423,7 +4423,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &496096608
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4937,6 +4937,7 @@ MonoBehaviour:
     player2WinsPanel: {fileID: 1485613596}
     drawPanel: {fileID: 39215271}
     redLives: {fileID: 496096607}
+    greenLives: {fileID: 946839264}
     player1: {fileID: 3478434357855649886}
     player2: {fileID: 6195269278291155433}
     enemyTank: {fileID: 410664301}
@@ -6389,7 +6390,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &946839265
 RectTransform:
   m_ObjectHideFlags: 0

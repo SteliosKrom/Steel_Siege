@@ -51,6 +51,8 @@ public class UIManager : MonoBehaviour
 
         // Subscribe UI Events...
         uiEvents.OnHideRedLives += DisableRedLives;
+        uiEvents.OnEnablePVPLives += EnablePVPLives;
+        uiEvents.OnEnablePVELives += EnablePVELives;
         uiEvents.OnShowPVEScore += EnablePVEScoreText;
         uiEvents.OnEnableGameModes += EnableGameModes;
         uiEvents.OnInsertCoin += InsertCoin;
@@ -195,9 +197,32 @@ public class UIManager : MonoBehaviour
         StartCoroutine(EnableScoreTextDelay());
     }
 
+    public void EnablePVELives()
+    {
+        StartCoroutine(EnablePVELivesDelay());
+    }
+
+    public void EnablePVPLives()
+    {
+        StartCoroutine(EnablePVPLivesDelay());
+    }
+
     public void DisableRedLives()
     {
         StartCoroutine(DisableRedLivesDelay());
+    }
+
+    public IEnumerator EnablePVPLivesDelay()
+    {
+        yield return new WaitForSeconds(assignRefsDelay);
+        mainRefs.redLives.SetActive(true);
+        mainRefs.greenLives.SetActive(true);
+    }
+
+    public IEnumerator EnablePVELivesDelay()
+    {
+        yield return new WaitForSeconds(assignRefsDelay);
+        mainRefs.greenLives.SetActive(true);
     }
 
     public IEnumerator DisableRedLivesDelay()
