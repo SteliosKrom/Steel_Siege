@@ -14,7 +14,6 @@ public class TitleSceneRefs
     public TextMeshProUGUI PVEText;
     public TextMeshProUGUI PVPSelectionArrow;
     public TextMeshProUGUI PVESelectionArrow;
-    public UIEvents uiEvents;
 }
 
 public class TitleSceneBridge : MonoBehaviour
