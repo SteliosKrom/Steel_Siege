@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewEnemyData", menuName = "Game Data/Enemy")]
-public class EnemyData : GameData
+public class EnemyData : ScriptableObject
 {
     [SerializeField] private string displayName;
     [SerializeField] private int maxLives;

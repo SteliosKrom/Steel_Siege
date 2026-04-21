@@ -9,9 +9,15 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     [SerializeField] private SpawnManager spawnManager;
     #endregion
 
-    #region SCRIPTABLE OBJECTS
-    [Header("SCRIPTABLE OBJECTS")]
+    #region GAME DATA
+    [Header("GAME DATA")]
     [SerializeField] private EnemyData enemyData;
+    #endregion
+
+    #region EVENTS
+    [Header("EVENTS")]
+    [SerializeField] private UIEventsSO uiEvents;
+    [SerializeField] private ScoreEventsSO scoreEvents;
     #endregion
 
     private void Start()
@@ -27,6 +33,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         if (currentLives <= 0)
         {
             this.gameObject.SetActive(false);
+            scoreEvents.RaiseScoreChanged();
+            uiEvents.RaiseScoreUIChanged();
         }
     }
 }

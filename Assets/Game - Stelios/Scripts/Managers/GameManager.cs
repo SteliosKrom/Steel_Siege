@@ -39,10 +39,11 @@ public class GameManager : MonoBehaviour
     private bool player1Dead = false;
     private bool player2Dead = false;
 
-    #region SCRIPTABLE OBJECTS
-    [Header("SCRIPTABLE OBJECTS")]
+    #region EVENTS
+    [Header("EVENTS")]
     [SerializeField] private GameEventsSO gameEvents;
     [SerializeField] private UIEventsSO uiEvents;
+    [SerializeField] private ScoreEventsSO scoreEvents;
     #endregion
 
     #region STATES
@@ -163,7 +164,6 @@ public class GameManager : MonoBehaviour
     {
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVP;
-        SceneManager.LoadScene("Main");
         StartCoroutine(RaiseAfterLoad(true));
         uiEvents.RaiseEnablePVPLives();
     }
@@ -237,6 +237,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameEvents.RaiseGameOver();
+        scoreEvents.RaiseHighScoreChanged();
         currentGameState = GameState.GameOver;
     }
 

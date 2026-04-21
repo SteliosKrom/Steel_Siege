@@ -14,6 +14,7 @@ public class TitleSceneRefs
     public TextMeshProUGUI PVEText;
     public TextMeshProUGUI PVPSelectionArrow;
     public TextMeshProUGUI PVESelectionArrow;
+    public TextMeshProUGUI highscoreText;
 }
 
 public class TitleSceneBridge : MonoBehaviour
@@ -23,9 +24,15 @@ public class TitleSceneBridge : MonoBehaviour
     [SerializeField] private TitleSceneRefs titleRefs;
     #endregion
 
+    #region EVENTS
+    [Header("EVENTS")]
+    [SerializeField] private UIEventsSO uiEvents;
+    #endregion
+
     private void Start()
     {
         UIManager.Instance.SetTitleUI(titleRefs);
+        uiEvents.RaiseHighScoreUIChanged();
         ResetCreditsUI();
     }
 
