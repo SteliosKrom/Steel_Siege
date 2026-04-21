@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewPlayerData", menuName = "Game Data/Player")]
-public class PlayerData : GameData
+public class PlayerData : ScriptableObject
 {
     [SerializeField] private string displayName;
     [SerializeField] private int maxLives;

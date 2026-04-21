@@ -7,10 +7,14 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField] private PlayerID playerID;
     [SerializeField] private int currentLives;
 
-    #region SCRIPTABLE OBJECTS
-    [Header("SCRIPTABLE OBJECTS")]
-    [SerializeField] private PlayerData playerData;
+    #region EVENTS
+    [Header("EVENTS")]
     [SerializeField] private GameEventsSO gameEvents;
+    #endregion
+
+    #region GAME DATA
+    [Header("GAME DATA")]
+    [SerializeField] private PlayerData playerData;
     #endregion
 
     #region OBJECTS

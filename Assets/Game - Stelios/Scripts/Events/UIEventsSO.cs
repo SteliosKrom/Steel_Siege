@@ -8,6 +8,8 @@ public class UIEventsSO : ScriptableObject
     public event Action OnEnablePVPLives;
     public event Action OnEnablePVELives;
     public event Action OnShowPVEScore;
+    public event Action OnScoreUIChanged;
+    public event Action OnHighScoreUIChanged;
     public event Action OnInsertCoin;
     public event Action OnEnableGameModes;
     public event Action OnPVPStay;
@@ -21,6 +23,8 @@ public class UIEventsSO : ScriptableObject
     public void RaiseEnablePVPLives() => OnEnablePVPLives?.Invoke();
     public void RaiseEnablePVELives() => OnEnablePVELives?.Invoke();
     public void RaiseShowPVEScore() => OnShowPVEScore?.Invoke();
+    public void RaiseScoreUIChanged() => OnScoreUIChanged?.Invoke();
+    public void RaiseHighScoreUIChanged() => OnHighScoreUIChanged?.Invoke();
     public void RaiseInsertCoin() => OnInsertCoin?.Invoke();
     public void RaiseEnableGameModes() => OnEnableGameModes?.Invoke();
     public void RaisePVPStay() => OnPVPStay?.Invoke();

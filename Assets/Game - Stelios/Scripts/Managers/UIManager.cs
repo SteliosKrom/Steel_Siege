@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -15,8 +16,8 @@ public class UIManager : MonoBehaviour
 
     private bool isWaiting = false;
 
-    #region SCRIPTABLE OBJECTS
-    [Header("SCRIPTABLE OBJECTS")]
+    #region EVENTS
+    [Header("EVENTS")]
     [SerializeField] private GameEventsSO gameEvents;
     [SerializeField] private UIEventsSO uiEvents;
     #endregion
@@ -41,6 +42,15 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (titleRefs == null) return;
+
+        titleRefs.insertCoinText.enabled = true;
+        titleRefs.pressStartText.enabled = false;
+        titleRefs.creditCoinText.text = creditCounter.ToString("00");
+    }
+
     private void OnEnable()
     {
         // Subscribe Game Events...
@@ -54,6 +64,8 @@ public class UIManager : MonoBehaviour
         uiEvents.OnEnablePVPLives += EnablePVPLives;
         uiEvents.OnEnablePVELives += EnablePVELives;
         uiEvents.OnShowPVEScore += EnablePVEScoreText;
+        uiEvents.OnScoreUIChanged += UpdateScoreUI;
+        uiEvents.OnHighScoreUIChanged += UpdateHighScoreUI;
         uiEvents.OnEnableGameModes += EnableGameModes;
         uiEvents.OnInsertCoin += InsertCoin;
 
@@ -76,7 +88,11 @@ public class UIManager : MonoBehaviour
 
         // Un-Subscribe UI Events...
         uiEvents.OnHideRedLives -= DisableRedLives;
+        uiEvents.OnEnablePVPLives -= EnablePVPLives;
+        uiEvents.OnEnablePVELives -= EnablePVELives;
         uiEvents.OnShowPVEScore -= EnablePVEScoreText;
+        uiEvents.OnScoreUIChanged -= UpdateScoreUI;
+        uiEvents.OnHighScoreUIChanged -= UpdateHighScoreUI;
         uiEvents.OnEnableGameModes -= EnableGameModes;
         uiEvents.OnInsertCoin -= InsertCoin;
 
@@ -87,15 +103,6 @@ public class UIManager : MonoBehaviour
 
         uiEvents.OnPVPSelected -= OnPVPSelected;
         uiEvents.OnPVESelected -= OnPVESelected;
-    }
-
-    private void Start()
-    {
-        if (titleRefs == null) return;
-
-        titleRefs.insertCoinText.enabled = true;
-        titleRefs.pressStartText.enabled = false;
-        titleRefs.creditCoinText.text = creditCounter.ToString("00");
     }
 
     public void EnableGameModes()
@@ -190,6 +197,16 @@ public class UIManager : MonoBehaviour
     public void ShowGameOver()
     {
         mainRefs.gameOverPanel.SetActive(true);
+    }
+
+    public void UpdateScoreUI()
+    {
+        mainRefs.scoreTextValue.text = ScoreManager.Instance.CurrentScore.ToString();
+    }
+
+    public void UpdateHighScoreUI()
+    {
+        titleRefs.highscoreText.text = ScoreManager.Instance.CurrentHighScore.ToString();
     }
 
     public void EnablePVEScoreText()
