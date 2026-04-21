@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 38e7f169ea69a4a45acc184922ff95c7
+guid: 4260239d881ff7940a474062f7bc9f3c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 946835791907651454
-    second: BrickObstacleBaseTile_0
+      213: -1242969437293424315
+    second: EnemyTank16x16 1_0
+  - first:
+      213: 4316561435953526755
+    second: EnemyTank16x16 1_1
+  - first:
+      213: -2071873322647585444
+    second: EnemyTank16x16 1_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,9 +52,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
@@ -72,7 +78,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -113,7 +119,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BrickObstacleBaseTile_0
+      name: EnemyTank16x16 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +134,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e7ff74dd226d32d00800000000000000
-      internalID: 946835791907651454
+      spriteID: 541557fd1e510cee0800000000000000
+      internalID: -1242969437293424315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyTank16x16 1_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e7f82181c187eb30800000000000000
+      internalID: 4316561435953526755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyTank16x16 1_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5d7bf7b03a3f33e0800000000000000
+      internalID: -2071873322647585444
       vertices: []
       indices: 
       edges: []
@@ -138,7 +188,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +198,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BrickObstacleBaseTile_0: 946835791907651454
+      EnemyTank16x16 1_0: -1242969437293424315
+      EnemyTank16x16 1_1: 4316561435953526755
+      EnemyTank16x16 1_2: -2071873322647585444
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
