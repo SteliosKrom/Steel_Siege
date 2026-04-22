@@ -19,7 +19,7 @@ public class ScoreManager : MonoBehaviour
     #endregion
 
     public int CurrentScore => currentScore;
-    public int CurrentHighScore => currentHighScore;
+    public int CurrentHighScore { get => currentHighScore; set => currentHighScore = value; }
 
     private void Awake()
     {
@@ -52,14 +52,15 @@ public class ScoreManager : MonoBehaviour
     public void UpdateScore()
     {
         currentScore += enemyData.ScoreValue;
-        currentHighScore = currentScore;
+        UpdateHighScore();
     }
 
     public void UpdateHighScore()
     {
-        if (currentScore >= currentHighScore)
+        if (currentScore > currentHighScore)
         {
             currentHighScore = currentScore;
+            SaveManager.Instance.SaveHighscore();
         }
     }
 }

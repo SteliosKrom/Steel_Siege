@@ -32,7 +32,6 @@ public class TitleSceneBridge : MonoBehaviour
     private void Start()
     {
         UIManager.Instance.SetTitleUI(titleRefs);
-        uiEvents.RaiseHighScoreUIChanged();
         ResetCreditsUI();
     }
 

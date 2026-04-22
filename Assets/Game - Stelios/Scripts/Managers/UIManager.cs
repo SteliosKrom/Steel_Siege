@@ -201,12 +201,12 @@ public class UIManager : MonoBehaviour
 
     public void UpdateScoreUI()
     {
-        mainRefs.scoreTextValue.text = ScoreManager.Instance.CurrentScore.ToString();
+        mainRefs.scoreTextValue.text = ScoreManager.Instance.CurrentScore.ToString("000000");
     }
 
     public void UpdateHighScoreUI()
     {
-        titleRefs.highscoreText.text = ScoreManager.Instance.CurrentHighScore.ToString();
+        titleRefs.highscoreText.text = ScoreManager.Instance.CurrentHighScore.ToString("000000");
     }
 
     public void EnablePVEScoreText()
