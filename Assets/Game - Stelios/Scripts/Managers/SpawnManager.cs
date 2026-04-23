@@ -5,10 +5,13 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     private float assignRefsDelay = 0.1f;
+    private float spawnDelay = 3f;
+    private float showWavesUIDelay = 3f;
 
     #region SCRIPTABLE OBJECTS
     [Header("SCRIPTABLE OBJECTS")]
     [SerializeField] private GameEventsSO gameEvents;
+    [SerializeField] private UIEventsSO uiEvents;
     #endregion
 
     [SerializeField] private GameObject enemyTank;
@@ -78,20 +81,23 @@ public class SpawnManager : MonoBehaviour
 
     public int EnemiesToSpawn(int wave)
     {
-        if (wave == 1) return 1;
-        else if (wave == 2) return 2;
-        else if (wave <= 6) return 3;
-        else if (wave <= 12) return 4;
-        else return 5;
+        int enemies = 1 + wave / 3;
+        if (enemies > 4) enemies = 4;
+        return enemies;
     }
 
     public IEnumerator SpawnEnemyWavesDelay()
     {
         while (true)
         {
-            yield return new WaitForSeconds(3f);
-            currentWave++;
+            yield return new WaitForSeconds(showWavesUIDelay);
 
+            currentWave++;
+            UIManager.Instance.MainRefs.wavesCountText.text = currentWave.ToString();
+            uiEvents.RaiseEnableWavesUI();
+
+            yield return new WaitForSeconds(spawnDelay);
+            uiEvents.RaiseDisableWavesUI();
             enemiesToSpawn = EnemiesToSpawn(currentWave);
 
             availablePoints = new List<Transform>(spawnPoints);

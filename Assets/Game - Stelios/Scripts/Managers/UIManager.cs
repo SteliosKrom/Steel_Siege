@@ -67,6 +67,8 @@ public class UIManager : MonoBehaviour
         uiEvents.OnScoreUIChanged += UpdateScoreUI;
         uiEvents.OnHighScoreUIChanged += UpdateHighScoreUI;
         uiEvents.OnEnableGameModes += EnableGameModes;
+        uiEvents.OnEnableWavesUI += EnableEnemyWavesUI;
+        uiEvents.OnDisableWavesUI += DisableEnemyWavesUI;
         uiEvents.OnInsertCoin += InsertCoin;
 
         uiEvents.OnPVPExit += OnPVPModeExit;
@@ -94,6 +96,8 @@ public class UIManager : MonoBehaviour
         uiEvents.OnScoreUIChanged -= UpdateScoreUI;
         uiEvents.OnHighScoreUIChanged -= UpdateHighScoreUI;
         uiEvents.OnEnableGameModes -= EnableGameModes;
+        uiEvents.OnEnableWavesUI -= EnableEnemyWavesUI;
+        uiEvents.OnDisableWavesUI -= DisableEnemyWavesUI;
         uiEvents.OnInsertCoin -= InsertCoin;
 
         uiEvents.OnPVPExit -= OnPVPModeExit;
@@ -197,6 +201,18 @@ public class UIManager : MonoBehaviour
     public void ShowGameOver()
     {
         mainRefs.gameOverPanel.SetActive(true);
+    }
+
+    public void EnableEnemyWavesUI()
+    {
+        mainRefs.wavesText.enabled = true;
+        mainRefs.wavesCountText.enabled = true;
+    }
+
+    public void DisableEnemyWavesUI()
+    {
+        mainRefs.wavesText.enabled = false;
+        mainRefs.wavesCountText.enabled = false;
     }
 
     public void UpdateScoreUI()
