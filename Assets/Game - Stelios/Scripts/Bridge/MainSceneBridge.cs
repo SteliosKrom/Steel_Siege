@@ -15,6 +15,8 @@ public class MainSceneRefs
     public GameObject enemyTank;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI scoreTextValue;
+    public TextMeshProUGUI wavesText;
+    public TextMeshProUGUI wavesCountText;
 }
 
 public class MainSceneBridge : MonoBehaviour
