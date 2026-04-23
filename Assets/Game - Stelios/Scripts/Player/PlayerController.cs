@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private KeyCode rightKey;
     [SerializeField] private KeyCode shootKey;
 
-    private float shootDelay = 0.15f;
+    private float shootDelay = 0.75f;
     private bool canShoot = true;
 
     [SerializeField] private PlayerData playerData;
