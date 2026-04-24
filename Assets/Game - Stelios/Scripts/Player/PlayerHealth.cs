@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
-    public enum PlayerID { P1, P2 }
-
-    [SerializeField] private PlayerID playerID;
     [SerializeField] private int currentLives;
 
     #region EVENTS
@@ -34,10 +31,11 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         if (currentLives <= 0)
         {
-            GameManager.Instance.PlayerDied(playerID, gameObject);
+            GameManager.Instance.PlayerDied(playerData.PlayerType, gameObject);
         }
     }
 
+    // Change the method name to DecreaseLivesUI and add it as an event to be triggered in UI Manager. Add a new Increase Lives UI same as Decrease Method...
     public void UpdateLivesUI()
     {
         UIManager.Instance.ManageLivesUI(playerLives, currentLives);

@@ -178,11 +178,11 @@ public class GameManager : MonoBehaviour
         uiEvents.RaiseHideRedLives();
     }
 
-    public void PlayerDied(PlayerHealth.PlayerID id, GameObject obj)
+    public void PlayerDied(PlayerData.PlayerID id, GameObject obj)
     {
-        if (id == PlayerHealth.PlayerID.P1)
+        if (id == PlayerData.PlayerID.P1)
             player1Dead = true;
-        else if (id == PlayerHealth.PlayerID.P2)
+        else if (id == PlayerData.PlayerID.P2)
             player2Dead = true;
 
         obj.SetActive(false);
