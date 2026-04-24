@@ -7,17 +7,22 @@ public class UIEventsSO : ScriptableObject
     public event Action OnHideRedLives;
     public event Action OnEnablePVPLives;
     public event Action OnEnablePVELives;
+
     public event Action OnShowPVEScore;
     public event Action OnScoreUIChanged;
     public event Action OnHighScoreUIChanged;
+
     public event Action OnInsertCoin;
+
     public event Action OnEnableGameModes;
     public event Action OnEnableWavesUI;
     public event Action OnDisableWavesUI;
+
     public event Action OnPVPStay;
     public event Action OnPVPExit;
     public event Action OnPVEStay;
     public event Action OnPVEExit;
+
     public event Action OnPVPSelected;
     public event Action OnPVESelected;
 

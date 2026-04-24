@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     #region GAME DATA
     [Header("GAME DATA")]
     [SerializeField] private PlayerData playerData;
+    [SerializeField] private PowerUpData powerUpData;
     #endregion
 
     #region OBJECTS
@@ -24,10 +25,18 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         currentLives = playerData.MaxLives;
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (powerUpData.PowerUpType == PowerUpData.Type.Lives)
+        {
+            IncreaseLives(other.gameObject);
+        }
+    }
+
     public void TakeDamage()
     {
         currentLives--;
-        UpdateLivesUI();
+        DecreaseLives();
 
         if (currentLives <= 0)
         {
@@ -35,9 +44,23 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         }
     }
 
-    // Change the method name to DecreaseLivesUI and add it as an event to be triggered in UI Manager. Add a new Increase Lives UI same as Decrease Method...
-    public void UpdateLivesUI()
+    public void IncreaseLives(GameObject obj)
     {
-        UIManager.Instance.ManageLivesUI(playerLives, currentLives);
+        if (currentLives == playerData.MaxLives)
+        {
+            // You can't increase your lives, because you have max lives. Give feedback to the player...
+            return;
+        }
+        else
+        {
+            currentLives++;
+            UIManager.Instance.IncreaseLivesUI(playerLives, currentLives);
+            obj.SetActive(false);
+        }
+    }
+
+    public void DecreaseLives()
+    {
+        UIManager.Instance.DecreaseLivesUI(playerLives, currentLives);
     }
 }

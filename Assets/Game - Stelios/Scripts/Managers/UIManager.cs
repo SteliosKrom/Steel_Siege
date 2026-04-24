@@ -63,12 +63,15 @@ public class UIManager : MonoBehaviour
         uiEvents.OnHideRedLives += DisableRedLives;
         uiEvents.OnEnablePVPLives += EnablePVPLives;
         uiEvents.OnEnablePVELives += EnablePVELives;
+
         uiEvents.OnShowPVEScore += EnablePVEScoreText;
         uiEvents.OnScoreUIChanged += UpdateScoreUI;
         uiEvents.OnHighScoreUIChanged += UpdateHighScoreUI;
+
         uiEvents.OnEnableGameModes += EnableGameModes;
         uiEvents.OnEnableWavesUI += EnableEnemyWavesUI;
         uiEvents.OnDisableWavesUI += DisableEnemyWavesUI;
+
         uiEvents.OnInsertCoin += InsertCoin;
 
         uiEvents.OnPVPExit += OnPVPModeExit;
@@ -92,12 +95,15 @@ public class UIManager : MonoBehaviour
         uiEvents.OnHideRedLives -= DisableRedLives;
         uiEvents.OnEnablePVPLives -= EnablePVPLives;
         uiEvents.OnEnablePVELives -= EnablePVELives;
+
         uiEvents.OnShowPVEScore -= EnablePVEScoreText;
         uiEvents.OnScoreUIChanged -= UpdateScoreUI;
         uiEvents.OnHighScoreUIChanged -= UpdateHighScoreUI;
+
         uiEvents.OnEnableGameModes -= EnableGameModes;
         uiEvents.OnEnableWavesUI -= EnableEnemyWavesUI;
         uiEvents.OnDisableWavesUI -= DisableEnemyWavesUI;
+
         uiEvents.OnInsertCoin -= InsertCoin;
 
         uiEvents.OnPVPExit -= OnPVPModeExit;
@@ -136,7 +142,19 @@ public class UIManager : MonoBehaviour
         isWaiting = false;
     }
 
-    public void ManageLivesUI(GameObject[] playerLives, int currentLives)
+    public void IncreaseLivesUI(GameObject[] playerLives, int currentLives)
+    {
+        // Implement increase lives UI...
+        for (int i = 0; i <= playerLives.Length - 1; i++)
+        {
+            if (i < currentLives)
+            {
+                playerLives[i].SetActive(true);
+            }
+        }
+    }
+
+    public void DecreaseLivesUI(GameObject[] playerLives, int currentLives)
     {
         for (int i = 0; i < playerLives.Length; i++)
         {
