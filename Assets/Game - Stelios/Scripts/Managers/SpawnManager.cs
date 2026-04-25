@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
     private float assignRefsDelay = 0.1f;
-    private float spawnDelay = 3f;
+    private float spawnEnemyDelay;
+    private float spawnLivesDelay;
     private float showWavesUIDelay = 3f;
+
+    private int currentWave = 0;
+    private int enemiesToSpawn = 0;
+    private int enemiesAlive = 0;
+
+    private const string ENEMY_TAG = "Enemy";
+    private const string LIVE_TAG = "Live";
 
     #region SCRIPTABLE OBJECTS
     [Header("SCRIPTABLE OBJECTS")]
@@ -15,23 +24,25 @@ public class SpawnManager : MonoBehaviour
     #endregion
 
     [SerializeField] private GameObject enemyTank;
+
+    #region POINTS
+    [Header("POINTS")]
     [SerializeField] private Transform playerSpawnPoint;
     [SerializeField] private Transform player1SpawnPointPVP;
     [SerializeField] private Transform player2SpawnPointPVP;
-    [SerializeField] private List<Transform> spawnPoints;
+    [SerializeField] private List<Transform> spawnEnemyPoints;
+    [SerializeField] private List<Transform> spawnLivePoints;
     private List<Transform> availablePoints;
-    private int currentWave = 0;
-    private int enemiesToSpawn = 0;
-    private int enemiesAlive = 0;
+    #endregion
 
     public int EnemiesAlive { get => enemiesAlive; set => enemiesAlive = value; }
 
     private void Start()
     {
+        StartCoroutine(SpawnLivesDelay());
+
         if (GameManager.Instance.CurrentGameMode == GameMode.PVE)
-        {
             StartCoroutine(SpawnEnemyWavesDelay());
-        }
     }
 
     private void OnEnable()
@@ -70,10 +81,18 @@ public class SpawnManager : MonoBehaviour
         UIManager.Instance.MainRefs.player1.SetActive(true);
     }
 
+    public GameObject SpawnLivesAtRandomPoints()
+    {
+        int rand = Random.Range(0, 6);
+        GameObject live = ObjectPoolManager.Instance.GetObject(LIVE_TAG);
+        live.transform.position = spawnLivePoints[rand].transform.position;
+        return live;
+    }
+
     public void SpawnEnemiesAtRandomPoints()
     {
         int rand = Random.Range(0, availablePoints.Count);
-        GameObject enemy = ObjectPoolManager.Instance.GetObject("Enemy");
+        GameObject enemy = ObjectPoolManager.Instance.GetObject(ENEMY_TAG);
         enemy.transform.position = availablePoints[rand].position;
         enemiesAlive++;
         availablePoints.RemoveAt(rand);
@@ -86,21 +105,38 @@ public class SpawnManager : MonoBehaviour
         return enemies;
     }
 
+    public IEnumerator SpawnLivesDelay()
+    {
+        while (true)
+        {
+            if (GameManager.Instance.CurrentGameState != GameState.Playing) break;
+
+            spawnLivesDelay = Random.Range(10, 15);
+            yield return new WaitForSeconds(spawnLivesDelay);
+            GameObject live = SpawnLivesAtRandomPoints();
+            yield return new WaitForSeconds(spawnLivesDelay);
+            ObjectPoolManager.Instance.ReturnObject(LIVE_TAG, live);
+        }
+    }
+
     public IEnumerator SpawnEnemyWavesDelay()
     {
         while (true)
         {
+            if (GameManager.Instance.CurrentGameState != GameState.Playing) break;
+
+            spawnEnemyDelay = Random.Range(2f, 4f);
             yield return new WaitForSeconds(showWavesUIDelay);
 
             currentWave++;
             UIManager.Instance.MainRefs.wavesCountText.text = currentWave.ToString();
             uiEvents.RaiseEnableWavesUI();
 
-            yield return new WaitForSeconds(spawnDelay);
+            yield return new WaitForSeconds(spawnEnemyDelay);
             uiEvents.RaiseDisableWavesUI();
             enemiesToSpawn = EnemiesToSpawn(currentWave);
 
-            availablePoints = new List<Transform>(spawnPoints);
+            availablePoints = new List<Transform>(spawnEnemyPoints);
 
             for (int i = 0; i < enemiesToSpawn; i++)
                 SpawnEnemiesAtRandomPoints();

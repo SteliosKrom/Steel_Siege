@@ -63,6 +63,7 @@ public class UIManager : MonoBehaviour
         uiEvents.OnHideRedLives += DisableRedLives;
         uiEvents.OnEnablePVPLives += EnablePVPLives;
         uiEvents.OnEnablePVELives += EnablePVELives;
+        uiEvents.OnDecreaseLivesUI += DecreaseLivesUI;
 
         uiEvents.OnShowPVEScore += EnablePVEScoreText;
         uiEvents.OnScoreUIChanged += UpdateScoreUI;
@@ -95,6 +96,7 @@ public class UIManager : MonoBehaviour
         uiEvents.OnHideRedLives -= DisableRedLives;
         uiEvents.OnEnablePVPLives -= EnablePVPLives;
         uiEvents.OnEnablePVELives -= EnablePVELives;
+        uiEvents.OnDecreaseLivesUI -= DecreaseLivesUI;
 
         uiEvents.OnShowPVEScore -= EnablePVEScoreText;
         uiEvents.OnScoreUIChanged -= UpdateScoreUI;
@@ -144,7 +146,6 @@ public class UIManager : MonoBehaviour
 
     public void IncreaseLivesUI(GameObject[] playerLives, int currentLives)
     {
-        // Implement increase lives UI...
         for (int i = 0; i <= playerLives.Length - 1; i++)
         {
             if (i < currentLives)
