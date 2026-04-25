@@ -1172,6 +1172,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainRefs:
+    player1Lives:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    player2Lives:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     gameOverPanel: {fileID: 0}
     player1WinsPanel: {fileID: 0}
     player2WinsPanel: {fileID: 0}
@@ -1183,6 +1191,8 @@ MonoBehaviour:
     enemyTank: {fileID: 0}
     scoreText: {fileID: 0}
     scoreTextValue: {fileID: 0}
+    wavesText: {fileID: 0}
+    wavesCountText: {fileID: 0}
   titleRefs:
     modesMenu: {fileID: 2035222779}
     insertCoinText: {fileID: 28447618}

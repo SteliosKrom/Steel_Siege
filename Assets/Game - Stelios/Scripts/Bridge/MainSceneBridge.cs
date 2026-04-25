@@ -4,6 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class MainSceneRefs
 {
+    public GameObject[] player1Lives;
+    public GameObject[] player2Lives;
     public GameObject gameOverPanel;
     public GameObject player1WinsPanel;
     public GameObject player2WinsPanel;

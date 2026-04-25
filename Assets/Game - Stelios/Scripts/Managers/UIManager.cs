@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -64,6 +65,7 @@ public class UIManager : MonoBehaviour
         uiEvents.OnEnablePVPLives += EnablePVPLives;
         uiEvents.OnEnablePVELives += EnablePVELives;
         uiEvents.OnDecreaseLivesUI += DecreaseLivesUI;
+        uiEvents.OnIncreaseLivesUI += IncreaseLivesUI;
 
         uiEvents.OnShowPVEScore += EnablePVEScoreText;
         uiEvents.OnScoreUIChanged += UpdateScoreUI;
@@ -97,6 +99,7 @@ public class UIManager : MonoBehaviour
         uiEvents.OnEnablePVPLives -= EnablePVPLives;
         uiEvents.OnEnablePVELives -= EnablePVELives;
         uiEvents.OnDecreaseLivesUI -= DecreaseLivesUI;
+        uiEvents.OnIncreaseLivesUI += IncreaseLivesUI;
 
         uiEvents.OnShowPVEScore -= EnablePVEScoreText;
         uiEvents.OnScoreUIChanged -= UpdateScoreUI;
@@ -144,29 +147,39 @@ public class UIManager : MonoBehaviour
         isWaiting = false;
     }
 
-    public void IncreaseLivesUI(GameObject[] playerLives, int currentLives)
+    public void IncreaseLivesUI(PlayerData.PlayerID playerID, int currentLives)
     {
-        for (int i = 0; i <= playerLives.Length - 1; i++)
+        if (playerID == PlayerData.PlayerID.P1)
+            GenericUpdateIncreaseLivesUI(mainRefs.player1Lives, currentLives);
+        else if (playerID == PlayerData.PlayerID.P2)
+            GenericUpdateIncreaseLivesUI(mainRefs.player2Lives, currentLives);
+    }
+
+    public void DecreaseLivesUI(PlayerData.PlayerID playerID, int currentLives)
+    {
+        if (playerID == PlayerData.PlayerID.P1)
+            GenericUpdateDecreaseLivesUI(mainRefs.player1Lives, currentLives);
+        else if (playerID == PlayerData.PlayerID.P2)
+            GenericUpdateDecreaseLivesUI(mainRefs.player2Lives, currentLives);
+    }
+
+    public void GenericUpdateIncreaseLivesUI(GameObject[] lives, int currentLives)
+    {
+        for (int i = 0; i < lives.Length; i++)
         {
             if (i < currentLives)
-            {
-                playerLives[i].SetActive(true);
-            }
+                lives[i].SetActive(true);
         }
     }
 
-    public void DecreaseLivesUI(GameObject[] playerLives, int currentLives)
+    public void GenericUpdateDecreaseLivesUI(GameObject[] lives, int currentLives)
     {
-        for (int i = 0; i < playerLives.Length; i++)
+        for (int i = 0; i < lives.Length; i++)
         {
             if (i < currentLives)
-            {
-                playerLives[i].SetActive(true);
-            }
+                lives[i].SetActive(true);
             else
-            {
-                playerLives[i].SetActive(false);
-            }
+                lives[i].SetActive(false);
         }
     }
 
