@@ -7,6 +7,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     #region EVENTS
     [Header("EVENTS")]
     [SerializeField] private GameEventsSO gameEvents;
+    [SerializeField] private UIEventsSO uiEvents;
     #endregion
 
     #region GAME DATA
@@ -19,6 +20,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [Header("OBJECTS")]
     [SerializeField] private GameObject[] playerLives;
     #endregion
+
+    public int CurrentLives => currentLives;
+    public GameObject[] PlayerLives => playerLives;
 
     private void Start()
     {
@@ -61,6 +65,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void DecreaseLives()
     {
-        UIManager.Instance.DecreaseLivesUI(playerLives, currentLives);
+        uiEvents.RaiseDecreaseLivesUI();
     }
 }

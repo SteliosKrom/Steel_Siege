@@ -4,9 +4,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "UIEventsSO", menuName = "UIEvent/Event")]
 public class UIEventsSO : ScriptableObject
 {
+    public PlayerHealth playerHealth;
+
     public event Action OnHideRedLives;
     public event Action OnEnablePVPLives;
     public event Action OnEnablePVELives;
+    public event Action<GameObject[], int> OnDecreaseLivesUI;
 
     public event Action OnShowPVEScore;
     public event Action OnScoreUIChanged;
@@ -35,6 +38,7 @@ public class UIEventsSO : ScriptableObject
     public void RaiseHideRedLives() => OnHideRedLives?.Invoke();
     public void RaiseEnablePVPLives() => OnEnablePVPLives?.Invoke();
     public void RaiseEnablePVELives() => OnEnablePVELives?.Invoke();
+    public void RaiseDecreaseLivesUI() => OnDecreaseLivesUI?.Invoke();
 
     // Raise Scores...
     public void RaiseShowPVEScore() => OnShowPVEScore?.Invoke();
