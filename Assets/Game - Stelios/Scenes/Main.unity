@@ -5435,6 +5435,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainRefs:
+    player1Lives:
+    - {fileID: 1285079314}
+    - {fileID: 692870550}
+    - {fileID: 2118284189}
+    player2Lives:
+    - {fileID: 159528695}
+    - {fileID: 550234816}
+    - {fileID: 1239763437}
     gameOverPanel: {fileID: 296547084779873110}
     player1WinsPanel: {fileID: 1702257915}
     player2WinsPanel: {fileID: 1485613596}
@@ -8705,6 +8713,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 442738793}
     m_Modifications:
     - target: {fileID: 1410293861934657135, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+      propertyPath: uiEvents
+      value: 
+      objectReference: {fileID: 11400000, guid: 2ba79ad53fa263f43a02d1a4c5aaf1a7, type: 2}
+    - target: {fileID: 1410293861934657135, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
       propertyPath: powerUpData
       value: 
       objectReference: {fileID: 11400000, guid: d6d373a010975394e8b00c2023c0e3d6, type: 2}
@@ -9062,6 +9074,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7693422991407813053, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+      propertyPath: uiEvents
+      value: 
+      objectReference: {fileID: 11400000, guid: 2ba79ad53fa263f43a02d1a4c5aaf1a7, type: 2}
     - target: {fileID: 7693422991407813053, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
       propertyPath: powerUpData
       value: 

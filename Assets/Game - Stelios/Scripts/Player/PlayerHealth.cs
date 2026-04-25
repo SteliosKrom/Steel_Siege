@@ -58,13 +58,13 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         else
         {
             currentLives++;
-            UIManager.Instance.IncreaseLivesUI(playerLives, currentLives);
+            uiEvents.RaiseIncreaseLivesUI(playerData.PlayerType, currentLives);
             obj.SetActive(false);
         }
     }
 
     public void DecreaseLives()
     {
-        uiEvents.RaiseDecreaseLivesUI();
+        uiEvents.RaiseDecreaseLivesUI(playerData.PlayerType, currentLives);
     }
 }

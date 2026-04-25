@@ -9,7 +9,8 @@ public class UIEventsSO : ScriptableObject
     public event Action OnHideRedLives;
     public event Action OnEnablePVPLives;
     public event Action OnEnablePVELives;
-    public event Action<GameObject[], int> OnDecreaseLivesUI;
+    public event Action<PlayerData.PlayerID, int> OnDecreaseLivesUI;
+    public event Action<PlayerData.PlayerID, int> OnIncreaseLivesUI;
 
     public event Action OnShowPVEScore;
     public event Action OnScoreUIChanged;
@@ -38,7 +39,8 @@ public class UIEventsSO : ScriptableObject
     public void RaiseHideRedLives() => OnHideRedLives?.Invoke();
     public void RaiseEnablePVPLives() => OnEnablePVPLives?.Invoke();
     public void RaiseEnablePVELives() => OnEnablePVELives?.Invoke();
-    public void RaiseDecreaseLivesUI() => OnDecreaseLivesUI?.Invoke();
+    public void RaiseDecreaseLivesUI(PlayerData.PlayerID playerID, int currentLives) => OnDecreaseLivesUI?.Invoke(playerID, currentLives);
+    public void RaiseIncreaseLivesUI(PlayerData.PlayerID playerID, int currentLives) => OnIncreaseLivesUI?.Invoke(playerID, currentLives);
 
     // Raise Scores...
     public void RaiseShowPVEScore() => OnShowPVEScore?.Invoke();
