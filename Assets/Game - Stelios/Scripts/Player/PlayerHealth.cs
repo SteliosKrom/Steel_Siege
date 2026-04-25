@@ -16,13 +16,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField] private PowerUpData powerUpData;
     #endregion
 
-    #region OBJECTS
-    [Header("OBJECTS")]
-    [SerializeField] private GameObject[] playerLives;
-    #endregion
-
     public int CurrentLives => currentLives;
-    public GameObject[] PlayerLives => playerLives;
 
     private void Start()
     {

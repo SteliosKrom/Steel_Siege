@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -8,6 +7,7 @@ public class SpawnManager : MonoBehaviour
     private float assignRefsDelay = 0.1f;
     private float spawnEnemyDelay;
     private float spawnLivesDelay;
+    private float despawnLivesDelay;
     private float showWavesUIDelay = 3f;
 
     private int currentWave = 0;
@@ -111,9 +111,12 @@ public class SpawnManager : MonoBehaviour
         {
             if (GameManager.Instance.CurrentGameState != GameState.Playing) break;
 
-            spawnLivesDelay = Random.Range(10, 15);
+            spawnLivesDelay = Random.Range(10, 14);
+
             yield return new WaitForSeconds(spawnLivesDelay);
             GameObject live = SpawnLivesAtRandomPoints();
+
+            despawnLivesDelay = Random.Range(11, 13);
             yield return new WaitForSeconds(spawnLivesDelay);
             ObjectPoolManager.Instance.ReturnObject(LIVE_TAG, live);
         }
