@@ -3,16 +3,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private float shootDelay = 0.75f;
+    private bool canShoot = true;
+
     [SerializeField] private string bulletTag;
 
+    #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
+    [SerializeField] private PlayerStamina playerStamina;
+    #endregion
+
+    #region KEYCODES
+    [Header("KEYCODES")]
     [SerializeField] private KeyCode upKey;
     [SerializeField] private KeyCode downKey;
     [SerializeField] private KeyCode leftKey;
     [SerializeField] private KeyCode rightKey;
     [SerializeField] private KeyCode shootKey;
-
-    private float shootDelay = 0.75f;
-    private bool canShoot = true;
+    #endregion
 
     [SerializeField] private PlayerData playerData;
     [SerializeField] private Rigidbody2D playerRb;
@@ -63,7 +71,7 @@ public class PlayerController : MonoBehaviour
 
     public void ApplyMovement()
     {
-        Vector2 targetPos = playerRb.position + moveDirection.normalized * playerData.MoveSpeed * Time.fixedDeltaTime;
+        Vector2 targetPos = playerRb.position + moveDirection.normalized * playerStamina.CurrentSpeed * Time.fixedDeltaTime;
         playerRb.MovePosition(targetPos);
     }
 

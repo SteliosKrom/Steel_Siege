@@ -4,6 +4,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private int currentLives;
 
+    private const string LIVE_TAG = "Live";
+
     #region EVENTS
     [Header("EVENTS")]
     [SerializeField] private GameEventsSO gameEvents;
@@ -13,7 +15,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     #region GAME DATA
     [Header("GAME DATA")]
     [SerializeField] private PlayerData playerData;
-    [SerializeField] private PowerUpData powerUpData;
     #endregion
 
     public int CurrentLives => currentLives;
@@ -25,7 +26,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (powerUpData.PowerUpType == PowerUpData.Type.Lives)
+        if (other.gameObject.CompareTag(LIVE_TAG))
         {
             IncreaseLives(other.gameObject);
         }

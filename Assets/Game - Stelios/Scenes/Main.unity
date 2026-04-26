@@ -5202,7 +5202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 634810612}
   m_Layer: 0
-  m_Name: 4thLiveSpawnPoint
+  m_Name: 4thPowerUpSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7437,7 +7437,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1129578370}
   m_Layer: 0
-  m_Name: 5thLiveSpawnPoint
+  m_Name: 5thPowerUpSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7618,7 +7618,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1323920853}
   m_Layer: 0
-  m_Name: SpawnLivesPoints
+  m_Name: SpawnPowerUpPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7734,7 +7734,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1432845990}
   m_Layer: 0
-  m_Name: 2ndLiveSpawnPoint
+  m_Name: 2ndPowerUpSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8035,7 +8035,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1667766139}
   m_Layer: 0
-  m_Name: 3rdLiveSpawnPoint
+  m_Name: 3rdPowerUpSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8066,7 +8066,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1668880175}
   m_Layer: 0
-  m_Name: 1stLiveSpawnPoint
+  m_Name: 1stPowerUpSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8383,10 +8383,13 @@ MonoBehaviour:
     size: 50
   - tag: Enemy
     prefab: {fileID: 410664301}
-    size: 50
+    size: 10
   - tag: Live
     prefab: {fileID: 1868903014634282546, guid: cce970aa0038c5549a8ff125e0c29e86, type: 3}
-    size: 50
+    size: 10
+  - tag: Stamina
+    prefab: {fileID: 2894473473479677383, guid: 92085d988845ad74ea081e8b70fdd625, type: 3}
+    size: 10
 --- !u!1 &1928389879
 GameObject:
   m_ObjectHideFlags: 0
@@ -8462,7 +8465,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1954923396}
   m_Layer: 0
-  m_Name: 6thLiveSpawnPoint
+  m_Name: 6thPowerUpSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8561,6 +8564,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b451cce5c5e9c514d9f51161473d5529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerUpTags:
+  - Live
+  - Stamina
   gameEvents: {fileID: 11400000, guid: 667ee07dfebd0c145a4169d9210287c2, type: 2}
   uiEvents: {fileID: 11400000, guid: 2ba79ad53fa263f43a02d1a4c5aaf1a7, type: 2}
   enemyTank: {fileID: 410664301}
@@ -8574,7 +8580,7 @@ MonoBehaviour:
   - {fileID: 696095325}
   - {fileID: 655504159}
   - {fileID: 836690334}
-  spawnLivePoints:
+  spawnPowerUpPoints:
   - {fileID: 1668880175}
   - {fileID: 1432845990}
   - {fileID: 1667766139}
@@ -8744,6 +8750,10 @@ PrefabInstance:
       propertyPath: bulletTag
       value: PlayerBullet
       objectReference: {fileID: 0}
+    - target: {fileID: 7142666122408042945, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+      propertyPath: playerStamina
+      value: 
+      objectReference: {fileID: 3478434357855649887}
     - target: {fileID: 7428298264837120881, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.6
@@ -8800,6 +8810,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9113841196242130850, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+      propertyPath: playerData
+      value: 
+      objectReference: {fileID: 11400000, guid: 77725756c655cfa4785c857d0f5c4aaf, type: 2}
+    - target: {fileID: 9113841196242130850, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+      propertyPath: powerUpData
+      value: 
+      objectReference: {fileID: 11400000, guid: 26d40e6f758d3014f9d5e2836a625760, type: 2}
     - target: {fileID: 9167754059994250412, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
       propertyPath: m_FlipX
       value: 0
@@ -8834,6 +8852,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7652540464277978568, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
   m_PrefabInstance: {fileID: 3478434357855649885}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3478434357855649887 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9113841196242130850, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+  m_PrefabInstance: {fileID: 3478434357855649885}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3478434357855649886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1203f6dca6ff96a49b9531f192b83e65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3936021661369293692
 GameObject:
   m_ObjectHideFlags: 0
@@ -9018,6 +9047,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 442738793}
     m_Modifications:
+    - target: {fileID: -3975423996616727512, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+      propertyPath: playerData
+      value: 
+      objectReference: {fileID: 11400000, guid: 7113df85d8985314da87683791312a55, type: 2}
+    - target: {fileID: -3975423996616727512, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+      propertyPath: powerUpData
+      value: 
+      objectReference: {fileID: 11400000, guid: 26d40e6f758d3014f9d5e2836a625760, type: 2}
     - target: {fileID: 980493572345705410, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.6
@@ -9026,6 +9063,10 @@ PrefabInstance:
       propertyPath: bulletTag
       value: PlayerBullet
       objectReference: {fileID: 0}
+    - target: {fileID: 1400494690727555144, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+      propertyPath: playerStamina
+      value: 
+      objectReference: {fileID: 6195269278291155434}
     - target: {fileID: 1775459107618490435, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8
@@ -9119,6 +9160,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9206897240742351648, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
   m_PrefabInstance: {fileID: 6195269278291155432}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6195269278291155434 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -3975423996616727512, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+  m_PrefabInstance: {fileID: 6195269278291155432}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6195269278291155433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1203f6dca6ff96a49b9531f192b83e65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!70 &6195269278291155439
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
