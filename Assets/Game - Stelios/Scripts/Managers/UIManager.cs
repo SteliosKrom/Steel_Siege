@@ -99,7 +99,7 @@ public class UIManager : MonoBehaviour
         uiEvents.OnEnablePVPLives -= EnablePVPLives;
         uiEvents.OnEnablePVELives -= EnablePVELives;
         uiEvents.OnDecreaseLivesUI -= DecreaseLivesUI;
-        uiEvents.OnIncreaseLivesUI += IncreaseLivesUI;
+        uiEvents.OnIncreaseLivesUI -= IncreaseLivesUI;
 
         uiEvents.OnShowPVEScore -= EnablePVEScoreText;
         uiEvents.OnScoreUIChanged -= UpdateScoreUI;

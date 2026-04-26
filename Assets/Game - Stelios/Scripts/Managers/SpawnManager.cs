@@ -1,21 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
     private float assignRefsDelay = 0.1f;
     private float spawnEnemyDelay;
-    private float spawnLivesDelay;
-    private float despawnLivesDelay;
+    private float spawnPowerUpsDelay;
+    private float despawnPowerUpsDelay;
     private float showWavesUIDelay = 3f;
 
     private int currentWave = 0;
     private int enemiesToSpawn = 0;
     private int enemiesAlive = 0;
 
+    [SerializeField] private string[] powerUpTags;
+    private string powerUpTag;
+
     private const string ENEMY_TAG = "Enemy";
-    private const string LIVE_TAG = "Live";
 
     #region SCRIPTABLE OBJECTS
     [Header("SCRIPTABLE OBJECTS")]
@@ -31,7 +34,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private Transform player1SpawnPointPVP;
     [SerializeField] private Transform player2SpawnPointPVP;
     [SerializeField] private List<Transform> spawnEnemyPoints;
-    [SerializeField] private List<Transform> spawnLivePoints;
+    [SerializeField] private List<Transform> spawnPowerUpPoints;
     private List<Transform> availablePoints;
     #endregion
 
@@ -39,7 +42,7 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SpawnLivesDelay());
+        StartCoroutine(SpawnPowerUpsDelay());
 
         if (GameManager.Instance.CurrentGameMode == GameMode.PVE)
             StartCoroutine(SpawnEnemyWavesDelay());
@@ -69,24 +72,42 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnPlayersOnPVP()
     {
-        Vector3 player1Pos = UIManager.Instance.MainRefs.player1.transform.position;
-        Vector3 player2Pos = UIManager.Instance.MainRefs.player2.transform.position;
-        player1Pos = player1SpawnPointPVP.position;
-        player2Pos = player2SpawnPointPVP.position;
+        UIManager.Instance.MainRefs.player1.transform.position = player1SpawnPointPVP.position;
+        UIManager.Instance.MainRefs.player2.transform.position = player2SpawnPointPVP.position;
+
+        UIManager.Instance.MainRefs.player1.SetActive(true);
+        UIManager.Instance.MainRefs.player2.SetActive(true);
     }
 
     public void SpawnPlayerOnPVE()
     {
-        UIManager.Instance.MainRefs.player1.transform.position = playerSpawnPoint.transform.position;
+        UIManager.Instance.MainRefs.player1.transform.position = playerSpawnPoint.position;
         UIManager.Instance.MainRefs.player1.SetActive(true);
     }
 
-    public GameObject SpawnLivesAtRandomPoints()
+    public GameObject SpawnPowerUpAtRandomPoints()
     {
-        int rand = Random.Range(0, 6);
-        GameObject live = ObjectPoolManager.Instance.GetObject(LIVE_TAG);
-        live.transform.position = spawnLivePoints[rand].transform.position;
-        return live;
+        int randPoint = Random.Range(0, 6);
+        int randTag = Random.Range(0, powerUpTags.Length);
+
+        powerUpTag = ChooseRandomPowerUps(randTag);
+
+        GameObject powerUp = ObjectPoolManager.Instance.GetObject(powerUpTag);
+        powerUp.transform.position = spawnPowerUpPoints[randPoint].transform.position;
+        return powerUp;
+    }
+
+    public string ChooseRandomPowerUps(int randTag)
+    {
+        for (int i = 0; i < powerUpTags.Length; i++)
+        {
+            if (powerUpTags[i] == powerUpTags[randTag])
+            {
+                powerUpTag = powerUpTags[i];
+                Debug.Log("Power up is: " + powerUpTag);
+            }
+        }
+        return powerUpTag;
     }
 
     public void SpawnEnemiesAtRandomPoints()
@@ -105,20 +126,20 @@ public class SpawnManager : MonoBehaviour
         return enemies;
     }
 
-    public IEnumerator SpawnLivesDelay()
+    public IEnumerator SpawnPowerUpsDelay()
     {
         while (true)
         {
             if (GameManager.Instance.CurrentGameState != GameState.Playing) break;
 
-            spawnLivesDelay = Random.Range(10, 14);
+            spawnPowerUpsDelay = Random.Range(10, 14);
 
-            yield return new WaitForSeconds(spawnLivesDelay);
-            GameObject live = SpawnLivesAtRandomPoints();
+            yield return new WaitForSeconds(spawnPowerUpsDelay);
+            GameObject powerUp = SpawnPowerUpAtRandomPoints();
 
-            despawnLivesDelay = Random.Range(11, 13);
-            yield return new WaitForSeconds(spawnLivesDelay);
-            ObjectPoolManager.Instance.ReturnObject(LIVE_TAG, live);
+            despawnPowerUpsDelay = Random.Range(11, 13);
+            yield return new WaitForSeconds(despawnPowerUpsDelay);
+            ObjectPoolManager.Instance.ReturnObject(powerUpTag, powerUp);
         }
     }
 
@@ -151,17 +172,12 @@ public class SpawnManager : MonoBehaviour
     public IEnumerator EnablePVEPlayerDelay()
     {
         yield return new WaitForSeconds(assignRefsDelay);
-        UIManager.Instance.MainRefs.player1.transform.position = playerSpawnPoint.position;
-        UIManager.Instance.MainRefs.player1.SetActive(true);
+        SpawnPlayerOnPVE();
     }
 
     public IEnumerator EnablePVPPlayersDelay()
     {
         yield return new WaitForSeconds(assignRefsDelay);
-        UIManager.Instance.MainRefs.player1.transform.position = player1SpawnPointPVP.position;
-        UIManager.Instance.MainRefs.player2.transform.position = player2SpawnPointPVP.position;
-
-        UIManager.Instance.MainRefs.player1.SetActive(true);
-        UIManager.Instance.MainRefs.player2.SetActive(true);
+        SpawnPlayersOnPVP();
     }
 }

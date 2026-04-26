@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ScoreEventsSO", menuName = "ScoreEventsSO/Event")]
+[CreateAssetMenu(fileName = "ScoreEventsSO", menuName = "ScoreEvent/Event")]
 public class ScoreEventsSO : ScriptableObject
 {
     public event Action OnScoreChanged;
