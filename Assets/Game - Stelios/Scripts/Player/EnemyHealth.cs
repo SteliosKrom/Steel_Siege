@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
+    private const string ENEMY_TAG = "Enemy";
     [SerializeField] private int currentLives;
 
     #region SCRIPT REFERENCES
@@ -32,9 +33,14 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
         if (currentLives <= 0)
         {
-            this.gameObject.SetActive(false);
+            ReturnEnemy();
             scoreEvents.RaiseScoreChanged();
             uiEvents.RaiseScoreUIChanged();
         }
+    }
+
+    public void ReturnEnemy()
+    {
+        ObjectPoolManager.Instance.ReturnObject(ENEMY_TAG, this.gameObject);
     }
 }
