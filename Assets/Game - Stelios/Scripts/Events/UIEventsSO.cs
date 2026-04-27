@@ -4,8 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "UIEventsSO", menuName = "UIEvent/Event")]
 public class UIEventsSO : ScriptableObject
 {
-    public PlayerHealth playerHealth;
-
     public event Action OnHideRedLives;
     public event Action OnEnablePVPLives;
     public event Action OnEnablePVELives;
