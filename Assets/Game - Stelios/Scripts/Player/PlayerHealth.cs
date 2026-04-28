@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [Header("EVENTS")]
     [SerializeField] private GameEventsSO gameEvents;
     [SerializeField] private UIEventsSO uiEvents;
+    [SerializeField] private AudioEventsSO audioEvents;
     #endregion
 
     #region GAME DATA
@@ -53,6 +54,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         else
         {
             currentLives++;
+            audioEvents.RaiseGainPowerUp();
             uiEvents.RaiseIncreaseLivesUI(playerData.PlayerType, currentLives);
             obj.SetActive(false);
         }
@@ -60,6 +62,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void DecreaseLives()
     {
+        audioEvents.RaiseHurt();
         uiEvents.RaiseDecreaseLivesUI(playerData.PlayerType, currentLives);
     }
 }

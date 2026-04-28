@@ -2,15 +2,21 @@ using UnityEngine;
 
 public class PlayerStamina : MonoBehaviour
 {
+    private const string STAMINA_TAG = "Stamina";
+    private const float staminaBoostMultiplier = 0.3f;
+
     private float staminaEffectDuration;
     private float maxStaminaEffectDuration;
     private float staminaBoost;
-    private const float staminaBoostMultiplier = 0.3f;
     private float currentSpeed;
 
     private bool staminaOnEffect = false;
 
-    private const string STAMINA_TAG = "Stamina";
+    #region EVENTS
+    [Header("EVENTS")]
+    [SerializeField] private GameEventsSO gameEvents;
+    [SerializeField] private AudioEventsSO audioEvents;
+    #endregion
 
     #region GAME DATA
     [Header("GAME DATA")]
@@ -46,14 +52,15 @@ public class PlayerStamina : MonoBehaviour
         if (other.gameObject.CompareTag(STAMINA_TAG))
         {
             other.gameObject.SetActive(false);
-            staminaOnEffect = true;
-            staminaEffectDuration = 0;
+            audioEvents.RaiseGainPowerUp();
             IncreaseSpeed();
         }
     }
 
     public void IncreaseSpeed()
     {
+        staminaOnEffect = true;
+        staminaEffectDuration = 0;
         currentSpeed += staminaBoost;
     }
 

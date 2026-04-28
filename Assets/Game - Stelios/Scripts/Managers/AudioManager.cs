@@ -1,19 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static AudioManager;
+
+[System.Serializable]
+public class AudioItem
+{
+    public SoundType type;
+    public AudioSource source;
+    public AudioClip clip;
+}
 
 public class AudioManager : MonoBehaviour
 {
-    public enum SoundType { Shoot, Move, Idle }
+    public enum SoundType { Shoot, Hurt, Explosion, Hit, GainPowerUp, SpawnPowerUp }
 
     public static AudioManager Instance;
 
-    [System.Serializable]
-    public class AudioItem
-    {
-        public SoundType type;
-        public AudioSource source;
-        public AudioClip clip;
-    }
+    #region EVENTS
+    [Header("EVENTS")]
+    [SerializeField] private AudioEventsSO audioEvents;
+    #endregion
 
     [SerializeField] private List<AudioItem> audioItemsList;
     private Dictionary<SoundType, AudioItem> audioItemsByType;
@@ -40,6 +46,26 @@ public class AudioManager : MonoBehaviour
         {
             audioItemsByType[item.type] = item;
         }
+    }
+
+    private void OnEnable()
+    {
+        audioEvents.OnShoot += PlaySFX;
+        audioEvents.OnHurt += PlaySFX;
+        audioEvents.OnExplosion += PlaySFX;
+        audioEvents.OnHitWall += PlaySFX;
+        audioEvents.OnGainPowerUp += PlaySFX;
+        audioEvents.OnSpawnPowerUp += PlaySFX;
+    }
+
+    private void OnDisable()
+    {
+        audioEvents.OnShoot -= PlaySFX;
+        audioEvents.OnHurt -= PlaySFX;
+        audioEvents.OnExplosion -= PlaySFX;
+        audioEvents.OnHitWall -= PlaySFX;
+        audioEvents.OnGainPowerUp -= PlaySFX;
+        audioEvents.OnSpawnPowerUp -= PlaySFX;
     }
 
     public void PlaySFX(SoundType type)

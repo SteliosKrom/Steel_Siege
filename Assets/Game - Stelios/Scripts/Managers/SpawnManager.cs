@@ -24,6 +24,7 @@ public class SpawnManager : MonoBehaviour
     [Header("SCRIPTABLE OBJECTS")]
     [SerializeField] private GameEventsSO gameEvents;
     [SerializeField] private UIEventsSO uiEvents;
+    [SerializeField] private AudioEventsSO audioEvents;
     #endregion
 
     [SerializeField] private GameObject enemyTank;
@@ -91,6 +92,7 @@ public class SpawnManager : MonoBehaviour
         int randTag = Random.Range(0, powerUpTags.Length);
 
         powerUpTag = ChooseRandomPowerUps(randTag);
+        audioEvents.RaiseSpawnPowerUp();
 
         GameObject powerUp = ObjectPoolManager.Instance.GetObject(powerUpTag);
         powerUp.transform.position = spawnPowerUpPoints[randPoint].transform.position;
