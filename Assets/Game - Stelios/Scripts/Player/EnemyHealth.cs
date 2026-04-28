@@ -19,6 +19,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     [Header("EVENTS")]
     [SerializeField] private UIEventsSO uiEvents;
     [SerializeField] private ScoreEventsSO scoreEvents;
+    [SerializeField] private AudioEventsSO audioEvents;
     #endregion
 
     private void Start()
@@ -36,6 +37,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             ReturnEnemy();
             scoreEvents.RaiseScoreChanged();
             uiEvents.RaiseScoreUIChanged();
+            audioEvents.RaiseExplosion();
         }
     }
 

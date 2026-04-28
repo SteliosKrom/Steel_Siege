@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,65 +10,117 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private string bulletTag;
 
+    #region INPUT 
+    private PlayerControls playerControls;
+    private Vector2 moveInput;
+    #endregion
+
+    #region EVENTS
+    [Header("EVENTS")]
+    [SerializeField] private AudioEventsSO audioEvents;
+    #endregion
+
     #region SCRIPT REFERENCES
     [Header("SCRIPT REFERENCES")]
     [SerializeField] private PlayerStamina playerStamina;
     #endregion
 
-    #region KEYCODES
-    [Header("KEYCODES")]
-    [SerializeField] private KeyCode upKey;
-    [SerializeField] private KeyCode downKey;
-    [SerializeField] private KeyCode leftKey;
-    [SerializeField] private KeyCode rightKey;
-    [SerializeField] private KeyCode shootKey;
-    #endregion
-
+    #region PLAYER
+    [Header("PLAYER")]
     [SerializeField] private PlayerData playerData;
     [SerializeField] private Rigidbody2D playerRb;
     [SerializeField] private Transform shootingPoint;
     private Vector2 moveDirection;
+    #endregion
 
-    private void Update()
+    private void Awake()
     {
-        InputForPlayerMovement();
-        InputForPlayerShooting();
+        playerControls = new PlayerControls();
+    }
+
+    private void OnEnable()
+    {
+        playerControls.Enable();
+
+        if (playerData.PlayerType == PlayerData.PlayerID.P1)
+        {
+            playerControls.P1.Move.performed += OnMove;
+            playerControls.P1.Move.canceled += OnMove;
+
+            playerControls.P1.Shoot.performed += OnShoot;
+        }
+        else
+        {
+            playerControls.P2.Move.performed += OnMove;
+            playerControls.P2.Move.canceled += OnMove;
+
+            playerControls.P2.Shoot.performed += OnShoot;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (playerData.PlayerType == PlayerData.PlayerID.P1)
+        {
+            playerControls.P1.Move.performed -= OnMove;
+            playerControls.P1.Move.canceled -= OnMove;
+
+            playerControls.P1.Shoot.performed -= OnShoot;
+
+        }
+        else
+        {
+            playerControls.P2.Move.performed -= OnMove;
+            playerControls.P2.Move.canceled -= OnMove;
+
+            playerControls.P2.Shoot.performed -= OnShoot;
+        }
+        playerControls.Disable();
     }
 
     private void FixedUpdate()
     {
+        HandlePlayerRotation();
         ApplyMovement();
     }
 
-    public void InputForPlayerMovement()
+    public void OnMove(InputAction.CallbackContext cxt)
     {
         if (GameManager.Instance.CurrentGameState != GameState.Playing) return;
 
-        // Player Movement. Change to Arcade Machine inputs later...
-        moveDirection = Vector2.zero;
+        // Change to Arcade Machine inputs later...
+        moveInput = cxt.ReadValue<Vector2>();
 
-        if (Input.GetKey(upKey)) Move(Vector2.up, 0f);
-        else if (Input.GetKey(downKey)) Move(Vector2.down, 180f);
-        else if (Input.GetKey(leftKey)) Move(Vector2.left, 90f);
-        else if (Input.GetKey(rightKey)) Move(Vector2.right, -90f);
+        if (moveInput.x > 0)
+            moveDirection = Vector2.right;
+        else if (moveInput.x < 0)
+            moveDirection = Vector2.left;
+        else if (moveInput.y > 0)
+            moveDirection = Vector2.up;
+        else if (moveInput.y < 0)
+            moveDirection = Vector2.down;
+        else
+            moveDirection = Vector2.zero;
     }
 
-    public void InputForPlayerShooting()
+    public void OnShoot(InputAction.CallbackContext cxt)
     {
         if (GameManager.Instance.CurrentGameState != GameState.Playing) return;
 
         // Player Shooting. Change to Arcade Machine inputs later...
-        if (Input.GetKeyDown(shootKey) && canShoot)
+        if (canShoot)
         {
             ShootBullet();
             StartCoroutine(ShootDelay());
         }
     }
 
-    public void Move(Vector2 dir, float rotation)
+    public void HandlePlayerRotation()
     {
-        moveDirection += dir;
-        playerRb.SetRotation(rotation);
+        if (moveDirection.y > 0) playerRb.SetRotation(0f);
+        else if (moveDirection.y < 0) playerRb.SetRotation(180f);
+        else if (moveDirection.x < 0) playerRb.SetRotation(90f);
+        else if (moveDirection.x > 0) playerRb.SetRotation(-90f);
     }
 
     public void ApplyMovement()
@@ -82,7 +136,7 @@ public class PlayerController : MonoBehaviour
         bullet.transform.rotation = shootingPoint.rotation;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.linearVelocity = shootingPoint.up * playerData.BulletSpeed;
-        AudioManager.Instance.PlaySFX(AudioManager.SoundType.Shoot);
+        audioEvents.RaiseShoot();
     }
 
     public IEnumerator ShootDelay()

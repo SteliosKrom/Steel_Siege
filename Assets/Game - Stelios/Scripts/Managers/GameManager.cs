@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public enum GameState
 {
@@ -39,6 +40,11 @@ public class GameManager : MonoBehaviour
     private bool player1Dead = false;
     private bool player2Dead = false;
 
+    #region INPUT
+    private PlayerControls playerControls;
+    private Vector2 navigateInput;
+    #endregion
+
     #region EVENTS
     [Header("EVENTS")]
     [SerializeField] private GameEventsSO gameEvents;
@@ -60,6 +66,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        playerControls = new PlayerControls();
+
         transform.SetParent(null);
 
         if (Instance == null)
@@ -73,6 +81,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        playerControls.Enable();
+        playerControls.UI.Navigate.started += OnNavigate;
+        playerControls.UI.AnyInput.started += OnAnyKey;
+        playerControls.UI.Submit.started += OnSubmit;
+    }
+
+    private void OnDisable()
+    {
+        playerControls.UI.Navigate.started -= OnNavigate;
+        playerControls.UI.AnyInput.started -= OnAnyKey;
+        playerControls.UI.Submit.started -= OnSubmit;
+        playerControls.Disable();
+    }
+
     private void Start()
     {
         currentModeIndex = 0;
@@ -83,9 +107,22 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        JoinGame();
         InputForGameModeSelection();
+    }
+
+    public void OnNavigate(InputAction.CallbackContext cxt)
+    {
+        navigateInput = cxt.ReadValue<Vector2>();
+    }
+
+    public void OnSubmit(InputAction.CallbackContext cxt)
+    {
         EnterGameMode();
+    }
+
+    public void OnAnyKey(InputAction.CallbackContext cxt)
+    {
+        JoinGame();
     }
 
     public void JoinGame()
@@ -96,19 +133,16 @@ public class GameManager : MonoBehaviour
         // Change later to Arcade Machine input...
         if (currentGameState == GameState.Title)
         {
-            if (Input.anyKeyDown)
+            switch (UIManager.Instance.CreditCounter)
             {
-                switch (UIManager.Instance.CreditCounter)
-                {
-                    case 0:
-                        uiEvents.RaiseInsertCoin();
-                        break;
-                    case 1:
-                        currentGameState = GameState.SelectModes;
-                        uiEvents.RaiseEnableGameModes();
-                        uiEvents.RaisePVPStay();
-                        break;
-                }
+                case 0:
+                    uiEvents.RaiseInsertCoin();
+                    break;
+                case 1:
+                    currentGameState = GameState.SelectModes;
+                    uiEvents.RaiseEnableGameModes();
+                    uiEvents.RaisePVPStay();
+                    break;
             }
         }
     }
@@ -119,13 +153,10 @@ public class GameManager : MonoBehaviour
 
         if (currentGameState == GameState.SelectModes)
         {
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                if (currentModeIndex == 0)
-                    LoadPVPMode();
-                else
-                    LoadPVEMode();
-            }
+            if (currentModeIndex == 0)
+                LoadPVPMode();
+            else
+                LoadPVEMode();
         }
     }
 
@@ -134,14 +165,12 @@ public class GameManager : MonoBehaviour
         if (currentGameState != GameState.SelectModes) return;
 
         // Change later to Arcade Machine inputs...
-        if (Input.GetKeyDown(KeyCode.S) && currentModeIndex == 0)
-        {
+        if (navigateInput.y < 0 && currentModeIndex == 0)
             SelectPVEMode();
-        }
-        else if (Input.GetKeyDown(KeyCode.W) && currentModeIndex == 1)
-        {
+        else if (navigateInput.y > 0 && currentModeIndex == 1)
             SelectPVPMode();
-        }
+
+        navigateInput = Vector2.zero;
     }
 
     public void SelectPVPMode()
