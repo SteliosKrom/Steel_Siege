@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
 
     private float checkGameResultDelay = 0.1f;
     private float returnBackToMainTitleDelay = 3f;
+    private float moveToLeaderboardDelay = 3f;
+    private float returnBackToMainTitleFromLeaderboard = 10f;
 
     private bool player1Dead = false;
     private bool player2Dead = false;
@@ -235,6 +237,7 @@ public class GameManager : MonoBehaviour
             {
                 Player1Wins();
             }
+            ReturnToMainTitle();
         }
         else if (currentGameMode == GameMode.PVE)
         {
@@ -242,8 +245,8 @@ public class GameManager : MonoBehaviour
             {
                 GameOver();
             }
+            MoveToLeaderboardScene();
         }
-        ReturnToMainTitle();
     }
 
     public void Draw()
@@ -269,7 +272,13 @@ public class GameManager : MonoBehaviour
         gameEvents.RaiseGameOver();
         scoreEvents.RaiseHighScoreChanged();
         audioEvents.RaiseGameOver();
+        LeaderboardManager.Instance.ProcessLeaderboard();
         currentGameState = GameState.GameOver;
+    }
+
+    public void MoveToLeaderboardScene()
+    {
+        StartCoroutine(MoveToLeaderboardDelay());
     }
 
     public void ReturnToMainTitle()
@@ -279,8 +288,16 @@ public class GameManager : MonoBehaviour
 
     public void ResetMatchState()
     {
-        player1Dead = false;
-        player2Dead = false;
+        switch (currentGameMode)
+        {
+            case GameMode.PVP:
+                player1Dead = false;
+                player2Dead = false;
+                break;
+            case GameMode.PVE:
+                player1Dead = false;
+                break;
+        }
     }
 
     public IEnumerator RaiseAfterLoad(bool isPVP)
@@ -292,6 +309,20 @@ public class GameManager : MonoBehaviour
             gameEvents.RaisePVPLoad();
         else
             gameEvents.RaisePVELoad();
+    }
+
+    public IEnumerator MoveToLeaderboardDelay()
+    {
+        yield return new WaitForSeconds(moveToLeaderboardDelay);
+
+        SceneManager.LoadScene("Leaderboard");
+        currentGameState = GameState.Leaderboard;
+
+        yield return new WaitForSeconds(returnBackToMainTitleFromLeaderboard);
+
+        SceneManager.LoadScene("Title");
+        ResetMatchState();
+        currentGameState = GameState.Title;
     }
 
     public IEnumerator ReturnToMainTitleDelay()

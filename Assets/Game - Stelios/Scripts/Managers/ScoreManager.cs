@@ -35,8 +35,6 @@ public class ScoreManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-
     private void OnEnable()
     {
         scoreEvents.OnScoreChanged += UpdateScore;
