@@ -656,6 +656,7 @@ MonoBehaviour:
   gameEvents: {fileID: 11400000, guid: 667ee07dfebd0c145a4169d9210287c2, type: 2}
   uiEvents: {fileID: 11400000, guid: 2ba79ad53fa263f43a02d1a4c5aaf1a7, type: 2}
   scoreEvents: {fileID: 11400000, guid: 1b260ac2ca221fa4ea04cb4b1b3c2d9f, type: 2}
+  audioEvents: {fileID: 11400000, guid: dacb1adbb9007174085075b9ac481a6e, type: 2}
   currentGameState: 0
   currentPlayerState: 0
   currentGameMode: 0
@@ -2804,6 +2805,9 @@ MonoBehaviour:
   - type: 5
     source: {fileID: 0}
     clip: {fileID: 8300000, guid: 45004ad2ca0cce2488c8b0f18eebfc86, type: 3}
+  - type: 6
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 1c172b35215693f40b1d1b2409b633dd, type: 3}
 --- !u!1 &2010954542
 GameObject:
   m_ObjectHideFlags: 0

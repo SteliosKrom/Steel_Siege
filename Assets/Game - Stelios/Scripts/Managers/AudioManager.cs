@@ -12,7 +12,7 @@ public class AudioItem
 
 public class AudioManager : MonoBehaviour
 {
-    public enum SoundType { Shoot, Hurt, Explosion, Hit, GainPowerUp, SpawnPowerUp }
+    public enum SoundType { Shoot, Hurt, Explosion, Hit, GainPowerUp, SpawnPowerUp, GameOver }
 
     public static AudioManager Instance;
 
@@ -56,6 +56,7 @@ public class AudioManager : MonoBehaviour
         audioEvents.OnHitWall += PlaySFX;
         audioEvents.OnGainPowerUp += PlaySFX;
         audioEvents.OnSpawnPowerUp += PlaySFX;
+        audioEvents.OnGameOver += PlaySFX;
     }
 
     private void OnDisable()
@@ -66,6 +67,7 @@ public class AudioManager : MonoBehaviour
         audioEvents.OnHitWall -= PlaySFX;
         audioEvents.OnGainPowerUp -= PlaySFX;
         audioEvents.OnSpawnPowerUp -= PlaySFX;
+        audioEvents.OnGameOver -= PlaySFX;
     }
 
     public void PlaySFX(SoundType type)

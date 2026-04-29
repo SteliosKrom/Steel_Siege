@@ -5050,8 +5050,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.00024795532, y: -0.067240715}
-  m_Size: {x: 0.85573006, y: 0.90528584}
+  m_Offset: {x: -0.00024795532, y: -0.033921003}
+  m_Size: {x: 0.85573006, y: 0.97192526}
   m_Direction: 0
 --- !u!1 &442738792
 GameObject:
@@ -5986,7 +5986,7 @@ MonoBehaviour:
     scoreTextValue: {fileID: 607319520}
     wavesText: {fileID: 132295340}
     wavesCountText: {fileID: 107352420}
-  soundTypes: 000000000100000002000000030000000400000005000000
+  soundTypes: 00000000010000000200000003000000040000000500000006000000
   localSources:
   - {fileID: 1496151162}
   - {fileID: 1518602024}
@@ -5994,6 +5994,7 @@ MonoBehaviour:
   - {fileID: 537449387}
   - {fileID: 242429418}
   - {fileID: 28078373}
+  - {fileID: 1897636407}
 --- !u!1 &679274467
 GameObject:
   m_ObjectHideFlags: 0
@@ -9175,7 +9176,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

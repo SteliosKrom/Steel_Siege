@@ -10,6 +10,7 @@ public class AudioEventsSO : ScriptableObject
     public event Action<AudioManager.SoundType> OnHitWall;
     public event Action<AudioManager.SoundType> OnGainPowerUp;
     public event Action<AudioManager.SoundType> OnSpawnPowerUp;
+    public event Action<AudioManager.SoundType> OnGameOver;
 
     public void RaiseShoot() => OnShoot?.Invoke(AudioManager.SoundType.Shoot);
     public void RaiseHurt() => OnHurt?.Invoke(AudioManager.SoundType.Hurt);
@@ -17,4 +18,5 @@ public class AudioEventsSO : ScriptableObject
     public void RaiseHitWall() => OnHitWall?.Invoke(AudioManager.SoundType.Hit);
     public void RaiseGainPowerUp() => OnGainPowerUp?.Invoke(AudioManager.SoundType.GainPowerUp);
     public void RaiseSpawnPowerUp() => OnSpawnPowerUp?.Invoke(AudioManager.SoundType.SpawnPowerUp);
+    public void RaiseGameOver() => OnGameOver?.Invoke(AudioManager.SoundType.GameOver);
 }

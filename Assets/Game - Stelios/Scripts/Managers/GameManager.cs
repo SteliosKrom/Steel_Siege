@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameEventsSO gameEvents;
     [SerializeField] private UIEventsSO uiEvents;
     [SerializeField] private ScoreEventsSO scoreEvents;
+    [SerializeField] private AudioEventsSO audioEvents;
     #endregion
 
     #region STATES
@@ -267,6 +268,7 @@ public class GameManager : MonoBehaviour
     {
         gameEvents.RaiseGameOver();
         scoreEvents.RaiseHighScoreChanged();
+        audioEvents.RaiseGameOver();
         currentGameState = GameState.GameOver;
     }
 
