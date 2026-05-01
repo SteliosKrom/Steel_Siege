@@ -131,15 +131,24 @@ public class SpawnManager : MonoBehaviour
     {
         while (true)
         {
-            if (GameManager.Instance.CurrentGameState != GameState.Playing) break;
+            if (GameManager.Instance.CurrentGameState != GameState.Playing)
+                yield break;
 
             spawnPowerUpsDelay = Random.Range(10, 14);
 
             yield return new WaitForSeconds(spawnPowerUpsDelay);
+
+            if (GameManager.Instance.CurrentGameState != GameState.Playing)
+                yield break;
+
             GameObject powerUp = SpawnPowerUpAtRandomPoints();
 
             despawnPowerUpsDelay = Random.Range(11, 13);
             yield return new WaitForSeconds(despawnPowerUpsDelay);
+
+            if (GameManager.Instance.CurrentGameState != GameState.Playing)
+                yield break;
+
             ObjectPoolManager.Instance.ReturnObject(powerUpTag, powerUp);
         }
     }
