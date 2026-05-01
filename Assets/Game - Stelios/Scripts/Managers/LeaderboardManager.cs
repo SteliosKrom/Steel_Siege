@@ -1,8 +1,5 @@
-using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Threading;
-using TMPro;
+using System.IO;
 using UnityEngine;
 
 public class LeaderboardManager : MonoBehaviour
@@ -12,8 +9,16 @@ public class LeaderboardManager : MonoBehaviour
     [SerializeField] private LeaderboardSceneRefs leaderboardRefs;
 
     [SerializeField] private List<int> bestScores;
+    [SerializeField] private List<string> bestScoreNames;
 
-    private bool inserted = false;
+    #region EVENTS
+    [Header("EVENTS")]
+    [SerializeField] private ScoreEventsSO scoreEvents;
+    #endregion
+
+    public List<int> BestScores { get => bestScores; set => bestScores = value; }
+    public List<string> BestScoreNames { get => bestScoreNames; set => bestScoreNames = value; }
+    public LeaderboardSceneRefs LeaderboardRefs => leaderboardRefs;
 
     private void Awake()
     {
@@ -30,41 +35,34 @@ public class LeaderboardManager : MonoBehaviour
         }
     }
 
-    public void ProcessLeaderboard()
+    public void InsertScore(int score, string name)
     {
-        TryInsertCurrentScore();
-        KeepTopScoresOnly();
-    }
+        bool inserted = false;
 
-    public void TryInsertCurrentScore()
-    {
-        for (int i = 0; i <= bestScores.Count - 1; i++)
+        for (int i = 0; i < bestScores.Count; i++)
         {
-            if (ScoreManager.Instance.CurrentScore > bestScores[i])
+            if (score > bestScores[i])
             {
-                bestScores.Insert(i, ScoreManager.Instance.CurrentScore);
-                Debug.Log("After Insert: " + string.Join(",", bestScores));
+                bestScores.Insert(i, score);
+                bestScoreNames.Insert(i, name);
                 inserted = true;
                 break;
             }
         }
-    }
 
-    public void KeepTopScoresOnly()
-    {
-        if (inserted && bestScores.Count > 5)
+        if (!inserted)
+        {
+            bestScores.Add(score);
+            bestScoreNames.Add(name);
+        }
+
+        if (bestScores.Count > 5)
         {
             bestScores.RemoveAt(bestScores.Count - 1);
-            Debug.Log("After Trim: " + string.Join(",", bestScores));
+            bestScoreNames.RemoveAt(bestScoreNames.Count - 1);
         }
-    }
 
-    public void RefreshLeaderboardUI()
-    {
-        for (int i = 0; i <= leaderboardRefs.bestScoresText.Length - 1; i++)
-        {
-            leaderboardRefs.bestScoresText[i].text = bestScores[i].ToString("000000");
-        }
+        Debug.Log("Leaderboard: " + string.Join(",", bestScores));
     }
 
     public void SetLeaderboardRefs(LeaderboardSceneRefs localLeaderboardRefs)

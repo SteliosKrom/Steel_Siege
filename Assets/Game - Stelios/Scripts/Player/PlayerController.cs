@@ -125,6 +125,8 @@ public class PlayerController : MonoBehaviour
 
     public void ApplyMovement()
     {
+        //if (GameManager.Instance.CurrentGameState != GameState.Playing) return;
+
         Vector2 targetPos = playerRb.position + moveDirection.normalized * playerStamina.CurrentSpeed * Time.fixedDeltaTime;
         playerRb.MovePosition(targetPos);
     }

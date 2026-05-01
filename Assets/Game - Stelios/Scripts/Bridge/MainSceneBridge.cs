@@ -6,12 +6,16 @@ public class MainSceneRefs
 {
     public GameObject[] player1Lives;
     public GameObject[] player2Lives;
+
     public GameObject gameOverPanel;
+    public GameObject enterYourNamePanel;
     public GameObject player1WinsPanel;
     public GameObject player2WinsPanel;
     public GameObject drawPanel;
+
     public GameObject redLives;
     public GameObject greenLives;
+
     public GameObject player1;
     public GameObject player2;
     public GameObject enemyTank;
@@ -20,6 +24,10 @@ public class MainSceneRefs
     public TextMeshProUGUI scoreTextValue;
     public TextMeshProUGUI wavesText;
     public TextMeshProUGUI wavesCountText;
+    public TextMeshProUGUI[] letters;
+    public TextMeshProUGUI firstLetter;
+    public TextMeshProUGUI secondLetter;
+    public TextMeshProUGUI thirdLetter;
 }
 
 public class MainSceneBridge : MonoBehaviour

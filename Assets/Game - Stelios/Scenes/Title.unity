@@ -295,7 +295,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 177368414}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -737,6 +737,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiEvents: {fileID: 11400000, guid: 2ba79ad53fa263f43a02d1a4c5aaf1a7, type: 2}
+  scoreEvents: {fileID: 11400000, guid: 1b260ac2ca221fa4ea04cb4b1b3c2d9f, type: 2}
+  resetSaveForTesting: 0
 --- !u!1 &500477697
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,6 +1317,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     gameOverPanel: {fileID: 0}
+    enterYourNamePanel: {fileID: 0}
     player1WinsPanel: {fileID: 0}
     player2WinsPanel: {fileID: 0}
     drawPanel: {fileID: 0}
@@ -1327,6 +1330,13 @@ MonoBehaviour:
     scoreTextValue: {fileID: 0}
     wavesText: {fileID: 0}
     wavesCountText: {fileID: 0}
+    letters:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    firstLetter: {fileID: 0}
+    secondLetter: {fileID: 0}
+    thirdLetter: {fileID: 0}
   titleRefs:
     modesMenu: {fileID: 2035222779}
     insertCoinText: {fileID: 28447618}
@@ -2587,7 +2597,20 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-  bestScores: 32000000280000001e000000140000000a000000
+    bestScoreNamesText:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  bestScores: 0000000000000000000000000000000000000000
+  bestScoreNames:
+  - ---
+  - ---
+  - ---
+  - ---
+  - ---
+  scoreEvents: {fileID: 11400000, guid: 1b260ac2ca221fa4ea04cb4b1b3c2d9f, type: 2}
 --- !u!1 &1825737496
 GameObject:
   m_ObjectHideFlags: 0
@@ -2860,7 +2883,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 45004ad2ca0cce2488c8b0f18eebfc86, type: 3}
   - type: 6
     source: {fileID: 0}
-    clip: {fileID: 8300000, guid: 1c172b35215693f40b1d1b2409b633dd, type: 3}
+    clip: {fileID: 8300000, guid: 4f6538c18bcc532488ccfcea0ebcde7c, type: 3}
 --- !u!1 &2010954542
 GameObject:
   m_ObjectHideFlags: 0
