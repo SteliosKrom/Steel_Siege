@@ -7,6 +7,7 @@ using TMPro;
 public class LeaderboardSceneRefs
 {
     public TextMeshProUGUI[] bestScoresText;
+    public TextMeshProUGUI[] bestScoreNamesText;
 }
 
 public class LeaderboardSceneBridge : MonoBehaviour

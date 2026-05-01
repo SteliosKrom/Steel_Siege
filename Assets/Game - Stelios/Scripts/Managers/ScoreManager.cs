@@ -18,7 +18,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private EnemyData enemyData;
     #endregion
 
-    public int CurrentScore => currentScore;
+    public int CurrentScore { get => currentScore; set => currentScore = value; }
     public int CurrentHighScore { get => currentHighScore; set => currentHighScore = value; }
 
     private void Awake()
@@ -35,30 +35,29 @@ public class ScoreManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     private void OnEnable()
     {
         scoreEvents.OnScoreChanged += UpdateScore;
-        scoreEvents.OnHighScoreChanged += UpdateHighScore;
     }
 
     private void OnDisable()
     {
         scoreEvents.OnScoreChanged -= UpdateScore;
-        scoreEvents.OnHighScoreChanged -= UpdateHighScore;
+    }
+
+    public void ResetRunScores()
+    {
+        currentScore = 0;
     }
 
     public void UpdateScore()
     {
         currentScore += enemyData.ScoreValue;
-        UpdateHighScore();
-    }
 
-    public void UpdateHighScore()
-    {
         if (currentScore > currentHighScore)
         {
             currentHighScore = currentScore;
-            SaveManager.Instance.SaveHighscore();
         }
     }
 }

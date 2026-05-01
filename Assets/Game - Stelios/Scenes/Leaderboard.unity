@@ -1626,6 +1626,12 @@ MonoBehaviour:
     - {fileID: 265193145}
     - {fileID: 277282884}
     - {fileID: 289810164}
+    bestScoreNamesText:
+    - {fileID: 1136970436}
+    - {fileID: 1758933026}
+    - {fileID: 2031113902}
+    - {fileID: 2063303436}
+    - {fileID: 637050427}
 --- !u!1 &794417723
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,8 +5,7 @@ using UnityEngine;
 public class ScoreEventsSO : ScriptableObject
 {
     public event Action OnScoreChanged;
-    public event Action OnHighScoreChanged;
 
+    // Raise On Score Changed...
     public void RaiseScoreChanged() => OnScoreChanged?.Invoke();
-    public void RaiseHighScoreChanged() => OnHighScoreChanged?.Invoke();
 }

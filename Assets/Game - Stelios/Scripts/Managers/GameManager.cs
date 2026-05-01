@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public enum GameState
 {
@@ -33,14 +34,20 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     private int currentModeIndex;
+    private int currentLetterIndex = 0;
 
     private float checkGameResultDelay = 0.1f;
     private float returnBackToMainTitleDelay = 3f;
-    private float moveToLeaderboardDelay = 3f;
+    private float moveToEnterYourNameDelay = 3f;
     private float returnBackToMainTitleFromLeaderboard = 10f;
 
     private bool player1Dead = false;
     private bool player2Dead = false;
+    private bool onEnterYourName = false;
+
+    private char[] allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+
+    private string currentLeaderboardBestScorePlayerName;
 
     #region INPUT
     private PlayerControls playerControls;
@@ -62,6 +69,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameMode currentGameMode;
     #endregion
 
+    public string CurrentLeaderboardBestScorePlayerName { get => currentLeaderboardBestScorePlayerName; set => currentLeaderboardBestScorePlayerName = value; }
     public int CurrentModeIndex { get => currentModeIndex; }
     public GameState CurrentGameState { get => currentGameState; set => currentGameState = value; }
     public PlayerState CurrentPlayerState { get => currentPlayerState; set => currentPlayerState = value; }
@@ -111,10 +119,12 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         InputForGameModeSelection();
+        EnterYourName();
     }
 
     public void OnNavigate(InputAction.CallbackContext cxt)
     {
+        // Add the Input For Game Mode Selection here for testing...
         navigateInput = cxt.ReadValue<Vector2>();
     }
 
@@ -196,6 +206,7 @@ public class GameManager : MonoBehaviour
     {
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVP;
+        ScoreManager.Instance.ResetRunScores();
         StartCoroutine(RaiseAfterLoad(true));
         uiEvents.RaiseEnablePVPLives();
     }
@@ -204,6 +215,7 @@ public class GameManager : MonoBehaviour
     {
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVE;
+        ScoreManager.Instance.ResetRunScores();
         StartCoroutine(RaiseAfterLoad(false));
         uiEvents.RaiseEnablePVELives();
         uiEvents.RaiseShowPVEScore();
@@ -237,15 +249,15 @@ public class GameManager : MonoBehaviour
             {
                 Player1Wins();
             }
-            ReturnToMainTitle();
+            StartCoroutine(ReturnToMainTitleDelay());
         }
         else if (currentGameMode == GameMode.PVE)
         {
             if (player1Dead)
             {
                 GameOver();
+                StartCoroutine(MoveToEnterYourNamePanelDelay());
             }
-            MoveToLeaderboardScene();
         }
     }
 
@@ -270,20 +282,52 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameEvents.RaiseGameOver();
-        scoreEvents.RaiseHighScoreChanged();
         audioEvents.RaiseGameOver();
-        LeaderboardManager.Instance.ProcessLeaderboard();
         currentGameState = GameState.GameOver;
     }
 
-    public void MoveToLeaderboardScene()
+    public void EnterYourName()
     {
-        StartCoroutine(MoveToLeaderboardDelay());
-    }
+        if (!onEnterYourName) return;
+        if (currentLetterIndex >= UIManager.Instance.MainRefs.letters.Length) return;
 
-    public void ReturnToMainTitle()
-    {
-        StartCoroutine(ReturnToMainTitleDelay());
+        for (int i = 0; i < allowedChars.Length; i++)
+        { 
+            if (Input.GetKeyDown(KeyCode.A + i))
+            {
+                UIManager.Instance.MainRefs.letters[currentLetterIndex].text = allowedChars[i].ToString();
+                currentLetterIndex++;
+
+                currentLeaderboardBestScorePlayerName = string.Concat(UIManager.Instance.MainRefs.letters[0].text, 
+                    UIManager.Instance.MainRefs.letters[1].text, 
+                    UIManager.Instance.MainRefs.letters[2].text);
+
+                if (currentLetterIndex == 3)
+                {
+                    int finalScore = ScoreManager.Instance.CurrentScore;
+                    string playerName = currentLeaderboardBestScorePlayerName;
+
+                    LeaderboardManager.Instance.InsertScore(finalScore, playerName);
+                    SaveManager.Instance.SaveAll();
+
+                    StartCoroutine(MoveToLeaderboardDelay());
+                }
+
+                break;
+            }
+        }
+
+        switch (currentLetterIndex)
+        {
+            case 1:
+                uiEvents.RaiseFirstLetterExit();
+                uiEvents.RaiseSecondLetterStay();
+                break;
+            case 2:
+                uiEvents.RaiseSecondLetterExit();
+                uiEvents.RaiseThirdLetterStay();
+                break;
+        }
     }
 
     public void ResetMatchState()
@@ -311,16 +355,31 @@ public class GameManager : MonoBehaviour
             gameEvents.RaisePVELoad();
     }
 
+    public IEnumerator MoveToEnterYourNamePanelDelay()
+    {
+        yield return new WaitForSeconds(moveToEnterYourNameDelay);
+        onEnterYourName = true;
+        UIManager.Instance.MainRefs.gameOverPanel.SetActive(false);
+        uiEvents.RaiseShowEnterYourNamePanel();
+        uiEvents.RaiseFirstLetterStay();
+    }
+
     public IEnumerator MoveToLeaderboardDelay()
     {
-        yield return new WaitForSeconds(moveToLeaderboardDelay);
+        yield return null;
 
         SceneManager.LoadScene("Leaderboard");
         currentGameState = GameState.Leaderboard;
 
+        yield return null;
+        uiEvents.RaiseLeaderboardScoresAndNamesUIChanged();
+
         yield return new WaitForSeconds(returnBackToMainTitleFromLeaderboard);
 
         SceneManager.LoadScene("Title");
+
+        yield return null;
+        uiEvents.RaiseHighScoreUIChanged();
         ResetMatchState();
         currentGameState = GameState.Title;
     }
@@ -329,6 +388,9 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(returnBackToMainTitleDelay);
         SceneManager.LoadScene("Title");
+
+        yield return null;
+        uiEvents.RaiseHighScoreUIChanged();
         ResetMatchState();
         currentGameState = GameState.Title;
     }

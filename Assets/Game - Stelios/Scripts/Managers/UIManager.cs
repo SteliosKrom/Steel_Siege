@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
     #endregion
 
     public TitleSceneRefs TitleRefs { get => titleRefs; }
-    public MainSceneRefs MainRefs{ get => mainRefs; }
+    public MainSceneRefs MainRefs { get => mainRefs; }
     public int CreditCounter { get => creditCounter; set => creditCounter = value; }
     public bool IsWaiting => isWaiting;
 
@@ -70,17 +70,26 @@ public class UIManager : MonoBehaviour
         uiEvents.OnShowPVEScore += EnablePVEScoreText;
         uiEvents.OnScoreUIChanged += UpdateScoreUI;
         uiEvents.OnHighScoreUIChanged += UpdateHighScoreUI;
+        uiEvents.OnLeaderboardScoresAndNamesUIChanged += UpdateLeaderboardScoresAndNamesUI;
 
         uiEvents.OnEnableGameModes += EnableGameModes;
         uiEvents.OnEnableWavesUI += EnableEnemyWavesUI;
         uiEvents.OnDisableWavesUI += DisableEnemyWavesUI;
 
         uiEvents.OnInsertCoin += InsertCoin;
+        uiEvents.OnShowEnterYourNamePanel += ShowEnterYourNamePanel;
 
         uiEvents.OnPVPExit += OnPVPModeExit;
         uiEvents.OnPVPStay += OnPVPModeStay;
         uiEvents.OnPVEExit += OnPVEModeExit;
         uiEvents.OnPVEStay += OnPVEModeStay;
+
+        uiEvents.OnFirstLetterStay += OnFirstLetterStay;
+        uiEvents.OnFirstLetterExit += OnFirstLetterExit;
+        uiEvents.OnSecondLetterStay += OnSecondLetterStay;
+        uiEvents.OnSecondLetterExit += OnSecondLetterExit;
+        uiEvents.OnThirdLetterStay += OnThirdLetterStay;
+        uiEvents.OnThirdLetterExit += OnThirdLetterExit;
 
         uiEvents.OnPVPSelected += OnPVPSelected;
         uiEvents.OnPVESelected += OnPVESelected;
@@ -104,17 +113,26 @@ public class UIManager : MonoBehaviour
         uiEvents.OnShowPVEScore -= EnablePVEScoreText;
         uiEvents.OnScoreUIChanged -= UpdateScoreUI;
         uiEvents.OnHighScoreUIChanged -= UpdateHighScoreUI;
+        uiEvents.OnLeaderboardScoresAndNamesUIChanged -= UpdateLeaderboardScoresAndNamesUI;
 
         uiEvents.OnEnableGameModes -= EnableGameModes;
         uiEvents.OnEnableWavesUI -= EnableEnemyWavesUI;
         uiEvents.OnDisableWavesUI -= DisableEnemyWavesUI;
 
         uiEvents.OnInsertCoin -= InsertCoin;
+        uiEvents.OnShowEnterYourNamePanel -= ShowEnterYourNamePanel;
 
         uiEvents.OnPVPExit -= OnPVPModeExit;
         uiEvents.OnPVPStay -= OnPVPModeStay;
         uiEvents.OnPVEExit -= OnPVEModeExit;
         uiEvents.OnPVEStay -= OnPVEModeStay;
+
+        uiEvents.OnFirstLetterStay -= OnFirstLetterStay;
+        uiEvents.OnFirstLetterExit -= OnFirstLetterExit;
+        uiEvents.OnSecondLetterStay -= OnSecondLetterStay;
+        uiEvents.OnSecondLetterExit -= OnSecondLetterExit;
+        uiEvents.OnThirdLetterStay -= OnThirdLetterStay;
+        uiEvents.OnThirdLetterExit -= OnThirdLetterExit;
 
         uiEvents.OnPVPSelected -= OnPVPSelected;
         uiEvents.OnPVESelected -= OnPVESelected;
@@ -195,45 +213,29 @@ public class UIManager : MonoBehaviour
         titleRefs.PVESelectionArrow.enabled = true;
     }
 
-    public void OnPVPModeStay()
-    {
-        titleRefs.PVPSelectionArrow.color = Color.red;
-    }
+    // PVP and PVE Modes selection events...
+    public void OnPVPModeStay() => titleRefs.PVPSelectionArrow.color = Color.red;
+    public void OnPVPModeExit() => titleRefs.PVPSelectionArrow.color = Color.white;
 
-    public void OnPVPModeExit()
-    {
-        titleRefs.PVPSelectionArrow.color = Color.white;
-    }
+    public void OnPVEModeStay() => titleRefs.PVESelectionArrow.color = Color.red;
+    public void OnPVEModeExit() => titleRefs.PVESelectionArrow.color = Color.white;
 
-    public void OnPVEModeStay()
-    {
-        titleRefs.PVESelectionArrow.color = Color.red;
-    }
+    // Enter your name letter highlight events...
+    public void OnFirstLetterStay() => mainRefs.firstLetter.color = Color.red;
+    public void OnFirstLetterExit() => mainRefs.firstLetter.color = Color.white;
 
-    public void OnPVEModeExit()
-    {
-        titleRefs.PVESelectionArrow.color = Color.white;
-    }
+    public void OnSecondLetterStay() => mainRefs.secondLetter.color = Color.red;
+    public void OnSecondLetterExit() => mainRefs.secondLetter.color = Color.white;
 
-    public void ShowDraw()
-    {
-        mainRefs.drawPanel.SetActive(true);
-    }
+    public void OnThirdLetterStay() => mainRefs.thirdLetter.color = Color.red;
+    public void OnThirdLetterExit() => mainRefs.thirdLetter.color = Color.white;
 
-    public void ShowP1Win()
-    {
-        mainRefs.player1WinsPanel.SetActive(true);
-    }
-
-    public void ShowP2Win()
-    {
-        mainRefs.player2WinsPanel.SetActive(true);
-    }
-
-    public void ShowGameOver()
-    {
-        mainRefs.gameOverPanel.SetActive(true);
-    }
+    // Enable Panels on events...
+    public void ShowDraw() => mainRefs.drawPanel.SetActive(true);
+    public void ShowP1Win() => mainRefs.player1WinsPanel.SetActive(true);
+    public void ShowP2Win() => mainRefs.player2WinsPanel.SetActive(true);
+    public void ShowGameOver() => mainRefs.gameOverPanel.SetActive(true);
+    public void ShowEnterYourNamePanel() => mainRefs.enterYourNamePanel.SetActive(true);
 
     public void EnableEnemyWavesUI()
     {
@@ -247,14 +249,24 @@ public class UIManager : MonoBehaviour
         mainRefs.wavesCountText.enabled = false;
     }
 
-    public void UpdateScoreUI()
+    // Update Score, Highscore and Leaderboard Scores and Names...
+    public void UpdateScoreUI() => mainRefs.scoreTextValue.text = ScoreManager.Instance.CurrentScore.ToString("000000");
+    public void UpdateHighScoreUI() => titleRefs.highscoreText.text = ScoreManager.Instance.CurrentHighScore.ToString("000000");
+    public void UpdateLeaderboardScoresAndNamesUI()
     {
-        mainRefs.scoreTextValue.text = ScoreManager.Instance.CurrentScore.ToString("000000");
-    }
-
-    public void UpdateHighScoreUI()
-    {
-        titleRefs.highscoreText.text = ScoreManager.Instance.CurrentHighScore.ToString("000000");
+        for (int i = 0; i <= LeaderboardManager.Instance.LeaderboardRefs.bestScoresText.Length - 1; i++)
+        {
+            if (i < LeaderboardManager.Instance.BestScores.Count)
+            {
+                LeaderboardManager.Instance.LeaderboardRefs.bestScoresText[i].text = LeaderboardManager.Instance.BestScores[i].ToString("000000");
+                LeaderboardManager.Instance.LeaderboardRefs.bestScoreNamesText[i].text = LeaderboardManager.Instance.BestScoreNames[i];
+            }
+            else
+            {
+                LeaderboardManager.Instance.LeaderboardRefs.bestScoresText[i].text = "000000";
+                LeaderboardManager.Instance.LeaderboardRefs.bestScoreNamesText[i].text = LeaderboardManager.Instance.BestScoreNames[i];
+            }
+        }
     }
 
     public void EnablePVEScoreText()
