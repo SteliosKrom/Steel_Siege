@@ -16,12 +16,6 @@ public enum GameState
     Leaderboard
 }
 
-public enum PlayerState
-{
-    Idle,
-    Moving
-}
-
 public enum GameMode
 {
     None,
@@ -65,14 +59,12 @@ public class GameManager : MonoBehaviour
     #region STATES
     [Header("STATES")]
     [SerializeField] private GameState currentGameState;
-    [SerializeField] private PlayerState currentPlayerState;
     [SerializeField] private GameMode currentGameMode;
     #endregion
 
     public string CurrentLeaderboardBestScorePlayerName { get => currentLeaderboardBestScorePlayerName; set => currentLeaderboardBestScorePlayerName = value; }
     public int CurrentModeIndex { get => currentModeIndex; }
     public GameState CurrentGameState { get => currentGameState; set => currentGameState = value; }
-    public PlayerState CurrentPlayerState { get => currentPlayerState; set => currentPlayerState = value; }
     public GameMode CurrentGameMode { get => currentGameMode; set => currentGameMode = value; }
 
     private void Awake()
@@ -112,7 +104,6 @@ public class GameManager : MonoBehaviour
     {
         currentModeIndex = 0;
         currentGameState = GameState.Title;
-        currentPlayerState = PlayerState.Idle;
         currentGameMode = GameMode.None;
     }
 
