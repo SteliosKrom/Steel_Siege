@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveDirection;
     #endregion
 
+    public Vector2 MoveInput => moveInput;
+
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -78,12 +80,6 @@ public class PlayerController : MonoBehaviour
         playerControls.Disable();
     }
 
-    private void FixedUpdate()
-    {
-        HandlePlayerRotation();
-        ApplyMovement();
-    }
-
     public void OnMove(InputAction.CallbackContext cxt)
     {
         if (GameManager.Instance.CurrentGameState != GameState.Playing) return;
@@ -125,7 +121,7 @@ public class PlayerController : MonoBehaviour
 
     public void ApplyMovement()
     {
-        //if (GameManager.Instance.CurrentGameState != GameState.Playing) return;
+        if (GameManager.Instance.CurrentGameState != GameState.Playing) return;
 
         Vector2 targetPos = playerRb.position + moveDirection.normalized * playerStamina.CurrentSpeed * Time.fixedDeltaTime;
         playerRb.MovePosition(targetPos);
