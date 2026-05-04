@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerStates
 {
-    public override void Enter(PlayerStateController stateController)
+    public PlayerIdleState(PlayerStateController stateController) : base(stateController) { }
+
+    public override void Enter()
     {
         // Enter Idle...
     }
 
-    public override void Update(PlayerStateController stateController)
+    public override void Update()
     {
         PlayerController playerController = stateController.PlayerController;
 
@@ -15,7 +17,7 @@ public class PlayerIdleState : PlayerStates
             stateController.ChangedState(stateController.moveState);
     }
 
-    public override void Exit(PlayerStateController stateController)
+    public override void Exit()
     {
         // Exit Idle...
     }

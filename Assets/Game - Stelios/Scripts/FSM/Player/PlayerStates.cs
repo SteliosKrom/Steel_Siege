@@ -1,6 +1,13 @@
 public abstract class PlayerStates
 {
-    public abstract void Enter(PlayerStateController stateContoller);
-    public abstract void Update(PlayerStateController stateController);
-    public abstract void Exit(PlayerStateController stateController);
+    protected PlayerStateController stateController;
+
+    public PlayerStates(PlayerStateController stateController)
+    {
+        this.stateController = stateController;
+    }
+
+    public abstract void Enter();
+    public abstract void Update();
+    public abstract void Exit();
 }
