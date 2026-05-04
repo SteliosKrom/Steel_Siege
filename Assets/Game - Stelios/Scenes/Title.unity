@@ -658,7 +658,6 @@ MonoBehaviour:
   scoreEvents: {fileID: 11400000, guid: 1b260ac2ca221fa4ea04cb4b1b3c2d9f, type: 2}
   audioEvents: {fileID: 11400000, guid: dacb1adbb9007174085075b9ac481a6e, type: 2}
   currentGameState: 0
-  currentPlayerState: 0
   currentGameMode: 0
 --- !u!1 &350138858
 GameObject:
@@ -1085,7 +1084,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 60.490005, y: 57.800003}
+  m_AnchoredPosition: {x: 61.520004, y: 57.800003}
   m_SizeDelta: {x: 90.79, y: 15.67}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &846322101
@@ -2244,7 +2243,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 41.769997, y: 58.4}
+  m_AnchoredPosition: {x: 42.800003, y: 58.4}
   m_SizeDelta: {x: 136.06, y: 15.68}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1668962563
