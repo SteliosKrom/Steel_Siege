@@ -61,8 +61,6 @@ public class LeaderboardManager : MonoBehaviour
             bestScores.RemoveAt(bestScores.Count - 1);
             bestScoreNames.RemoveAt(bestScoreNames.Count - 1);
         }
-
-        Debug.Log("Leaderboard: " + string.Join(",", bestScores));
     }
 
     public void SetLeaderboardRefs(LeaderboardSceneRefs localLeaderboardRefs)

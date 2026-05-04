@@ -105,7 +105,6 @@ public class SpawnManager : MonoBehaviour
             if (powerUpTags[i] == powerUpTags[randTag])
             {
                 powerUpTag = powerUpTags[i];
-                Debug.Log("Power up is: " + powerUpTag);
             }
         }
         return powerUpTag;

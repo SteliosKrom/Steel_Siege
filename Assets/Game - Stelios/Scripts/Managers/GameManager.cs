@@ -115,7 +115,6 @@ public class GameManager : MonoBehaviour
 
     public void OnNavigate(InputAction.CallbackContext cxt)
     {
-        // Add the Input For Game Mode Selection here for testing...
         navigateInput = cxt.ReadValue<Vector2>();
     }
 
