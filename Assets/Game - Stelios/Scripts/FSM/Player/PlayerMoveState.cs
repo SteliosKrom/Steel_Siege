@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class PlayerMoveState : PlayerStates
 {
-    public override void Enter(PlayerStateController stateController)
+    public PlayerMoveState(PlayerStateController stateController) : base(stateController) { }
+
+    public override void Enter()
     {
         // Enter Move...
     }
 
-    public override void Update(PlayerStateController stateController)
+    public override void Update()
     {
         PlayerController playerController = stateController.PlayerController;
 
@@ -18,7 +20,7 @@ public class PlayerMoveState : PlayerStates
             stateController.ChangedState(stateController.idleState);
     }
 
-    public override void Exit(PlayerStateController player)
+    public override void Exit()
     {
         // Exit Move...
     }

@@ -4,8 +4,8 @@ public class PlayerStateController : MonoBehaviour
 {
     private PlayerStates currentState;
 
-    public PlayerIdleState idleState = new PlayerIdleState();
-    public PlayerMoveState moveState = new PlayerMoveState();
+    public PlayerIdleState idleState;
+    public PlayerMoveState moveState;
 
     #region SCRIPT REFERENCES
     [Header("SCRIPT REFERENCES")]
@@ -14,6 +14,12 @@ public class PlayerStateController : MonoBehaviour
 
     public PlayerController PlayerController => playerController;
 
+    private void Awake()
+    {
+        idleState = new PlayerIdleState(this);
+        moveState = new PlayerMoveState(this);
+    }
+
     private void Start()
     {
         ChangedState(idleState);
@@ -21,15 +27,13 @@ public class PlayerStateController : MonoBehaviour
 
     private void Update()
     {
-        currentState.Update(this);
+        currentState.Update();
     }
 
     public void ChangedState(PlayerStates newState)
     {
-        if (currentState != null)
-            currentState.Exit(this);
-
+        currentState?.Exit();
         currentState = newState;
-        currentState.Enter(this);
+        currentState.Enter();
     }
 }
