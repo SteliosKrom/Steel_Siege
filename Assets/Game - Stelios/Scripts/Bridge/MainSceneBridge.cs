@@ -12,6 +12,7 @@ public class MainSceneRefs
     public GameObject player1WinsPanel;
     public GameObject player2WinsPanel;
     public GameObject drawPanel;
+    public GameObject debugOverlay;
 
     public GameObject redLives;
     public GameObject greenLives;
@@ -20,6 +21,11 @@ public class MainSceneRefs
     public GameObject player2;
     public GameObject enemyTank;
 
+    public TextMeshProUGUI fpsText;
+    public TextMeshProUGUI activeObjectsText;
+    public TextMeshProUGUI activeRigidBodiesText;
+    public TextMeshProUGUI numberOfDrawCallsText;
+    public TextMeshProUGUI ramUsageText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI scoreTextValue;
     public TextMeshProUGUI wavesText;
@@ -47,5 +53,8 @@ public class MainSceneBridge : MonoBehaviour
     {
         AudioManager.Instance.SetAudioSources(soundTypes, localSources);
         UIManager.Instance.SetMainUI(mainRefs);
+        UIManager.Instance.SetDebugOverlay(mainRefs.debugOverlay);
+
+        UIManager.Instance.SetUIReady(true);
     }
 }

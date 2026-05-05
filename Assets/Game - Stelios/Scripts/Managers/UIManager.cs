@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -14,6 +15,9 @@ public class UIManager : MonoBehaviour
     private int creditCounter = 0;
 
     private bool isWaiting = false;
+    private bool uiReady = false;
+
+    private GameObject currentDebugOverlay;
 
     #region EVENTS
     [Header("EVENTS")]
@@ -21,6 +25,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIEventsSO uiEvents;
     #endregion
 
+    public GameObject CurrentDebugOverlay => currentDebugOverlay;
     public TitleSceneRefs TitleRefs { get => titleRefs; }
     public MainSceneRefs MainRefs { get => mainRefs; }
     public int CreditCounter { get => creditCounter; set => creditCounter = value; }
@@ -234,6 +239,105 @@ public class UIManager : MonoBehaviour
     public void ShowP2Win() => mainRefs.player2WinsPanel.SetActive(true);
     public void ShowGameOver() => mainRefs.gameOverPanel.SetActive(true);
     public void ShowEnterYourNamePanel() => mainRefs.enterYourNamePanel.SetActive(true);
+    public void ShowDebugOverlayInTitle() => titleRefs.debugOverlay.SetActive(true);
+    public void ShowDebugOverlayInMain() => mainRefs.debugOverlay.SetActive(true);
+    public void HideDebugOverlayInTitle() => titleRefs.debugOverlay.SetActive(false);
+    public void HideDebugOverlayInMain() => mainRefs.debugOverlay.SetActive(false);
+
+    public void DisplayFPS(float fpsCount)
+    {
+        string value = fpsCount.ToString("0");
+        GameState state = GameManager.Instance.CurrentGameState;
+
+        if (IsTitleState(state))
+        {
+            titleRefs.fpsText.text = value;
+        }
+        else if (state == GameState.Leaderboard)
+        {
+            LeaderboardManager.Instance.LeaderboardRefs.fpsText.text = value;
+        }
+        else
+        {
+            mainRefs.fpsText.text = value;
+        }
+    }
+
+    public void DisplayActiveGameObjects(int activeObjectsCount)
+    {
+        string value = activeObjectsCount.ToString();
+        GameState state = GameManager.Instance.CurrentGameState;
+
+        if (IsTitleState(state))
+        {
+            titleRefs.activeObjectsText.text = value;
+        }
+        else if (state == GameState.Leaderboard)
+        {
+            LeaderboardManager.Instance.LeaderboardRefs.activeObjectsText.text = value;
+        }
+        else
+        {
+            mainRefs.activeObjectsText.text = value;
+        }
+    }
+
+    public void DisplayActiveRigidBodies(int activeRigidbodies)
+    {
+        string value = activeRigidbodies.ToString();
+        GameState state = GameManager.Instance.CurrentGameState;
+
+        if (IsTitleState(state))
+        {
+            titleRefs.activeRigidBodiesText.text = value;
+        }
+        else if (state == GameState.Leaderboard)
+        {
+            LeaderboardManager.Instance.LeaderboardRefs.activeRigidBodiesText.text = value;
+        }
+        else
+        {
+            mainRefs.activeRigidBodiesText.text = value;
+        }
+    }
+
+    public void DisplayNumberOfDrawCalls(int numberOfDrawCalls)
+    {
+        string value = numberOfDrawCalls.ToString();
+        GameState state = GameManager.Instance.CurrentGameState;
+
+        if (IsTitleState(state))
+        {
+            titleRefs.numberOfDrawCallsText.text = value;
+        }
+        else if (state == GameState.Leaderboard)
+        {
+            LeaderboardManager.Instance.LeaderboardRefs.numberOfDrawCallsText.text = value;
+        }
+        else
+        {
+            mainRefs.numberOfDrawCallsText.text = value;
+        }
+    }
+
+    public void DisplayRamUsage(int ramUsage)
+    {
+        string value = ramUsage + "%";
+        GameState state = GameManager.Instance.CurrentGameState;
+
+        if (IsTitleState(state))
+        {
+            titleRefs.ramUsageText.text = value;
+        }
+        else if (state == GameState.Leaderboard)
+        {
+            LeaderboardManager.Instance.LeaderboardRefs.ramUsageText.text = value;
+        }
+        else
+        {
+            mainRefs.ramUsageText.text = value;
+        }
+    }
 
     public void EnableEnemyWavesUI()
     {
@@ -311,6 +415,26 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(assignRefsDelay);
         mainRefs.scoreText.enabled = true;
         mainRefs.scoreTextValue.enabled = true;
+    }
+
+    public bool IsTitleState(GameState state)
+    {
+        return state == GameState.Title || state == GameState.SelectModes;
+    }
+
+    public void SetUIReady(bool value)
+    {
+        uiReady = value;
+    }
+
+    public bool IsUIReady()
+    {
+        return uiReady;
+    }
+
+    public void SetDebugOverlay(GameObject overlay)
+    {
+        currentDebugOverlay = overlay;
     }
 
     public void SetMainUI(MainSceneRefs localMainRefs)

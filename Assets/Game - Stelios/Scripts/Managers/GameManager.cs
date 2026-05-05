@@ -2,7 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
-using Unity.VisualScripting;
+using Unity.Profiling;
+using System;
 
 public enum GameState
 {
@@ -30,6 +31,15 @@ public class GameManager : MonoBehaviour
     private int currentModeIndex;
     private int currentLetterIndex = 0;
 
+    private float fpsTimer = 0f;
+    private float drawCallsTimer = 0f;
+    private float fps = 0f;
+
+    private int drawCalls = 0;
+    private int ramUsage;
+    private int activeGameObjects;
+    private int activeRigidbodies;
+
     private float checkGameResultDelay = 0.1f;
     private float returnBackToMainTitleDelay = 3f;
     private float moveToEnterYourNameDelay = 3f;
@@ -42,6 +52,9 @@ public class GameManager : MonoBehaviour
     private char[] allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 
     private string currentLeaderboardBestScorePlayerName;
+
+    private ProfilerRecorder drawCallsRecorder;
+    private ProfilerRecorder memoryRecorder;
 
     #region INPUT
     private PlayerControls playerControls;
@@ -86,6 +99,8 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         playerControls.Enable();
         playerControls.UI.Navigate.started += OnNavigate;
         playerControls.UI.AnyInput.started += OnAnyKey;
@@ -94,10 +109,18 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
         playerControls.UI.Navigate.started -= OnNavigate;
         playerControls.UI.AnyInput.started -= OnAnyKey;
         playerControls.UI.Submit.started -= OnSubmit;
         playerControls.Disable();
+
+        if (drawCallsRecorder.Valid)
+            drawCallsRecorder.Dispose();
+
+        if (memoryRecorder.Valid)
+            memoryRecorder.Dispose();
     }
 
     private void Start()
@@ -109,8 +132,35 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (!UIManager.Instance.IsUIReady())
+            return;
+
+        CalculateDrawCalls();
+        CalculateFPS();
+        ramUsage = (int)CalculateRamUsage();
+        activeGameObjects = CalculateActiveGameObjects();
+        activeRigidbodies = CalculateActiveRigidBodies();
+
+        UIManager.Instance.DisplayFPS(fps);
+        UIManager.Instance.DisplayNumberOfDrawCalls(drawCalls);
+        UIManager.Instance.DisplayRamUsage(ramUsage);
+        UIManager.Instance.DisplayActiveGameObjects(activeGameObjects);
+        UIManager.Instance.DisplayActiveRigidBodies(activeRigidbodies);
+
         InputForGameModeSelection();
         EnterYourName();
+    }
+
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (drawCallsRecorder.Valid)
+            drawCallsRecorder.Dispose();
+
+        if (memoryRecorder.Valid)
+            memoryRecorder.Dispose();
+
+        drawCallsRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Render, "Draw Calls Count");
+        memoryRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "Total Used Memory");
     }
 
     public void OnNavigate(InputAction.CallbackContext cxt)
@@ -120,7 +170,20 @@ public class GameManager : MonoBehaviour
 
     public void OnSubmit(InputAction.CallbackContext cxt)
     {
-        EnterGameMode();
+        if (cxt.control.name == "enter")
+            EnterGameMode();
+
+        if (cxt.control.name == "f1")
+        {
+            if (UIManager.Instance.CurrentDebugOverlay.activeInHierarchy)
+            {
+                UIManager.Instance.CurrentDebugOverlay.SetActive(false);
+            }
+            else
+            {
+                UIManager.Instance.CurrentDebugOverlay.SetActive(true);
+            }
+        }
     }
 
     public void OnAnyKey(InputAction.CallbackContext cxt)
@@ -148,6 +211,53 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public float CalculateFPS()
+    {
+        fpsTimer += Time.deltaTime;
+
+        if (fpsTimer >= 1f)
+        {
+            fps = Mathf.RoundToInt(1f / Time.deltaTime);
+            fpsTimer = 0f;
+        }
+        return fps;
+    }
+
+    public int CalculateActiveGameObjects()
+    {
+        GameObject[] activeGameObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+        int count = activeGameObjects.Length;
+        return count;
+    }
+
+    public int CalculateActiveRigidBodies()
+    {
+        Rigidbody2D[] activeRigidbodies = FindObjectsByType<Rigidbody2D>(FindObjectsSortMode.None);
+        int count = activeRigidbodies.Length;
+        return count;
+    }
+
+    public int CalculateDrawCalls()
+    {
+        drawCallsTimer += Time.deltaTime;
+
+        if (drawCallsTimer >= 1f)
+        {
+            drawCalls = (int)drawCallsRecorder.LastValue;
+            drawCallsTimer = 0f;
+        }
+        return (int)drawCalls;
+    }
+
+    public float CalculateRamUsage()
+    {
+        long usedBytes = memoryRecorder.LastValue;
+        float usedMB = usedBytes / (1024 * 1024);
+        float totalMB = SystemInfo.systemMemorySize;
+        float percent = (usedMB / totalMB) * 100f;
+        return Mathf.RoundToInt(percent);
     }
 
     public void EnterGameMode()
@@ -282,14 +392,14 @@ public class GameManager : MonoBehaviour
         if (currentLetterIndex >= UIManager.Instance.MainRefs.letters.Length) return;
 
         for (int i = 0; i < allowedChars.Length; i++)
-        { 
+        {
             if (Input.GetKeyDown(KeyCode.A + i))
             {
                 UIManager.Instance.MainRefs.letters[currentLetterIndex].text = allowedChars[i].ToString();
                 currentLetterIndex++;
 
-                currentLeaderboardBestScorePlayerName = string.Concat(UIManager.Instance.MainRefs.letters[0].text, 
-                    UIManager.Instance.MainRefs.letters[1].text, 
+                currentLeaderboardBestScorePlayerName = string.Concat(UIManager.Instance.MainRefs.letters[0].text,
+                    UIManager.Instance.MainRefs.letters[1].text,
                     UIManager.Instance.MainRefs.letters[2].text);
 
                 if (currentLetterIndex == 3)
@@ -336,6 +446,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator RaiseAfterLoad(bool isPVP)
     {
+        UIManager.Instance.SetUIReady(false);
+
         SceneManager.LoadScene("Main");
         yield return null;
 
