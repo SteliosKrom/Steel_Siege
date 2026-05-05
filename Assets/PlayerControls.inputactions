@@ -254,7 +254,7 @@
                 },
                 {
                     "name": "",
-                    "id": "fb2b69b3-3dd1-4e26-80d7-0924514f0701",
+                    "id": "6f750d84-380e-413e-b38f-8fd737458116",
                     "path": "<Keyboard>/anyKey",
                     "interactions": "",
                     "processors": "",
@@ -276,8 +276,30 @@
                 },
                 {
                     "name": "",
+                    "id": "bbff9acf-8e23-4354-b3a8-e603623eeda6",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "bf2aa73d-abee-4d68-baae-bde5d6f3daaf",
                     "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb0ab3ac-df45-48b9-898f-9553bc815708",
+                    "path": "<Keyboard>/f1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -6,6 +6,14 @@ using TMPro;
 [System.Serializable]
 public class LeaderboardSceneRefs
 {
+    public GameObject debugOverlay;
+
+    public TextMeshProUGUI fpsText;
+    public TextMeshProUGUI activeObjectsText;
+    public TextMeshProUGUI activeRigidBodiesText;
+    public TextMeshProUGUI numberOfDrawCallsText;
+    public TextMeshProUGUI ramUsageText;
+
     public TextMeshProUGUI[] bestScoresText;
     public TextMeshProUGUI[] bestScoreNamesText;
 }
@@ -20,5 +28,8 @@ public class LeaderboardSceneBridge : MonoBehaviour
     private void Awake()
     {
         LeaderboardManager.Instance.SetLeaderboardRefs(leaderboardRefs);
+        UIManager.Instance.SetDebugOverlay(leaderboardRefs.debugOverlay);
+
+        UIManager.Instance.SetUIReady(true);
     }
 }
