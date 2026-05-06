@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     private float fpsTimer = 0f;
     private float drawCallsTimer = 0f;
     private float fps = 0f;
+    private float demoModeTimer = 0f;
 
     private int drawCalls = 0;
     private int ramUsage;
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
     private bool player1Dead = false;
     private bool player2Dead = false;
     private bool onEnterYourName = false;
+    [SerializeField] private bool onDemoMode = false;
 
     private char[] allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 
@@ -106,7 +108,6 @@ public class GameManager : MonoBehaviour
 
         playerControls.Enable();
         playerControls.UI.Navigate.started += OnNavigate;
-        playerControls.UI.AnyInput.started += OnAnyKey;
         playerControls.UI.Submit.started += OnSubmit;
     }
 
@@ -115,7 +116,6 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
 
         playerControls.UI.Navigate.started -= OnNavigate;
-        playerControls.UI.AnyInput.started -= OnAnyKey;
         playerControls.UI.Submit.started -= OnSubmit;
         playerControls.Disable();
 
@@ -152,6 +152,7 @@ public class GameManager : MonoBehaviour
 
         InputForGameModeSelection();
         EnterYourName();
+        AnyKey();
     }
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -164,6 +165,9 @@ public class GameManager : MonoBehaviour
 
         drawCallsRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Render, "Draw Calls Count");
         memoryRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "Total Used Memory");
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         switch (scene.name)
         {
@@ -181,45 +185,74 @@ public class GameManager : MonoBehaviour
 
     public void OnNavigate(InputAction.CallbackContext cxt)
     {
+        if (onDemoMode) return;
+
         navigateInput = cxt.ReadValue<Vector2>();
     }
 
     public void OnSubmit(InputAction.CallbackContext cxt)
     {
+        if (onDemoMode) return;
+
         if (cxt.control.name == "enter")
             EnterGameMode();
 
         if (cxt.control.name == "f1")
         {
             if (UIManager.Instance.CurrentDebugOverlay.activeInHierarchy)
-            {
                 UIManager.Instance.CurrentDebugOverlay.SetActive(false);
-            }
             else
-            {
                 UIManager.Instance.CurrentDebugOverlay.SetActive(true);
-            }
         }
 
         if (cxt.control.name == "f2")
         {
-            Debug.Log("Toggle CRT Filter!");
             if (mainCamera.GetComponent<CRTFilterEffect>().enabled)
-            {
                 mainCamera.GetComponent<CRTFilterEffect>().enabled = false;
-                Debug.Log("Disable CRT Filter!");
-            }
             else
-            {
                 mainCamera.GetComponent<CRTFilterEffect>().enabled = true;
-                Debug.Log("Enable CRT Filter!");
-            }
         }
     }
 
-    public void OnAnyKey(InputAction.CallbackContext cxt)
+    public void AnyKey()
     {
-        JoinGame();
+        demoModeTimer += Time.deltaTime;
+        bool inputThisFrame = playerControls.UI.AnyInput.WasPressedThisFrame();
+
+        if (!onDemoMode)
+        {
+            if (inputThisFrame)
+            {
+                if (currentGameState == GameState.Title)
+                {
+                    JoinGame();
+                    demoModeTimer = 0f;
+                    return;
+                }
+                else
+                {
+                    demoModeTimer = 0f;
+                    return;
+                }
+            }
+            else
+            {
+                if ((currentGameState == GameState.Title || currentGameState == GameState.SelectModes) && demoModeTimer > 30)
+                {
+                    EnterDemoMode();
+                    return;
+                }
+            }
+        }
+        else
+        {
+            if (inputThisFrame)
+            {
+                demoModeTimer = 0f;
+                ExitDemoMode();
+                return;
+            }
+        }
     }
 
     public void JoinGame()
@@ -242,6 +275,18 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void EnterDemoMode()
+    {
+        onDemoMode = true;
+        SceneManager.LoadScene("Demo");
+    }
+
+    public void ExitDemoMode()
+    {
+        onDemoMode = false;
+        SceneManager.LoadScene("Title");
     }
 
     public float CalculateFPS()
@@ -337,6 +382,7 @@ public class GameManager : MonoBehaviour
     {
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVP;
+
         ScoreManager.Instance.ResetRunScores();
         StartCoroutine(RaiseAfterLoad(true));
         uiEvents.RaiseEnablePVPLives();
@@ -346,8 +392,10 @@ public class GameManager : MonoBehaviour
     {
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVE;
+
         ScoreManager.Instance.ResetRunScores();
         StartCoroutine(RaiseAfterLoad(false));
+
         uiEvents.RaiseEnablePVELives();
         uiEvents.RaiseShowPVEScore();
         uiEvents.RaiseHideRedLives();
