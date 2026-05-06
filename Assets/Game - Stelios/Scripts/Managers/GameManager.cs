@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using Unity.Profiling;
-using System;
 
 public enum GameState
 {
@@ -73,6 +72,10 @@ public class GameManager : MonoBehaviour
     [Header("STATES")]
     [SerializeField] private GameState currentGameState;
     [SerializeField] private GameMode currentGameMode;
+    #endregion
+
+    #region OBJECTS
+    private GameObject mainCamera;
     #endregion
 
     public string CurrentLeaderboardBestScorePlayerName { get => currentLeaderboardBestScorePlayerName; set => currentLeaderboardBestScorePlayerName = value; }
@@ -161,6 +164,19 @@ public class GameManager : MonoBehaviour
 
         drawCallsRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Render, "Draw Calls Count");
         memoryRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "Total Used Memory");
+
+        switch (scene.name)
+        {
+            case "Title":
+                mainCamera = GameObject.Find("MainCamera");
+                break;
+            case "Main":
+                mainCamera = GameObject.Find("MainCamera");
+                break;
+            case "Leaderboard":
+                mainCamera = GameObject.Find("MainCamera");
+                break;
+        }
     }
 
     public void OnNavigate(InputAction.CallbackContext cxt)
@@ -182,6 +198,21 @@ public class GameManager : MonoBehaviour
             else
             {
                 UIManager.Instance.CurrentDebugOverlay.SetActive(true);
+            }
+        }
+
+        if (cxt.control.name == "f2")
+        {
+            Debug.Log("Toggle CRT Filter!");
+            if (mainCamera.GetComponent<CRTFilterEffect>().enabled)
+            {
+                mainCamera.GetComponent<CRTFilterEffect>().enabled = false;
+                Debug.Log("Disable CRT Filter!");
+            }
+            else
+            {
+                mainCamera.GetComponent<CRTFilterEffect>().enabled = true;
+                Debug.Log("Enable CRT Filter!");
             }
         }
     }
