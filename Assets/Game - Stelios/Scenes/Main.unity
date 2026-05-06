@@ -6981,8 +6981,9 @@ GameObject:
   - component: {fileID: 680641483}
   - component: {fileID: 680641485}
   - component: {fileID: 680641482}
+  - component: {fileID: 680641486}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7082,6 +7083,19 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!114 &680641486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680641481}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d59bf81ab21f6540b7c7d45b1d07751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CRTFilterEffect
+  crtMaterial: {fileID: 2100000, guid: 4f8c328c00066bc42a4084cfa3f20abb, type: 2}
 --- !u!1 &692870550
 GameObject:
   m_ObjectHideFlags: 0
