@@ -5,9 +5,12 @@ public class ObjectPoolManager : MonoBehaviour
 {
     public static ObjectPoolManager Instance;
 
+    [SerializeField] private Factory factory;
+
     [System.Serializable]
     public class PoolItems
     {
+        public Transform parent;
         public string tag;
         public GameObject prefab;
         public int size;
@@ -38,7 +41,7 @@ public class ObjectPoolManager : MonoBehaviour
 
             for (int i = 0; i < item.size; i++)
             {
-                GameObject obj = Instantiate(item.prefab);
+                GameObject obj = factory.CreateObject(item.prefab, item.parent);
                 obj.SetActive(false);
                 objects.Enqueue(obj);
             }
@@ -54,6 +57,12 @@ public class ObjectPoolManager : MonoBehaviour
             return null;
         }
 
+        if (poolDict[tag].Count == 0)
+        {
+            GameObject newObj = AutoExpandPool(tag);
+            return newObj;
+        }
+
         GameObject obj = poolDict[tag].Dequeue();
         obj.SetActive(true);
         return obj;
@@ -63,5 +72,12 @@ public class ObjectPoolManager : MonoBehaviour
     {
         obj.SetActive(false);
         poolDict[tag].Enqueue(obj);
+    }
+
+    public GameObject AutoExpandPool(string tag)
+    {
+        PoolItems selectedPool = pools.Find(p => p.tag == tag);
+        GameObject newObj = factory.CreateObject(selectedPool.prefab, selectedPool.parent);
+        return newObj;
     }
 }
