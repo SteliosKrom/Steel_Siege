@@ -57,12 +57,6 @@ public class ObjectPoolManager : MonoBehaviour
             return null;
         }
 
-        if (poolDict[tag].Count == 0)
-        {
-            GameObject newObj = AutoExpandPool(tag);
-            return newObj;
-        }
-
         GameObject obj = poolDict[tag].Dequeue();
         obj.SetActive(true);
         return obj;
@@ -72,12 +66,5 @@ public class ObjectPoolManager : MonoBehaviour
     {
         obj.SetActive(false);
         poolDict[tag].Enqueue(obj);
-    }
-
-    public GameObject AutoExpandPool(string tag)
-    {
-        PoolItems selectedPool = pools.Find(p => p.tag == tag);
-        GameObject newObj = factory.CreateObject(selectedPool.prefab, selectedPool.parent);
-        return newObj;
     }
 }

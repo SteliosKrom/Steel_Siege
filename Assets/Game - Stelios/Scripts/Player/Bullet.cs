@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private string bulletTag;
+    [SerializeField] private string BULLET_TAG;
 
     #region EVENTS
     [Header("EVENTS")]
@@ -32,6 +32,9 @@ public class Bullet : MonoBehaviour
 
     public void ReturnBullet()
     {
-        ObjectPoolManager.Instance.ReturnObject(bulletTag, gameObject);
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = 0f;
+        ObjectPoolManager.Instance.ReturnObject(BULLET_TAG, gameObject);
     }
 }
