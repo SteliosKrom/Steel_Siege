@@ -16,14 +16,22 @@ public class EnemyAIController : MonoBehaviour
 
     private Vector2 moveDirection;
 
-    private void Start()
+    private void OnEnable()
     {
         changeDirectionDelay = 1.5f;
         shootDelay = 1.5f;
+        moveDirection = Vector3.zero;
 
         ChooseDirection();
         StartCoroutine(ChangeDirectionDelay());
         StartCoroutine(ShootDelay());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        enemyRb.linearVelocity = Vector3.zero;
+        enemyRb.angularVelocity = 0f;
     }
 
     private void FixedUpdate()
@@ -87,6 +95,8 @@ public class EnemyAIController : MonoBehaviour
         bullet.transform.position = shootingPoint.transform.position;
         bullet.transform.rotation = shootingPoint.transform.rotation;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = 0f;
         rb.linearVelocity = shootingPoint.up * enemyData.BulletSpeed;
         AudioManager.Instance.PlaySFX(AudioManager.SoundType.Shoot);
     }

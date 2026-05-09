@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
-    private const string ENEMY_TAG = "Enemy";
+    [SerializeField] private string ENEMY_TAG = "Enemy";
     [SerializeField] private int currentLives;
 
     #region SCRIPT REFERENCES
@@ -22,7 +22,12 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     [SerializeField] private AudioEventsSO audioEvents;
     #endregion
 
-    private void Start()
+    private void OnEnable()
+    {
+        ResetLives();
+    }
+
+    public void ResetLives()
     {
         currentLives = enemyData.MaxLives;
     }
