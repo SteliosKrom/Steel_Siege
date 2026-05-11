@@ -64,6 +64,7 @@ public class UIManager : MonoBehaviour
         gameEvents.OnDraw += ShowDraw;
 
         // Subscribe UI Events...
+        uiEvents.OnHideGreenLives += DisableGreenLives;
         uiEvents.OnHideRedLives += DisableRedLives;
         uiEvents.OnEnablePVPLives += EnablePVPLives;
         uiEvents.OnEnablePVELives += EnablePVELives;
@@ -107,6 +108,7 @@ public class UIManager : MonoBehaviour
         gameEvents.OnDraw -= ShowDraw;
 
         // Un-Subscribe UI Events...
+        uiEvents.OnHideGreenLives += DisableGreenLives;
         uiEvents.OnHideRedLives -= DisableRedLives;
         uiEvents.OnEnablePVPLives -= EnablePVPLives;
         uiEvents.OnEnablePVELives -= EnablePVELives;
@@ -391,6 +393,11 @@ public class UIManager : MonoBehaviour
         StartCoroutine(DisableRedLivesDelay());
     }
 
+    public void DisableGreenLives()
+    {
+        StartCoroutine(DisableGreenLivesDelay());
+    }
+
     public IEnumerator EnablePVPLivesDelay()
     {
         yield return new WaitForSeconds(assignRefsDelay);
@@ -408,6 +415,12 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(assignRefsDelay);
         mainRefs.redLives.SetActive(false);
+    }
+
+    public IEnumerator DisableGreenLivesDelay()
+    {
+        yield return new WaitForSeconds(assignRefsDelay);
+        mainRefs.greenLives.SetActive(false);
     }
 
     public IEnumerator EnableScoreTextDelay()

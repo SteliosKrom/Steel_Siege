@@ -12679,6 +12679,10 @@ PrefabInstance:
       propertyPath: m_Interpolate
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7142666122408042945, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7652540464277978568, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
       propertyPath: m_Name
       value: Player_1
@@ -12732,6 +12736,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7652540464277978568, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 4318519486472910256}
+    - targetCorrespondingSourceObject: {fileID: 7652540464277978568, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4318519486472910255}
   m_SourcePrefab: {fileID: 100100000, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
@@ -12746,11 +12753,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 3478434357855649885}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3478434357855649886}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4343b7bb0cbbae044b575e6272767370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &3478434357855649888 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 5973937955565430563, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+  m_PrefabInstance: {fileID: 3478434357855649885}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3478434357855649889 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7428298264837120881, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+  m_PrefabInstance: {fileID: 3478434357855649885}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3936021661369293692
 GameObject:
   m_ObjectHideFlags: 0
@@ -12787,6 +12804,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStateController
   playerController: {fileID: 3478434357855649887}
+--- !u!114 &4318519486472910256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3478434357855649886}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9217087ef964c254789bea2dc6c8a5ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAIController
+  bulletTag: PlayerBullet
+  enemyRb: {fileID: 3478434357855649888}
+  enemyData: {fileID: 11400000, guid: 88acac55b17132f41a4a606dd9891bb7, type: 2}
+  shootingPoint: {fileID: 3478434357855649889}
 --- !u!4 &4318519487339209146 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1775459107618490435, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}

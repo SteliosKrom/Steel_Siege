@@ -53,6 +53,8 @@ public class ScoreManager : MonoBehaviour
 
     public void UpdateScore()
     {
+        if (GameManager.Instance.OnDemoMode) return;
+
         currentScore += enemyData.ScoreValue;
 
         if (currentScore > currentHighScore)

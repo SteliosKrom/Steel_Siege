@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     private float fpsTimer = 0f;
     private float drawCallsTimer = 0f;
-    private float fps = 0f;
+    private float fps;
     private float demoModeTimer = 0f;
 
     private int drawCalls = 0;
@@ -80,10 +80,26 @@ public class GameManager : MonoBehaviour
     private GameObject mainCamera;
     #endregion
 
-    public string CurrentLeaderboardBestScorePlayerName { get => currentLeaderboardBestScorePlayerName; set => currentLeaderboardBestScorePlayerName = value; }
+    #region PROPERTIES
+    public bool OnDemoMode => onDemoMode;
+    public string CurrentLeaderboardBestScorePlayerName { get => currentLeaderboardBestScorePlayerName; 
+        set => currentLeaderboardBestScorePlayerName = value; }
     public int CurrentModeIndex { get => currentModeIndex; }
+    public float FPS
+    {
+        get
+        {
+            return fps;
+        }
+        set
+        {
+            if (value >= 60)
+                fps = 60;
+        }
+    }
     public GameState CurrentGameState { get => currentGameState; set => currentGameState = value; }
     public GameMode CurrentGameMode { get => currentGameMode; set => currentGameMode = value; }
+    #endregion
 
     private void Awake()
     {
@@ -144,7 +160,7 @@ public class GameManager : MonoBehaviour
         activeGameObjects = CalculateActiveGameObjects();
         activeRigidbodies = CalculateActiveRigidBodies();
 
-        UIManager.Instance.DisplayFPS(fps);
+        UIManager.Instance.DisplayFPS(FPS);
         UIManager.Instance.DisplayNumberOfDrawCalls(drawCalls);
         UIManager.Instance.DisplayRamUsage(ramUsage);
         UIManager.Instance.DisplayActiveGameObjects(activeGameObjects);
@@ -175,7 +191,14 @@ public class GameManager : MonoBehaviour
                 mainCamera = GameObject.Find("MainCamera");
                 break;
             case "Main":
-                mainCamera = GameObject.Find("MainCamera");
+                if (onDemoMode)
+                {
+                    mainCamera = GameObject.Find("MainCamera");
+                    mainCamera.GetComponent<CRTFilterEffect>().enabled = true;
+                    return;
+                }
+                else 
+                    mainCamera = GameObject.Find("MainCamera");
                 break;
             case "Leaderboard":
                 mainCamera = GameObject.Find("MainCamera");
@@ -225,15 +248,10 @@ public class GameManager : MonoBehaviour
             {
                 if (currentGameState == GameState.Title)
                 {
-                    JoinGame();
-                    demoModeTimer = 0f;
-                    return;
+                    JoinGame();   
                 }
-                else
-                {
-                    demoModeTimer = 0f;
-                    return;
-                }
+                demoModeTimer = 0f;
+                return;
             }
             else
             {
@@ -260,7 +278,6 @@ public class GameManager : MonoBehaviour
         if (UIManager.Instance.IsWaiting) return;
         if (currentGameState == GameState.SelectModes) return;
 
-        // Change later to Arcade Machine input...
         if (currentGameState == GameState.Title)
         {
             switch (UIManager.Instance.CreditCounter)
@@ -279,8 +296,7 @@ public class GameManager : MonoBehaviour
 
     public void EnterDemoMode()
     {
-        onDemoMode = true;
-        SceneManager.LoadScene("Demo");
+        LoadDemoMode();
     }
 
     public void ExitDemoMode()
@@ -295,10 +311,10 @@ public class GameManager : MonoBehaviour
 
         if (fpsTimer >= 1f)
         {
-            fps = Mathf.RoundToInt(1f / Time.deltaTime);
+            FPS = Mathf.RoundToInt(1f / Time.deltaTime);
             fpsTimer = 0f;
         }
-        return fps;
+        return FPS;
     }
 
     public int CalculateActiveGameObjects()
@@ -353,7 +369,6 @@ public class GameManager : MonoBehaviour
     {
         if (currentGameState != GameState.SelectModes) return;
 
-        // Change later to Arcade Machine inputs...
         if (navigateInput.y < 0 && currentModeIndex == 0)
             SelectPVEMode();
         else if (navigateInput.y > 0 && currentModeIndex == 1)
@@ -396,9 +411,39 @@ public class GameManager : MonoBehaviour
         ScoreManager.Instance.ResetRunScores();
         StartCoroutine(RaiseAfterLoad(false));
 
+        StartCoroutine(GetComponentOnPVEDelay());
+
         uiEvents.RaiseEnablePVELives();
         uiEvents.RaiseShowPVEScore();
         uiEvents.RaiseHideRedLives();
+    }
+
+    public void LoadDemoMode()
+    {
+        onDemoMode = true;
+        currentGameState = GameState.Playing;
+        currentGameMode = GameMode.PVE;
+
+        StartCoroutine(RaiseAfterLoad(false));
+
+        StartCoroutine(GetComponentOnDemoDelay());
+
+        uiEvents.RaiseHideRedLives();
+        uiEvents.RaiseHideGreenLives();
+    }
+
+    public IEnumerator GetComponentOnDemoDelay()
+    {
+        yield return null;
+        UIManager.Instance.MainRefs.player1.GetComponent<PlayerController>().enabled = false;
+        UIManager.Instance.MainRefs.player1.GetComponent<EnemyAIController>().enabled = true;
+    }
+
+    public IEnumerator GetComponentOnPVEDelay()
+    {
+        yield return null;
+        UIManager.Instance.MainRefs.player1.GetComponent<PlayerController>().enabled = true;
+        UIManager.Instance.MainRefs.player1.GetComponent<EnemyAIController>().enabled = false;
     }
 
     public void PlayerDied(PlayerData.PlayerID id, GameObject obj)
@@ -460,6 +505,11 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        if (onDemoMode)
+        {
+            LoadDemoMode();
+            return;
+        }
         gameEvents.RaiseGameOver();
         audioEvents.RaiseGameOver();
         currentGameState = GameState.GameOver;

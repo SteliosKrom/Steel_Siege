@@ -6,6 +6,7 @@ using UnityEngine;
 public class UIEventsSO : ScriptableObject
 {
     public event Action OnHideRedLives;
+    public event Action OnHideGreenLives;
     public event Action OnEnablePVPLives;
     public event Action OnEnablePVELives;
     public event Action<PlayerData.PlayerID, int> OnDecreaseLivesUI;
@@ -45,6 +46,7 @@ public class UIEventsSO : ScriptableObject
     public void RaiseDisableWavesUI() => OnDisableWavesUI?.Invoke();
 
     // Raise Lives...
+    public void RaiseHideGreenLives() => OnHideGreenLives?.Invoke();
     public void RaiseHideRedLives() => OnHideRedLives?.Invoke();
     public void RaiseEnablePVPLives() => OnEnablePVPLives?.Invoke();
     public void RaiseEnablePVELives() => OnEnablePVELives?.Invoke();
