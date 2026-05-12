@@ -6,15 +6,18 @@ public class PlayerIdleState : PlayerStates
 
     public override void Enter()
     {
-        // Enter Idle...
+        stateController.AnimationPlayer.Stop();
     }
 
     public override void Update()
     {
         PlayerController playerController = stateController.PlayerController;
 
-        if (playerController.MoveInput != Vector2.zero)
-            stateController.ChangedState(stateController.moveState);
+        if (playerController.MoveInput.sqrMagnitude > 0.01f)
+        {
+            stateController.ChangeState(stateController.moveState);
+        }
+
     }
 
     public override void Exit()

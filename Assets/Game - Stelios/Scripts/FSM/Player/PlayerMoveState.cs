@@ -6,7 +6,7 @@ public class PlayerMoveState : PlayerStates
 
     public override void Enter()
     {
-        // Enter Move...
+        stateController.AnimationPlayer.Play(stateController.MoveClip);
     }
 
     public override void Update()
@@ -16,8 +16,10 @@ public class PlayerMoveState : PlayerStates
         playerController.HandlePlayerRotation();
         playerController.ApplyMovement();
 
-        if (playerController.MoveInput == Vector2.zero)
-            stateController.ChangedState(stateController.idleState);
+        if (playerController.MoveInput.sqrMagnitude < 0.01f)
+        {
+            stateController.ChangeState(stateController.idleState);
+        }
     }
 
     public override void Exit()

@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 
+
+
 public class PlayerController : MonoBehaviour
 {
     private float shootDelay = 0.75f;
@@ -85,7 +87,7 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.CurrentGameState != GameState.Playing) return;
 
         // Change to Arcade Machine inputs later...
-        moveInput = cxt.ReadValue<Vector2>();
+        moveInput = cxt.ReadValue<Vector2>().normalized;
 
         if (moveInput.x > 0)
             moveDirection = Vector2.right;

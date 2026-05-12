@@ -7,6 +7,14 @@ public class PlayerStateController : MonoBehaviour
     public PlayerIdleState idleState;
     public PlayerMoveState moveState;
 
+    [SerializeField] private AnimationPlayer animationPlayer;
+    [SerializeField] private AnimationClipData moveClip;
+
+    #region PROPERTIES
+    public AnimationPlayer AnimationPlayer => animationPlayer;
+    public AnimationClipData MoveClip => moveClip;
+    #endregion
+
     #region SCRIPT REFERENCES
     [Header("SCRIPT REFERENCES")]
     [SerializeField] private PlayerController playerController;
@@ -22,7 +30,7 @@ public class PlayerStateController : MonoBehaviour
 
     private void Start()
     {
-        ChangedState(idleState);
+        ChangeState(idleState);
     }
 
     private void Update()
@@ -30,7 +38,7 @@ public class PlayerStateController : MonoBehaviour
         currentState.Update();
     }
 
-    public void ChangedState(PlayerStates newState)
+    public void ChangeState(PlayerStates newState)
     {
         currentState?.Exit();
         currentState = newState;
