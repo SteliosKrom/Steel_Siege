@@ -23,6 +23,12 @@ public enum GameMode
     PVE
 }
 
+public enum PlayerState
+{
+    Idle,
+    Moving
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;

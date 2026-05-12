@@ -11940,7 +11940,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5973654646885573090, guid: f9a505d0e93cd3c43ba92579adb809b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1926572969}
   m_SourcePrefab: {fileID: 100100000, guid: f9a505d0e93cd3c43ba92579adb809b1, type: 3}
 --- !u!4 &1926572967 stripped
 Transform:
@@ -11950,6 +11953,25 @@ Transform:
 --- !u!1 &1926572968 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5973654646885573090, guid: f9a505d0e93cd3c43ba92579adb809b1, type: 3}
+  m_PrefabInstance: {fileID: 1926572966}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1926572969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926572968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9998cabeabe13346962b108a3ba7ba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationPlayer
+  spriteRenderer: {fileID: 1926572970}
+  currentClip: {fileID: 11400000, guid: 3e2e9c08f7e5a764db2d4ebd672fca86, type: 2}
+--- !u!212 &1926572970 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1533723807281804311, guid: f9a505d0e93cd3c43ba92579adb809b1, type: 3}
   m_PrefabInstance: {fileID: 1926572966}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1928389879
@@ -12741,6 +12763,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7652540464277978568, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4318519486472910255}
+    - targetCorrespondingSourceObject: {fileID: 7652540464277978568, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4318519486472910261}
   m_SourcePrefab: {fileID: 100100000, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
 --- !u!1 &3478434357855649886 stripped
 GameObject:
@@ -12803,6 +12828,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a912bef08fb3b4cac536ba4b716400, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStateController
+  animationPlayer: {fileID: 4318519486472910261}
+  moveClip: {fileID: 11400000, guid: 0374f0acafbbf5342905fb0c37ad5787, type: 2}
   playerController: {fileID: 3478434357855649887}
 --- !u!114 &4318519486472910256
 MonoBehaviour:
@@ -12820,6 +12847,25 @@ MonoBehaviour:
   enemyRb: {fileID: 3478434357855649888}
   enemyData: {fileID: 11400000, guid: 88acac55b17132f41a4a606dd9891bb7, type: 2}
   shootingPoint: {fileID: 3478434357855649889}
+--- !u!212 &4318519486472910260 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 9167754059994250412, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+  m_PrefabInstance: {fileID: 3478434357855649885}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4318519486472910261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3478434357855649886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9998cabeabe13346962b108a3ba7ba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationPlayer
+  spriteRenderer: {fileID: 4318519486472910260}
+  currentClip: {fileID: 11400000, guid: 0374f0acafbbf5342905fb0c37ad5787, type: 2}
 --- !u!4 &4318519487339209146 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1775459107618490435, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
@@ -13008,6 +13054,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9206897240742351648, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6195269278291155434}
+    - targetCorrespondingSourceObject: {fileID: 9206897240742351648, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6195269278291155436}
   m_SourcePrefab: {fileID: 100100000, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
 --- !u!1 &6195269278291155433 stripped
 GameObject:
@@ -13026,6 +13075,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a912bef08fb3b4cac536ba4b716400, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStateController
+  animationPlayer: {fileID: 6195269278291155436}
+  moveClip: {fileID: 11400000, guid: 46f57aab9371af049afba0225efe5bac, type: 2}
   playerController: {fileID: 6195269278291155435}
 --- !u!114 &6195269278291155435 stripped
 MonoBehaviour:
@@ -13038,6 +13089,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4343b7bb0cbbae044b575e6272767370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6195269278291155436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6195269278291155433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9998cabeabe13346962b108a3ba7ba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationPlayer
+  spriteRenderer: {fileID: 6195269278291155437}
+  currentClip: {fileID: 11400000, guid: 46f57aab9371af049afba0225efe5bac, type: 2}
+--- !u!212 &6195269278291155437 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1875325603205140224, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+  m_PrefabInstance: {fileID: 6195269278291155432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7269278022835426804
 RectTransform:
   m_ObjectHideFlags: 0
