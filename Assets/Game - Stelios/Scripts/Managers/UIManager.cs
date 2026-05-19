@@ -108,7 +108,7 @@ public class UIManager : MonoBehaviour
         gameEvents.OnDraw -= ShowDraw;
 
         // Un-Subscribe UI Events...
-        uiEvents.OnHideGreenLives += DisableGreenLives;
+        uiEvents.OnHideGreenLives -= DisableGreenLives;
         uiEvents.OnHideRedLives -= DisableRedLives;
         uiEvents.OnEnablePVPLives -= EnablePVPLives;
         uiEvents.OnEnablePVELives -= EnablePVELives;

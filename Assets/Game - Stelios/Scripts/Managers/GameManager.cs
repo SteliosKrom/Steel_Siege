@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using Unity.Profiling;
+using UnityEngine.Video;
 
 public enum GameState
 {
@@ -62,6 +63,8 @@ public class GameManager : MonoBehaviour
 
     private ProfilerRecorder drawCallsRecorder;
     private ProfilerRecorder memoryRecorder;
+
+    [SerializeField] private VideoPlayer videoPlayer;
 
     #region INPUT
     private PlayerControls playerControls;
@@ -308,7 +311,7 @@ public class GameManager : MonoBehaviour
     public void ExitDemoMode()
     {
         onDemoMode = false;
-        SceneManager.LoadScene("Title");
+        videoPlayer.Stop();
     }
 
     public float CalculateFPS()
@@ -417,8 +420,6 @@ public class GameManager : MonoBehaviour
         ScoreManager.Instance.ResetRunScores();
         StartCoroutine(RaiseAfterLoad(false));
 
-        StartCoroutine(GetComponentOnPVEDelay());
-
         uiEvents.RaiseEnablePVELives();
         uiEvents.RaiseShowPVEScore();
         uiEvents.RaiseHideRedLives();
@@ -427,29 +428,7 @@ public class GameManager : MonoBehaviour
     public void LoadDemoMode()
     {
         onDemoMode = true;
-        currentGameState = GameState.Playing;
-        currentGameMode = GameMode.PVE;
-
-        StartCoroutine(RaiseAfterLoad(false));
-
-        StartCoroutine(GetComponentOnDemoDelay());
-
-        uiEvents.RaiseHideRedLives();
-        uiEvents.RaiseHideGreenLives();
-    }
-
-    public IEnumerator GetComponentOnDemoDelay()
-    {
-        yield return null;
-        UIManager.Instance.MainRefs.player1.GetComponent<PlayerController>().enabled = false;
-        UIManager.Instance.MainRefs.player1.GetComponent<EnemyAIController>().enabled = true;
-    }
-
-    public IEnumerator GetComponentOnPVEDelay()
-    {
-        yield return null;
-        UIManager.Instance.MainRefs.player1.GetComponent<PlayerController>().enabled = true;
-        UIManager.Instance.MainRefs.player1.GetComponent<EnemyAIController>().enabled = false;
+        videoPlayer.Play();
     }
 
     public void PlayerDied(PlayerData.PlayerID id, GameObject obj)
