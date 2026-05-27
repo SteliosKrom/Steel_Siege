@@ -84,7 +84,7 @@
                 {
                     "name": "",
                     "id": "81ca56d4-5fae-4a71-8316-684ad70b5765",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -176,7 +176,7 @@
                 {
                     "name": "",
                     "id": "8f1c7e06-5616-4030-b4e1-8f8948036c8c",
-                    "path": "<Keyboard>/numpad0",
+                    "path": "<Keyboard>/insert",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
