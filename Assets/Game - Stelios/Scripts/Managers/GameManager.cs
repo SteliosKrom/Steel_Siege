@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     private ProfilerRecorder drawCallsRecorder;
     private ProfilerRecorder memoryRecorder;
 
-    [SerializeField] private VideoPlayer videoPlayer;
+    private VideoPlayer videoPlayer;
 
     #region INPUT
     private PlayerControls playerControls;
@@ -197,6 +197,7 @@ public class GameManager : MonoBehaviour
         switch (scene.name)
         {
             case "Title":
+                videoPlayer = GameObject.Find("VideoPlayer").GetComponent<VideoPlayer>();
                 mainCamera = GameObject.Find("MainCamera");
                 break;
             case "Main":
