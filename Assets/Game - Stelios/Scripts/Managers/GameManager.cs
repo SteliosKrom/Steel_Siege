@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     private int currentModeIndex;
-    private int currentLetterIndex = 0;
+    [SerializeField] private int currentLetterIndex = 0;
 
     private float fpsTimer = 0f;
     private float drawCallsTimer = 0f;
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
 
     private bool player1Dead = false;
     private bool player2Dead = false;
-    private bool onEnterYourName = false;
+    [SerializeField] private bool onEnterYourName = false;
     [SerializeField] private bool onDemoMode = false;
 
     private char[] allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
@@ -519,6 +519,9 @@ public class GameManager : MonoBehaviour
 
                 if (currentLetterIndex == 3)
                 {
+                    onEnterYourName = false;
+                    currentLetterIndex = 0;
+
                     int finalScore = ScoreManager.Instance.CurrentScore;
                     string playerName = currentLeaderboardBestScorePlayerName;
 
@@ -527,7 +530,6 @@ public class GameManager : MonoBehaviour
 
                     StartCoroutine(MoveToLeaderboardDelay());
                 }
-
                 break;
             }
         }
