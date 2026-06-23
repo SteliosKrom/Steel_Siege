@@ -11,6 +11,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField] private GameEventsSO gameEvents;
     [SerializeField] private UIEventsSO uiEvents;
     [SerializeField] private AudioEventsSO audioEvents;
+    [SerializeField] private ScoreEventsSO scoreEvents;
     #endregion
 
     #region GAME DATA
@@ -48,7 +49,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         if (currentLives == playerData.MaxLives)
         {
-            // You can't increase your lives, because you have max lives. Give feedback to the player...
+            ScoreManager.Instance.CurrentScore += 50;
+            uiEvents.RaiseScoreUIChanged();
+            audioEvents.RaiseGainPowerUp();
+            obj.SetActive(false);
             return;
         }
         else

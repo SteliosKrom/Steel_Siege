@@ -1,8 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
-
 
 
 public class PlayerController : MonoBehaviour
@@ -86,7 +84,6 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.Instance.CurrentGameState != GameState.Playing) return;
 
-        // Change to Arcade Machine inputs later...
         moveInput = cxt.ReadValue<Vector2>().normalized;
 
         if (moveInput.x > 0)
@@ -105,7 +102,6 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.Instance.CurrentGameState != GameState.Playing) return;
 
-        // Player Shooting. Change to Arcade Machine inputs later...
         if (canShoot)
         {
             ShootBullet();

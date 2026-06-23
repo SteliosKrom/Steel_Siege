@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -9,6 +8,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private MainSceneRefs mainRefs;
     [SerializeField] private TitleSceneRefs titleRefs;
 
+    private float timer = 0f;
+    private float timeInterval = 1f;
     private float enterCreditDelay = 2f;
     private float assignRefsDelay = 0.1f;
 
@@ -16,6 +17,7 @@ public class UIManager : MonoBehaviour
 
     private bool isWaiting = false;
     private bool uiReady = false;
+    private bool isVisible = true;
 
     private GameObject currentDebugOverlay;
 
@@ -141,6 +143,35 @@ public class UIManager : MonoBehaviour
 
         uiEvents.OnPVPSelected -= OnPVPSelected;
         uiEvents.OnPVESelected -= OnPVESelected;
+    }
+
+    private void Update()
+    {
+        if (GameManager.Instance.CurrentGameState == GameState.SelectModes) return;
+        if (GameManager.Instance.CurrentGameState == GameState.Playing) return;
+
+        if (creditCounter == 1)
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= timeInterval)
+            {
+                isVisible = !isVisible;
+                titleRefs.pressStartText.enabled = isVisible;
+                timer = 0f;
+            }
+        }
+        else
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= timeInterval)
+            {
+                isVisible = !isVisible;
+                titleRefs.insertCoinText.enabled = isVisible;
+                timer = 0f;
+            }
+        }
     }
 
     public void EnableGameModes()
