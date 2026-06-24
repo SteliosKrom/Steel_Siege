@@ -147,8 +147,8 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.CurrentGameState == GameState.SelectModes) return;
-        if (GameManager.Instance.CurrentGameState == GameState.Playing) return;
+        if (IsOnTitle()) 
+            return;
 
         if (creditCounter == 1)
         {
@@ -172,6 +172,11 @@ public class UIManager : MonoBehaviour
                 timer = 0f;
             }
         }
+    }
+
+    public bool IsOnTitle()
+    {
+        return GameManager.Instance.CurrentGameState != GameState.Title;
     }
 
     public void EnableGameModes()
