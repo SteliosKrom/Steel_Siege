@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     private float shootDelay = 0.75f;
     private bool canShoot = true;
+    private bool isMoving;
 
     [SerializeField] private string bulletTag;
 
@@ -80,11 +81,29 @@ public class PlayerController : MonoBehaviour
         playerControls.Disable();
     }
 
+    private void Update()
+    {
+        if (isMoving)
+        {
+            if (!AudioManager.Instance.IsPlaying(AudioManager.SoundType.Moving))
+                AudioManager.Instance.PlaySFX(AudioManager.SoundType.Moving);
+        }
+        else AudioManager.Instance.StopSFX(AudioManager.SoundType.Moving);
+
+        if (!isMoving)
+        {
+            if (!AudioManager.Instance.IsPlaying(AudioManager.SoundType.Idle))
+                AudioManager.Instance.PlaySFX(AudioManager.SoundType.Idle);
+        }
+        else AudioManager.Instance.StopSFX(AudioManager.SoundType.Idle);
+    }
+
     public void OnMove(InputAction.CallbackContext cxt)
     {
         if (GameManager.Instance.CurrentGameState != GameState.Playing) return;
 
         moveInput = cxt.ReadValue<Vector2>().normalized;
+        isMoving = moveInput.sqrMagnitude > 0.001f;
 
         if (moveInput.x > 0)
             moveDirection = Vector2.right;
