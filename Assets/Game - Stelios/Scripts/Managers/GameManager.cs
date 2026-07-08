@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using Unity.Profiling;
 using UnityEngine.Video;
+using UnityEngine.Profiling;
 
 public enum GameState
 {
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
     private ProfilerRecorder memoryRecorder;
 
     private VideoPlayer videoPlayer;
+
 
     #region INPUT
     private PlayerControls playerControls;
@@ -311,8 +313,7 @@ public class GameManager : MonoBehaviour
 
     public void ExitDemoMode()
     {
-        onDemoMode = false;
-        videoPlayer.Stop();
+        LoadMenu();
     }
 
     public float CalculateFPS()
@@ -429,7 +430,15 @@ public class GameManager : MonoBehaviour
     public void LoadDemoMode()
     {
         onDemoMode = true;
+        AudioManager.Instance.StopSoundtrack(AudioManager.SoundType.MenuMusic);
         videoPlayer.Play();
+    }
+
+    public void LoadMenu()
+    {
+        onDemoMode = false;
+        AudioManager.Instance.PlaySoundtrack(AudioManager.SoundType.MenuMusic);
+        videoPlayer.Stop();
     }
 
     public void PlayerDied(PlayerData.PlayerID id, GameObject obj)

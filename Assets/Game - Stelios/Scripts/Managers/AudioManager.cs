@@ -1,3 +1,4 @@
+using NUnit.Compatibility;
 using System.Collections.Generic;
 using UnityEngine;
 using static AudioManager;
@@ -12,7 +13,7 @@ public class AudioItem
 
 public class AudioManager : MonoBehaviour
 {
-    public enum SoundType { Shoot, Hurt, Explosion, Hit, GainPowerUp, SpawnPowerUp, GameOver }
+    public enum SoundType { Moving, Idle, Shoot, Hurt, Explosion, Hit, GainPowerUp, SpawnPowerUp, GameOver, MenuMusic}
 
     public static AudioManager Instance;
 
@@ -84,6 +85,34 @@ public class AudioManager : MonoBehaviour
         {
             item.source.Stop();
         }
+    }
+
+    public void PlaySoundtrack(SoundType type)
+    {
+        if (audioItemsByType.TryGetValue(type, out var item))
+        {
+            item.source.Play();
+        }
+    }
+
+    public void StopSoundtrack(SoundType type)
+    {
+        if (audioItemsByType.TryGetValue(type, out var item))
+        {
+            item.source.Stop();
+        }
+    }
+
+    public bool IsPlaying(SoundType type)
+    {
+        if (audioItemsByType.TryGetValue(type, out var item))
+        {
+            if (item.source.isPlaying)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void SetAudioSources(SoundType[] types, AudioSource[] sources)
