@@ -505,6 +505,7 @@ public class GameManager : MonoBehaviour
             LoadDemoMode();
             return;
         }
+
         gameEvents.RaiseGameOver();
         audioEvents.RaiseGameOver();
 
