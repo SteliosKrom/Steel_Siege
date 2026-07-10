@@ -507,6 +507,10 @@ public class GameManager : MonoBehaviour
         }
         gameEvents.RaiseGameOver();
         audioEvents.RaiseGameOver();
+
+        AudioManager.Instance.StopSFX(AudioManager.SoundType.Idle);
+        AudioManager.Instance.StopSFX(AudioManager.SoundType.Moving);
+
         currentGameState = GameState.GameOver;
     }
 
