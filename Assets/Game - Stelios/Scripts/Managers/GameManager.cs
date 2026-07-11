@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using Unity.Profiling;
 using UnityEngine.Video;
-using UnityEngine.Profiling;
 
 public enum GameState
 {
@@ -232,7 +231,7 @@ public class GameManager : MonoBehaviour
         if (cxt.control.name == "enter")
             EnterGameMode();
 
-        if (cxt.control.name == "f1")
+        if (cxt.control.name == "t")
         {
             if (UIManager.Instance.CurrentDebugOverlay.activeInHierarchy)
                 UIManager.Instance.CurrentDebugOverlay.SetActive(false);
@@ -240,7 +239,7 @@ public class GameManager : MonoBehaviour
                 UIManager.Instance.CurrentDebugOverlay.SetActive(true);
         }
 
-        if (cxt.control.name == "f2")
+        if (cxt.control.name == "y")
         {
             if (mainCamera.GetComponent<CRTFilterEffect>().enabled)
                 mainCamera.GetComponent<CRTFilterEffect>().enabled = false;
