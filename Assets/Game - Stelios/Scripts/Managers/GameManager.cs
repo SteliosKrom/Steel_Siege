@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using Unity.Profiling;
 using UnityEngine.Video;
+using System.Text;
 
 public enum GameState
 {
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     private int currentModeIndex;
     [SerializeField] private int currentLetterIndex = 0;
+    [SerializeField] private int currentCharIndex = 0;
 
     private float fpsTimer = 0f;
     private float drawCallsTimer = 0f;
@@ -92,9 +94,18 @@ public class GameManager : MonoBehaviour
 
     #region PROPERTIES
     public bool OnDemoMode => onDemoMode;
-    public string CurrentLeaderboardBestScorePlayerName { get => currentLeaderboardBestScorePlayerName; 
-        set => currentLeaderboardBestScorePlayerName = value; }
+    public string CurrentLeaderboardBestScorePlayerName
+    {
+        get => currentLeaderboardBestScorePlayerName;
+        set => currentLeaderboardBestScorePlayerName = value;
+    }
     public int CurrentModeIndex { get => currentModeIndex; }
+    public int CurrentLetterIndex { get => currentLetterIndex; set => currentLetterIndex = value; }
+    public int CurrentCharIndex
+    {
+        get => currentCharIndex;
+        set => currentCharIndex = Mathf.Clamp(value, 0, allowedChars.Length - 1);
+    }
     public float FPS
     {
         get
@@ -135,6 +146,7 @@ public class GameManager : MonoBehaviour
         playerControls.Enable();
         playerControls.UI.Navigate.started += OnNavigate;
         playerControls.UI.Submit.started += OnSubmit;
+        playerControls.UI.NameInput.started += OnEnterYourName;
     }
 
     private void OnDisable()
@@ -143,6 +155,7 @@ public class GameManager : MonoBehaviour
 
         playerControls.UI.Navigate.started -= OnNavigate;
         playerControls.UI.Submit.started -= OnSubmit;
+        playerControls.UI.NameInput.started -= OnEnterYourName;
         playerControls.Disable();
 
         if (drawCallsRecorder.Valid)
@@ -177,7 +190,6 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.DisplayActiveRigidBodies(activeRigidbodies);
 
         InputForGameModeSelection();
-        EnterYourName();
         AnyKey();
     }
 
@@ -208,7 +220,7 @@ public class GameManager : MonoBehaviour
                     mainCamera.GetComponent<CRTFilterEffect>().enabled = true;
                     return;
                 }
-                else 
+                else
                     mainCamera = GameObject.Find("MainCamera");
                 break;
             case "Leaderboard":
@@ -259,14 +271,15 @@ public class GameManager : MonoBehaviour
             {
                 if (currentGameState == GameState.Title)
                 {
-                    JoinGame();   
+                    JoinGame();
                 }
                 demoModeTimer = 0f;
                 return;
             }
             else
             {
-                if ((currentGameState == GameState.Title || currentGameState == GameState.SelectModes) && demoModeTimer > 30)
+                if ((currentGameState == GameState.Title || currentGameState == GameState.SelectModes) 
+                    && demoModeTimer > 30)
                 {
                     EnterDemoMode();
                     return;
@@ -282,6 +295,87 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void OnEnterYourName(InputAction.CallbackContext cxt)
+    {
+        if (!onEnterYourName) return;
+        if (CurrentLetterIndex >= UIManager.Instance.MainRefs.letters.Length) return;
+
+        if (Keyboard.current.wKey.wasPressedThisFrame)
+        {
+            CurrentCharIndex = (CurrentCharIndex + 1) % allowedChars.Length;
+            UIManager.Instance.MainRefs.letters[CurrentLetterIndex].text = allowedChars[CurrentCharIndex].ToString();
+        }
+
+        if (Keyboard.current.sKey.wasPressedThisFrame)
+        {
+            CurrentCharIndex = (CurrentCharIndex - 1 + allowedChars.Length) % allowedChars.Length;
+            UIManager.Instance.MainRefs.letters[CurrentLetterIndex].text = allowedChars[CurrentCharIndex].ToString();
+        }
+
+        if (Keyboard.current.dKey.wasPressedThisFrame)
+        {
+            CurrentLetterIndex++;
+            CurrentCharIndex = 0;
+
+            if (CurrentLetterIndex == 3)
+                BuildFinalName();
+        }
+
+        if (Keyboard.current.aKey.wasPressedThisFrame)
+        {
+            UIManager.Instance.MainRefs.letters[CurrentLetterIndex].text = "_";
+            CurrentLetterIndex--;
+            CurrentCharIndex = 0;
+
+            if (CurrentLetterIndex < 0)
+                CurrentLetterIndex = 0;
+        }
+
+        switch (CurrentLetterIndex)
+        {
+            case 0:
+                uiEvents.RaiseFirstLetterStay();
+                uiEvents.RaiseSecondLetterExit();
+                uiEvents.RaiseThirdLetterExit();
+                break;
+            case 1:
+                uiEvents.RaiseFirstLetterExit();
+                uiEvents.RaiseSecondLetterStay();
+                uiEvents.RaiseThirdLetterExit();
+                break;
+            case 2:
+                uiEvents.RaiseFirstLetterExit();
+                uiEvents.RaiseSecondLetterExit();
+                uiEvents.RaiseThirdLetterStay();
+                break;
+        }
+    }
+
+    public void BuildFinalName()
+    {
+        StringBuilder sb = new StringBuilder(3);
+
+        for (int i = 0; i < UIManager.Instance.MainRefs.letters.Length; i++)
+            sb.Append(UIManager.Instance.MainRefs.letters[i].text);
+
+        currentLeaderboardBestScorePlayerName = sb.ToString();
+        InsertAndValidateName();
+    }
+
+    public void InsertAndValidateName()
+    {
+        onEnterYourName = false;
+        CurrentLetterIndex = 0;
+
+        int finalScore = ScoreManager.Instance.CurrentScore;
+        string playerName = currentLeaderboardBestScorePlayerName;
+
+        LeaderboardManager.Instance.InsertScore(finalScore, playerName);
+        SaveManager.Instance.SaveAll();
+
+        StartCoroutine(MoveToLeaderboardDelay());
     }
 
     public void JoinGame()
@@ -512,52 +606,6 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance.StopSFX(AudioManager.SoundType.Moving);
 
         currentGameState = GameState.GameOver;
-    }
-
-    public void EnterYourName()
-    {
-        if (!onEnterYourName) return;
-        if (currentLetterIndex >= UIManager.Instance.MainRefs.letters.Length) return;
-
-        for (int i = 0; i < allowedChars.Length; i++)
-        {
-            if (Input.GetKeyDown(KeyCode.A + i))
-            {
-                UIManager.Instance.MainRefs.letters[currentLetterIndex].text = allowedChars[i].ToString();
-                currentLetterIndex++;
-
-                currentLeaderboardBestScorePlayerName = string.Concat(UIManager.Instance.MainRefs.letters[0].text,
-                    UIManager.Instance.MainRefs.letters[1].text,
-                    UIManager.Instance.MainRefs.letters[2].text);
-
-                if (currentLetterIndex == 3)
-                {
-                    onEnterYourName = false;
-                    currentLetterIndex = 0;
-
-                    int finalScore = ScoreManager.Instance.CurrentScore;
-                    string playerName = currentLeaderboardBestScorePlayerName;
-
-                    LeaderboardManager.Instance.InsertScore(finalScore, playerName);
-                    SaveManager.Instance.SaveAll();
-
-                    StartCoroutine(MoveToLeaderboardDelay());
-                }
-                break;
-            }
-        }
-
-        switch (currentLetterIndex)
-        {
-            case 1:
-                uiEvents.RaiseFirstLetterExit();
-                uiEvents.RaiseSecondLetterStay();
-                break;
-            case 2:
-                uiEvents.RaiseSecondLetterExit();
-                uiEvents.RaiseThirdLetterStay();
-                break;
-        }
     }
 
     public void ResetMatchState()
