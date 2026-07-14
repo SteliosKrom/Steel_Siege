@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     private int currentModeIndex;
     [SerializeField] private int currentLetterIndex = 0;
+    [SerializeField] private int enterLetterIndex = 0;
     [SerializeField] private int currentCharIndex = 0;
 
     private float fpsTimer = 0f;
@@ -58,6 +59,8 @@ public class GameManager : MonoBehaviour
     private bool player2Dead = false;
     [SerializeField] private bool onEnterYourName = false;
     [SerializeField] private bool onDemoMode = false;
+    private bool[] slotHasLetter = new bool[3];
+    private bool[] slotWasConfirmed = new bool[3];
 
     private char[] allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 
@@ -67,7 +70,6 @@ public class GameManager : MonoBehaviour
     private ProfilerRecorder memoryRecorder;
 
     private VideoPlayer videoPlayer;
-
 
     #region INPUT
     private PlayerControls playerControls;
@@ -101,6 +103,11 @@ public class GameManager : MonoBehaviour
     }
     public int CurrentModeIndex { get => currentModeIndex; }
     public int CurrentLetterIndex { get => currentLetterIndex; set => currentLetterIndex = value; }
+    public int EnterLetterIndex
+    {
+        get => enterLetterIndex;
+        set => enterLetterIndex = Mathf.Clamp(value, 0, 3);
+    }
     public int CurrentCharIndex
     {
         get => currentCharIndex;
@@ -278,7 +285,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                if ((currentGameState == GameState.Title || currentGameState == GameState.SelectModes) 
+                if ((currentGameState == GameState.Title || currentGameState == GameState.SelectModes)
                     && demoModeTimer > 30)
                 {
                     EnterDemoMode();
@@ -306,31 +313,55 @@ public class GameManager : MonoBehaviour
         {
             CurrentCharIndex = (CurrentCharIndex + 1) % allowedChars.Length;
             UIManager.Instance.MainRefs.letters[CurrentLetterIndex].text = allowedChars[CurrentCharIndex].ToString();
+            slotHasLetter[CurrentLetterIndex] = true;
+            slotWasConfirmed[CurrentLetterIndex] = false;
         }
 
         if (Keyboard.current.sKey.wasPressedThisFrame)
         {
             CurrentCharIndex = (CurrentCharIndex - 1 + allowedChars.Length) % allowedChars.Length;
             UIManager.Instance.MainRefs.letters[CurrentLetterIndex].text = allowedChars[CurrentCharIndex].ToString();
+            slotHasLetter[CurrentLetterIndex] = true;
+            slotWasConfirmed[CurrentLetterIndex] = false;
         }
 
         if (Keyboard.current.dKey.wasPressedThisFrame)
         {
+            if (slotHasLetter[CurrentLetterIndex] && !slotWasConfirmed[CurrentLetterIndex])
+            {
+                EnterLetterIndex++;
+                slotWasConfirmed[CurrentLetterIndex] = true;
+            }
+
             CurrentLetterIndex++;
             CurrentCharIndex = 0;
 
             if (CurrentLetterIndex == 3)
-                BuildFinalName();
+            {
+                TryConfirmName();
+                CurrentLetterIndex = 2;
+            }
         }
 
         if (Keyboard.current.aKey.wasPressedThisFrame)
         {
+            if (slotWasConfirmed[CurrentLetterIndex])
+            {
+                EnterLetterIndex--;
+                slotHasLetter[CurrentLetterIndex] = false;
+                slotWasConfirmed[CurrentLetterIndex] = false;
+            }
+
             UIManager.Instance.MainRefs.letters[CurrentLetterIndex].text = "_";
+            slotHasLetter[CurrentLetterIndex] = false;
+            slotWasConfirmed[CurrentLetterIndex] = false;
             CurrentLetterIndex--;
             CurrentCharIndex = 0;
 
             if (CurrentLetterIndex < 0)
+            {
                 CurrentLetterIndex = 0;
+            }
         }
 
         switch (CurrentLetterIndex)
@@ -351,6 +382,12 @@ public class GameManager : MonoBehaviour
                 uiEvents.RaiseThirdLetterStay();
                 break;
         }
+    }
+
+    public void TryConfirmName()
+    {
+        if (EnterLetterIndex == 0 || EnterLetterIndex == 3)
+            BuildFinalName();
     }
 
     public void BuildFinalName()
@@ -659,6 +696,16 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Title");
 
         yield return null;
+        CurrentLetterIndex = 0;
+        CurrentCharIndex = 0;
+        EnterLetterIndex = 0;
+
+        for (int i = 0; i < 3; i++)
+        {
+            slotHasLetter[i] = false;
+            slotWasConfirmed[i] = false;
+        }
+
         uiEvents.RaiseHighScoreUIChanged();
         ResetMatchState();
         currentGameState = GameState.Title;
