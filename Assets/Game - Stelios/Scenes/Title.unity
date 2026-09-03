@@ -153,7 +153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.4, y: -40.24}
+  m_AnchoredPosition: {x: -0.4, y: -35}
   m_SizeDelta: {x: 167.38, y: 15.89}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &28447618
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28447616}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -3872,8 +3872,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 2.5, y: 8.700012}
-  m_SizeDelta: {x: 242.28, y: 15.989998}
+  m_AnchoredPosition: {x: 0, y: 6.147522}
+  m_SizeDelta: {x: 193.39, y: 12.295}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1733825758
 MonoBehaviour:
@@ -3904,8 +3904,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3922,8 +3922,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
-  m_fontSizeBase: 15
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4435,36 +4435,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioEvents: {fileID: 11400000, guid: dacb1adbb9007174085075b9ac481a6e, type: 2}
   audioItemsList:
-  - type: 2
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: 5e38914317f6e1447ad607d44ac2b094, type: 3}
-  - type: 3
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: 9c48cbd2c1283e94cbb888dfd460eb79, type: 3}
-  - type: 4
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: d14e5c33b8c03344eb934f22aaa8a89a, type: 3}
-  - type: 5
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: 07f6939b3dd7fa94586f5de499188d2c, type: 3}
-  - type: 6
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: 0598b09a155920c48a096a9153e30c46, type: 3}
-  - type: 7
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: 45004ad2ca0cce2488c8b0f18eebfc86, type: 3}
-  - type: 8
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: 4f6538c18bcc532488ccfcea0ebcde7c, type: 3}
-  - type: 9
-    source: {fileID: 177368416}
-    clip: {fileID: 8300000, guid: 8b19a567df08e40aa97756bf728db4c1, type: 3}
-  - type: 1
-    source: {fileID: 0}
-    clip: {fileID: 8300000, guid: c3a48cbfabe356c4889cb87b55279fe9, type: 3}
   - type: 0
     source: {fileID: 0}
-    clip: {fileID: 8300000, guid: 8cb826a213ceea5428e4c0a1c14aa534, type: 3}
+    clip: {fileID: 8300000, guid: 5e38914317f6e1447ad607d44ac2b094, type: 3}
+  - type: 1
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 9c48cbd2c1283e94cbb888dfd460eb79, type: 3}
+  - type: 2
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: d14e5c33b8c03344eb934f22aaa8a89a, type: 3}
+  - type: 3
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 07f6939b3dd7fa94586f5de499188d2c, type: 3}
+  - type: 4
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 0598b09a155920c48a096a9153e30c46, type: 3}
+  - type: 5
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 45004ad2ca0cce2488c8b0f18eebfc86, type: 3}
+  - type: 6
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 4f6538c18bcc532488ccfcea0ebcde7c, type: 3}
+  - type: 7
+    source: {fileID: 177368416}
+    clip: {fileID: 8300000, guid: 8b19a567df08e40aa97756bf728db4c1, type: 3}
 --- !u!1 &1995665546
 GameObject:
   m_ObjectHideFlags: 0
@@ -4841,7 +4835,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.6, y: -40.3}
+  m_AnchoredPosition: {x: 2.6, y: -35}
   m_SizeDelta: {x: 166.25, y: 16.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2049682764

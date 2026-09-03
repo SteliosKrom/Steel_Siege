@@ -34,6 +34,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveDirection;
     #endregion
 
+    #region AUDIO
+    [Header("AUDIO")]
+    [SerializeField] private AudioSource idleAudio;
+    [SerializeField] private AudioSource moveAudio;
+    #endregion
+
     public Vector2 MoveInput => moveInput;
 
     private void Awake()
@@ -83,19 +89,27 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        HandleMovementAudio();
+    }
+
+    public void HandleMovementAudio()
+    {
         if (isMoving)
         {
-            if (!AudioManager.Instance.IsPlaying(AudioManager.SoundType.Moving))
-                AudioManager.Instance.PlaySFX(AudioManager.SoundType.Moving);
-        }
-        else AudioManager.Instance.StopSFX(AudioManager.SoundType.Moving);
+            if (!moveAudio.isPlaying)
+                moveAudio.Play();
 
-        if (!isMoving)
-        {
-            if (!AudioManager.Instance.IsPlaying(AudioManager.SoundType.Idle))
-                AudioManager.Instance.PlaySFX(AudioManager.SoundType.Idle);
+            if (idleAudio.isPlaying)
+                idleAudio.Stop();
         }
-        else AudioManager.Instance.StopSFX(AudioManager.SoundType.Idle);
+        else
+        {
+            if (!idleAudio.isPlaying)
+                idleAudio.Play();
+
+            if (moveAudio.isPlaying)
+                moveAudio.Stop();
+        }
     }
 
     public void OnMove(InputAction.CallbackContext cxt)

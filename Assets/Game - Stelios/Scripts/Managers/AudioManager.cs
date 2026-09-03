@@ -13,7 +13,7 @@ public class AudioItem
 
 public class AudioManager : MonoBehaviour
 {
-    public enum SoundType { Moving, Idle, Shoot, Hurt, Explosion, Hit, GainPowerUp, SpawnPowerUp, GameOver, MenuMusic}
+    public enum SoundType {Shoot, Hurt, Explosion, Hit, GainPowerUp, SpawnPowerUp, GameOver, MenuMusic}
 
     public static AudioManager Instance;
 
