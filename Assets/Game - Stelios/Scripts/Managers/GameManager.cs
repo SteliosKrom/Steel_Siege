@@ -712,7 +712,6 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(returnBackToMainTitleDelay);
         SceneManager.LoadScene("Title");
-
         yield return null;
         uiEvents.RaiseHighScoreUIChanged();
         ResetMatchState();

@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     private float shootDelay = 0.75f;
     private bool canShoot = true;
-    private bool isMoving;
+    [SerializeField] private bool isMoving;
 
     [SerializeField] private string bulletTag;
 
@@ -32,12 +32,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D playerRb;
     [SerializeField] private Transform shootingPoint;
     private Vector2 moveDirection;
-    #endregion
-
-    #region AUDIO
-    [Header("AUDIO")]
-    [SerializeField] private AudioSource idleAudio;
-    [SerializeField] private AudioSource moveAudio;
     #endregion
 
     public Vector2 MoveInput => moveInput;
@@ -85,31 +79,6 @@ public class PlayerController : MonoBehaviour
             playerControls.P2.Shoot.performed -= OnShoot;
         }
         playerControls.Disable();
-    }
-
-    private void Update()
-    {
-        HandleMovementAudio();
-    }
-
-    public void HandleMovementAudio()
-    {
-        if (isMoving)
-        {
-            if (!moveAudio.isPlaying)
-                moveAudio.Play();
-
-            if (idleAudio.isPlaying)
-                idleAudio.Stop();
-        }
-        else
-        {
-            if (!idleAudio.isPlaying)
-                idleAudio.Play();
-
-            if (moveAudio.isPlaying)
-                moveAudio.Stop();
-        }
     }
 
     public void OnMove(InputAction.CallbackContext cxt)

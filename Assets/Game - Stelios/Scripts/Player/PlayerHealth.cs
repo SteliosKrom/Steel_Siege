@@ -11,7 +11,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField] private GameEventsSO gameEvents;
     [SerializeField] private UIEventsSO uiEvents;
     [SerializeField] private AudioEventsSO audioEvents;
-    [SerializeField] private ScoreEventsSO scoreEvents;
     #endregion
 
     #region GAME DATA
