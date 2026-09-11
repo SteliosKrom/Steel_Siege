@@ -33,7 +33,11 @@ public class TimerManager : MonoBehaviour
         if (GameManager.Instance.CurrentGameState != GameState.Playing)
             return;
 
-        CountTime();
+        if (GameManager.Instance.CurrentGameMode == GameMode.PVP)
+        {
+            pvpTimer.SetActive(true);
+            CountTime();
+        }
     }
 
     private void CountTime()

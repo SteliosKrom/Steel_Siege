@@ -538,7 +538,6 @@ public class GameManager : MonoBehaviour
     {
         currentGameState = GameState.Playing;
         currentGameMode = GameMode.PVP;
-
         ScoreManager.Instance.ResetRunScores();
         StartCoroutine(RaiseAfterLoad(true));
         uiEvents.RaiseEnablePVPLives();

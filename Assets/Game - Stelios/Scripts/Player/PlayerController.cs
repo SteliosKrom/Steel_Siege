@@ -34,11 +34,42 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveDirection;
     #endregion
 
+    #region AUDIO
+    [Header("AUDIO")]
+    [SerializeField] private AudioSource moveAudioSource;
+    [SerializeField] private AudioSource idleAudioSource;
+    #endregion
+
     public Vector2 MoveInput => moveInput;
 
     private void Awake()
     {
         playerControls = new PlayerControls();
+    }
+
+    private void Update()
+    {
+        HandleMovementAudio();
+    }
+
+    public void HandleMovementAudio()
+    {
+        if (isMoving)
+        {
+            if (!moveAudioSource.isPlaying)
+                moveAudioSource.Play();
+
+            if (idleAudioSource.isPlaying)
+                idleAudioSource.Stop();
+        }
+        else
+        {
+            if (!idleAudioSource.isPlaying)
+                idleAudioSource.Play();
+
+            if (moveAudioSource.isPlaying)
+                moveAudioSource.Stop();
+        }
     }
 
     private void OnEnable()
