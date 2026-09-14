@@ -7,4 +7,3 @@ public class AnimationClipData : ScriptableObject
     public float frameRate = 12f;
     public bool loop = true;
 }
-

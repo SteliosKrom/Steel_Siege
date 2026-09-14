@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AnimationPlayer : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private AnimationClipData currentClip;
+
+    public UnityEvent OnAnimationFinished;
 
     private int currentFrame;
     private float timer;
@@ -23,7 +26,7 @@ public class AnimationPlayer : MonoBehaviour
 
     private void Update()
     {
-        if(currentClip == null) return;
+        if (currentClip == null) return;
 
         timer += Time.deltaTime;
 
@@ -35,9 +38,16 @@ public class AnimationPlayer : MonoBehaviour
             if (currentFrame >= currentClip.frames.Length)
             {
                 if (currentClip.loop)
+                {
                     currentFrame = 0;
+                }
                 else
+                {
                     currentFrame = currentClip.frames.Length - 1;
+                    OnAnimationFinished?.Invoke();
+                    currentClip = null;
+                    return;
+                }
             }
             spriteRenderer.sprite = currentClip.frames[currentFrame];
         }
