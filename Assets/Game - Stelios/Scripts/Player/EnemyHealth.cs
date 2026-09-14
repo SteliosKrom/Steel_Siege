@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
+    [SerializeField] private Transform VFXParent;
     [SerializeField] private string ENEMY_TAG = "Enemy";
     [SerializeField] private int currentLives;
+
+    #region OBJECTS
+    [Header("OBJECTS")]
+    [SerializeField] private GameObject explosionPrefab;
+    #endregion
 
     #region SCRIPT REFERENCES
     [Header("SCRIPT REFERENCES")]
@@ -39,10 +45,14 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
         if (currentLives <= 0)
         {
-            ReturnEnemy();
+
             scoreEvents.RaiseScoreChanged();
             uiEvents.RaiseScoreUIChanged();
             audioEvents.RaiseExplosion();
+
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity, VFXParent);
+
+            ReturnEnemy();
         }
     }
 

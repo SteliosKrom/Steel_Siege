@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
+    [SerializeField] private Transform VFXParent;
     [SerializeField] private int currentLives;
-
     private const string LIVE_TAG = "Live";
+
+    #region OBJECTS
+    [Header("OBJECTS")]
+    [SerializeField] private GameObject explosionPrefab;
+    #endregion
 
     #region EVENTS
     [Header("EVENTS")]
@@ -41,6 +46,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (currentLives <= 0)
         {
             GameManager.Instance.PlayerDied(playerData.PlayerType, gameObject);
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity, VFXParent);
         }
     }
 

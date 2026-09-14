@@ -6582,6 +6582,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &604752630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 604752631}
+  m_Layer: 0
+  m_Name: '---------------------------------------------- '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &604752631
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604752630}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.83660966, y: 0.20877463, z: -0.07729114}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &607319518
 GameObject:
   m_ObjectHideFlags: 0
@@ -7291,7 +7322,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainRefs:
-    timerManager: {fileID: 268135921}
     player1Lives:
     - {fileID: 1285079314}
     - {fileID: 692870550}
@@ -11713,6 +11743,37 @@ Transform:
   - {fileID: 551470623}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1616031745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1616031746}
+  m_Layer: 0
+  m_Name: VFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1616031746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616031745}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.13888, y: -0.11033, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1640500562
 GameObject:
   m_ObjectHideFlags: 0
@@ -12510,9 +12571,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7013816266567348257, guid: f9a505d0e93cd3c43ba92579adb809b1, type: 3}
+      propertyPath: VFXParent
+      value: 
+      objectReference: {fileID: 1616031746}
+    - target: {fileID: 7013816266567348257, guid: f9a505d0e93cd3c43ba92579adb809b1, type: 3}
       propertyPath: spawnManager
       value: 
       objectReference: {fileID: 1986769297}
+    - target: {fileID: 7013816266567348257, guid: f9a505d0e93cd3c43ba92579adb809b1, type: 3}
+      propertyPath: explosionPrefab
+      value: 
+      objectReference: {fileID: 1793590991912330357, guid: 3502b913409dd964fad39a1e26c471d7, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12545,6 +12614,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationPlayer
   spriteRenderer: {fileID: 1926572970}
   currentClip: {fileID: 11400000, guid: 3e2e9c08f7e5a764db2d4ebd672fca86, type: 2}
+  OnAnimationFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!212 &1926572970 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 1533723807281804311, guid: f9a505d0e93cd3c43ba92579adb809b1, type: 3}
@@ -13410,6 +13482,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 442738793}
     m_Modifications:
+    - target: {fileID: 1410293861934657135, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+      propertyPath: VFXParent
+      value: 
+      objectReference: {fileID: 1616031746}
+    - target: {fileID: 1410293861934657135, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+      propertyPath: explosionPrefab
+      value: 
+      objectReference: {fileID: 1793590991912330357, guid: 3502b913409dd964fad39a1e26c471d7, type: 3}
     - target: {fileID: 2141502846258314281, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
       propertyPath: m_CompositeOperation
       value: 0
@@ -13589,6 +13669,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationPlayer
   spriteRenderer: {fileID: 4318519486472910260}
   currentClip: {fileID: 11400000, guid: 0374f0acafbbf5342905fb0c37ad5787, type: 2}
+  OnAnimationFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &4318519487339209146 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1775459107618490435, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
@@ -13782,6 +13865,14 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 6200000, guid: c0f9f8c4e2860374b9e1da077135602b, type: 2}
+    - target: {fileID: 7693422991407813053, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+      propertyPath: VFXParent
+      value: 
+      objectReference: {fileID: 1616031746}
+    - target: {fileID: 7693422991407813053, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+      propertyPath: explosionPrefab
+      value: 
+      objectReference: {fileID: 1793590991912330357, guid: 3502b913409dd964fad39a1e26c471d7, type: 3}
     - target: {fileID: 9206897240742351648, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
       propertyPath: m_Name
       value: Player_2
@@ -13846,6 +13937,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationPlayer
   spriteRenderer: {fileID: 6195269278291155437}
   currentClip: {fileID: 11400000, guid: 46f57aab9371af049afba0225efe5bac, type: 2}
+  OnAnimationFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!212 &6195269278291155437 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 1875325603205140224, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
@@ -13902,4 +13996,6 @@ SceneRoots:
   - {fileID: 1487913794}
   - {fileID: 1932885507}
   - {fileID: 665965640}
+  - {fileID: 1616031746}
+  - {fileID: 604752631}
   - {fileID: 1573398265}
