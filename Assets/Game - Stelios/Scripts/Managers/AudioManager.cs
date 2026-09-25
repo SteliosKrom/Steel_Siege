@@ -1,4 +1,3 @@
-using NUnit.Compatibility;
 using System.Collections.Generic;
 using UnityEngine;
 using static AudioManager;
@@ -13,7 +12,11 @@ public class AudioItem
 
 public class AudioManager : MonoBehaviour
 {
-    public enum SoundType {Shoot, Hurt, Explosion, Hit, GainPowerUp, SpawnPowerUp, GameOver, MenuMusic}
+    public enum SoundType
+    {
+        Shoot, Hurt, Explosion, Hit, GainPowerUp, SpawnPowerUp, GameOver, MenuMusic,
+        Tank1Idle, Tank1Move, Tank2Idle, Tank2Move
+    }
 
     public static AudioManager Instance;
 

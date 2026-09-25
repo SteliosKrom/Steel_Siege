@@ -17,7 +17,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private string[] powerUpTags;
     private string powerUpTag;
 
-    private const string ENEMY_TAG = "Enemy";
+    private const string ENEMY_POOL_ID = "EnemyTank";
+    private const string SPEED_ENEMY_TANK_ID = "SpeedTank";
 
     #region SCRIPTABLE OBJECTS
     [Header("SCRIPTABLE OBJECTS")]
@@ -113,8 +114,28 @@ public class SpawnManager : MonoBehaviour
     public void SpawnEnemiesAtRandomPoints()
     {
         int rand = Random.Range(0, availablePoints.Count);
-        GameObject enemy = ObjectPoolManager.Instance.GetObject(ENEMY_TAG);
-        enemy.transform.position = availablePoints[rand].position;
+        int randType = Random.Range(0, 2);
+        GameObject enemyTank;
+
+        if (currentWave >= 9)
+        {
+            if (randType == 0)
+            {
+                enemyTank = ObjectPoolManager.Instance.GetObject(ENEMY_POOL_ID);
+                enemyTank.transform.position = availablePoints[rand].position;
+            }
+            else
+            {
+                enemyTank = ObjectPoolManager.Instance.GetObject(SPEED_ENEMY_TANK_ID);
+                enemyTank.transform.position = availablePoints[rand].position;
+            }
+        }
+        else
+        {
+            enemyTank = ObjectPoolManager.Instance.GetObject(ENEMY_POOL_ID);
+            enemyTank.transform.position = availablePoints[rand].position;
+        }
+
         enemiesAlive++;
         availablePoints.RemoveAt(rand);
     }

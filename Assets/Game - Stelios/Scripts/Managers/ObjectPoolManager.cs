@@ -11,7 +11,7 @@ public class ObjectPoolManager : MonoBehaviour
     public class PoolItems
     {
         public Transform parent;
-        public string tag;
+        public string poolID;
         public GameObject prefab;
         public int size;
     }
@@ -45,26 +45,26 @@ public class ObjectPoolManager : MonoBehaviour
                 obj.SetActive(false);
                 objects.Enqueue(obj);
             }
-            poolDict.Add(item.tag, objects);
+            poolDict.Add(item.poolID, objects);
         }
     }
 
-    public GameObject GetObject(string tag)
+    public GameObject GetObject(string poolID)
     {
-        if (!poolDict.ContainsKey(tag))
+        if (!poolDict.ContainsKey(poolID))
         {
             Debug.LogWarning("No pool found!");
             return null;
         }
 
-        GameObject obj = poolDict[tag].Dequeue();
+        GameObject obj = poolDict[poolID].Dequeue();
         obj.SetActive(true);
         return obj;
     }
 
-    public void ReturnObject(string tag, GameObject obj)
+    public void ReturnObject(string poolID, GameObject obj)
     {
         obj.SetActive(false);
-        poolDict[tag].Enqueue(obj);
+        poolDict[poolID].Enqueue(obj);
     }
 }

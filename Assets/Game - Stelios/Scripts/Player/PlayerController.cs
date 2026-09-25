@@ -34,12 +34,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveDirection;
     #endregion
 
-    #region AUDIO
-    [Header("AUDIO")]
-    [SerializeField] private AudioSource moveAudioSource;
-    [SerializeField] private AudioSource idleAudioSource;
-    #endregion
-
     public Vector2 MoveInput => moveInput;
 
     private void Awake()
@@ -56,20 +50,36 @@ public class PlayerController : MonoBehaviour
     {
         if (isMoving)
         {
-            if (!moveAudioSource.isPlaying)
-                moveAudioSource.Play();
+            if (!AudioManager.Instance.IsPlaying(GetMoveSound()))
+            {
+                AudioManager.Instance.PlaySoundtrack(GetMoveSound());
+            }
 
-            if (idleAudioSource.isPlaying)
-                idleAudioSource.Stop();
+            AudioManager.Instance.StopSoundtrack(GetIdleSound());
         }
         else
         {
-            if (!idleAudioSource.isPlaying)
-                idleAudioSource.Play();
+            if (!AudioManager.Instance.IsPlaying(GetIdleSound()))
+            {
+                AudioManager.Instance.PlaySoundtrack(GetIdleSound());
+            }
 
-            if (moveAudioSource.isPlaying)
-                moveAudioSource.Stop();
+            AudioManager.Instance.StopSoundtrack(GetMoveSound());
         }
+    }
+
+    private AudioManager.SoundType GetMoveSound()
+    {
+        return playerData.PlayerType == PlayerData.PlayerID.P1
+            ? AudioManager.SoundType.Tank1Move
+            : AudioManager.SoundType.Tank2Move;
+    }
+
+    private AudioManager.SoundType GetIdleSound()
+    {
+        return playerData.PlayerType == PlayerData.PlayerID.P1
+            ? AudioManager.SoundType.Tank1Idle
+            : AudioManager.SoundType.Tank2Idle;
     }
 
     private void OnEnable()

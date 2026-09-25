@@ -5761,7 +5761,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 32
+  Priority: 128
   DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
@@ -6081,6 +6081,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1926572967}
+  - {fileID: 1705451245518534022}
   - {fileID: 4318519486472910254}
   - {fileID: 4318519487339209146}
   m_Father: {fileID: 1970853985}
@@ -6156,6 +6157,37 @@ RectTransform:
   m_AnchoredPosition: {x: 19.20996, y: -8.10321}
   m_SizeDelta: {x: 50.962, y: 16.206}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &533751058
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 533751059}
+  m_Layer: 0
+  m_Name: SpeedEnemyPools
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &533751059
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533751058}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1573398265}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &537449385
 GameObject:
   m_ObjectHideFlags: 0
@@ -7357,7 +7389,7 @@ MonoBehaviour:
     firstLetter: {fileID: 1100902986}
     secondLetter: {fileID: 2104435316}
     thirdLetter: {fileID: 327732604}
-  soundTypes: 0200000003000000040000000500000006000000070000000100000000000000
+  soundTypes: 020000000300000004000000050000000600000007000000010000000000000008000000090000000a0000000b000000
   localSources:
   - {fileID: 1496151162}
   - {fileID: 1518602024}
@@ -7367,6 +7399,10 @@ MonoBehaviour:
   - {fileID: 28078373}
   - {fileID: 1897636407}
   - {fileID: 1518602024}
+  - {fileID: 660593512}
+  - {fileID: 1366953378}
+  - {fileID: 2054587005}
+  - {fileID: 299854592}
 --- !u!1 &679274467
 GameObject:
   m_ObjectHideFlags: 0
@@ -10902,7 +10938,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 32
+  Priority: 128
   DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
@@ -11741,6 +11777,7 @@ Transform:
   - {fileID: 1643672477}
   - {fileID: 902447907}
   - {fileID: 551470623}
+  - {fileID: 533751059}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1616031745
@@ -12495,23 +12532,27 @@ MonoBehaviour:
   factory: {fileID: 322907752}
   pools:
   - parent: {fileID: 1978380293}
-    tag: PlayerBullet
+    poolID: PlayerBullet
     prefab: {fileID: 4700311634676453428, guid: cc236cd21d9eb624290e9391f8445ee7, type: 3}
     size: 50
   - parent: {fileID: 1643672477}
-    tag: EnemyBullet
+    poolID: EnemyBullet
     prefab: {fileID: 4700311634676453428, guid: fb2c4c8019c4e7d4c9724bd931a2ab0f, type: 3}
     size: 50
   - parent: {fileID: 902447907}
-    tag: Enemy
+    poolID: EnemyTank
     prefab: {fileID: 1926572968}
     size: 50
+  - parent: {fileID: 533751059}
+    poolID: SpeedTank
+    prefab: {fileID: 2133181293742428787, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+    size: 50
   - parent: {fileID: 551470623}
-    tag: Live
+    poolID: Health
     prefab: {fileID: 1868903014634282546, guid: cce970aa0038c5549a8ff125e0c29e86, type: 3}
     size: 10
   - parent: {fileID: 551470623}
-    tag: Stamina
+    poolID: Stamina
     prefab: {fileID: 2894473473479677383, guid: 92085d988845ad74ea081e8b70fdd625, type: 3}
     size: 10
 --- !u!1001 &1926572966
@@ -12569,6 +12610,10 @@ PrefabInstance:
     - target: {fileID: 5973654646885573090, guid: f9a505d0e93cd3c43ba92579adb809b1, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7013816266567348257, guid: f9a505d0e93cd3c43ba92579adb809b1, type: 3}
+      propertyPath: poolID
+      value: EnemyTank
       objectReference: {fileID: 0}
     - target: {fileID: 7013816266567348257, guid: f9a505d0e93cd3c43ba92579adb809b1, type: 3}
       propertyPath: VFXParent
@@ -12877,7 +12922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpTags:
-  - Live
+  - Health
   - Stamina
   gameEvents: {fileID: 11400000, guid: 667ee07dfebd0c145a4169d9210287c2, type: 2}
   uiEvents: {fileID: 11400000, guid: 2ba79ad53fa263f43a02d1a4c5aaf1a7, type: 2}
@@ -13474,6 +13519,84 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 10
+--- !u!4 &1705451245518534022 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8689559802853280804, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+  m_PrefabInstance: {fileID: 1740919187550663285}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1740919187550663285
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 442738793}
+    m_Modifications:
+    - target: {fileID: 262478901186499956, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: poolID
+      value: SpeedTank
+      objectReference: {fileID: 0}
+    - target: {fileID: 262478901186499956, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: VFXParent
+      value: 
+      objectReference: {fileID: 1616031746}
+    - target: {fileID: 262478901186499956, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: spawnManager
+      value: 
+      objectReference: {fileID: 1986769297}
+    - target: {fileID: 293244587436482469, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: currentClip
+      value: 
+      objectReference: {fileID: 11400000, guid: 12eb03ca5569e744197791f0979f4c24, type: 2}
+    - target: {fileID: 2133181293742428787, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: m_Name
+      value: SpeedEnemyTank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689559802853280804, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.25405
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689559802853280804, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.86221
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689559802853280804, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689559802853280804, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689559802853280804, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689559802853280804, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689559802853280804, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689559802853280804, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689559802853280804, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689559802853280804, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -180
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
 --- !u!1001 &3478434357855649885
 PrefabInstance:
   m_ObjectHideFlags: 0
