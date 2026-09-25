@@ -12545,7 +12545,7 @@ MonoBehaviour:
     size: 50
   - parent: {fileID: 533751059}
     poolID: SpeedTank
-    prefab: {fileID: 2133181293742428787, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+    prefab: {fileID: 1740919187550663286}
     size: 50
   - parent: {fileID: 551470623}
     poolID: Health
@@ -13533,10 +13533,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 442738793}
     m_Modifications:
     - target: {fileID: 262478901186499956, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
-      propertyPath: poolID
-      value: SpeedTank
-      objectReference: {fileID: 0}
-    - target: {fileID: 262478901186499956, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
       propertyPath: VFXParent
       value: 
       objectReference: {fileID: 1616031746}
@@ -13544,10 +13540,6 @@ PrefabInstance:
       propertyPath: spawnManager
       value: 
       objectReference: {fileID: 1986769297}
-    - target: {fileID: 293244587436482469, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
-      propertyPath: currentClip
-      value: 
-      objectReference: {fileID: 11400000, guid: 12eb03ca5569e744197791f0979f4c24, type: 2}
     - target: {fileID: 2133181293742428787, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
       propertyPath: m_Name
       value: SpeedEnemyTank
@@ -13597,6 +13589,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+--- !u!1 &1740919187550663286 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2133181293742428787, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+  m_PrefabInstance: {fileID: 1740919187550663285}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3478434357855649885
 PrefabInstance:
   m_ObjectHideFlags: 0
