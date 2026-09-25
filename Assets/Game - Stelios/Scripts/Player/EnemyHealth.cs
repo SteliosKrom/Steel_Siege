@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private Transform VFXParent;
-    [SerializeField] private string ENEMY_TAG = "Enemy";
+    [SerializeField] private string poolID;
     [SerializeField] private int currentLives;
 
     #region OBJECTS
@@ -58,6 +58,6 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     public void ReturnEnemy()
     {
-        ObjectPoolManager.Instance.ReturnObject(ENEMY_TAG, this.gameObject);
+        ObjectPoolManager.Instance.ReturnObject(poolID, this.gameObject);
     }
 }

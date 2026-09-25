@@ -4459,6 +4459,18 @@ MonoBehaviour:
   - type: 7
     source: {fileID: 177368416}
     clip: {fileID: 8300000, guid: 8b19a567df08e40aa97756bf728db4c1, type: 3}
+  - type: 8
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: c3a48cbfabe356c4889cb87b55279fe9, type: 3}
+  - type: 9
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 8cb826a213ceea5428e4c0a1c14aa534, type: 3}
+  - type: 10
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: c3a48cbfabe356c4889cb87b55279fe9, type: 3}
+  - type: 11
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 8cb826a213ceea5428e4c0a1c14aa534, type: 3}
 --- !u!1 &1995665546
 GameObject:
   m_ObjectHideFlags: 0
