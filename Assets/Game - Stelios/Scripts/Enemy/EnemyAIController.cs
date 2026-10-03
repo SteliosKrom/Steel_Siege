@@ -62,6 +62,9 @@ public class EnemyAIController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.Instance.CurrentGameState != GameState.Playing)
+            return;
+
         if (movementType == MovementType.Random)
         {
             ApplyMovement();

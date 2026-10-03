@@ -135,7 +135,6 @@ public class SpawnManager : MonoBehaviour
             enemyTank = ObjectPoolManager.Instance.GetObject(ENEMY_POOL_ID);
             enemyTank.transform.position = availablePoints[rand].position;
         }
-
         enemiesAlive++;
         availablePoints.RemoveAt(rand);
     }

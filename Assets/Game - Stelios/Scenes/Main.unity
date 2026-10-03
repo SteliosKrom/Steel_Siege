@@ -12749,6 +12749,10 @@ MonoBehaviour:
     poolID: Stamina
     prefab: {fileID: 2894473473479677383, guid: 92085d988845ad74ea081e8b70fdd625, type: 3}
     size: 10
+  - parent: {fileID: 551470623}
+    poolID: Shield
+    prefab: {fileID: 6959196489926041455, guid: 9c72fcdf32b1f46468c13c7dba22fff5, type: 3}
+    size: 10
 --- !u!1001 &1926572966
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13147,6 +13151,7 @@ MonoBehaviour:
   powerUpTags:
   - Health
   - Stamina
+  - Shield
   gameEvents: {fileID: 11400000, guid: 667ee07dfebd0c145a4169d9210287c2, type: 2}
   uiEvents: {fileID: 11400000, guid: 2ba79ad53fa263f43a02d1a4c5aaf1a7, type: 2}
   audioEvents: {fileID: 11400000, guid: dacb1adbb9007174085075b9ac481a6e, type: 2}

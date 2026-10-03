@@ -106,6 +106,14 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void StopTanksSoundtracks()
+    {
+        StopSoundtrack(SoundType.Tank1Idle);
+        StopSoundtrack(SoundType.Tank1Move);
+        StopSoundtrack(SoundType.Tank2Idle);
+        StopSoundtrack(SoundType.Tank2Move);
+    }
+
     public bool IsPlaying(SoundType type)
     {
         if (audioItemsByType.TryGetValue(type, out var item))

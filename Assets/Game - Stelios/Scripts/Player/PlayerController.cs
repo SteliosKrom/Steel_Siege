@@ -48,6 +48,9 @@ public class PlayerController : MonoBehaviour
 
     public void HandleMovementAudio()
     {
+        if (GameManager.Instance.CurrentGameState != GameState.Playing)
+            return;
+
         if (isMoving)
         {
             if (!AudioManager.Instance.IsPlaying(GetMoveSound()))

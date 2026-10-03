@@ -611,18 +611,21 @@ public class GameManager : MonoBehaviour
 
     public void Draw()
     {
+        AudioManager.Instance.StopTanksSoundtracks();
         gameEvents.RaiseDraw();
         currentGameState = GameState.Draw;
     }
 
     public void Player1Wins()
     {
+        AudioManager.Instance.StopTanksSoundtracks();
         gameEvents.RaiseP1Win();
         currentGameState = GameState.Player1Wins;
     }
 
     public void Player2Wins()
     {
+        AudioManager.Instance.StopTanksSoundtracks();
         gameEvents.RaiseP2Win();
         currentGameState = GameState.Player2Wins;
     }
@@ -634,6 +637,9 @@ public class GameManager : MonoBehaviour
             LoadDemoMode();
             return;
         }
+
+        AudioManager.Instance.StopSoundtrack(AudioManager.SoundType.Tank1Idle);
+        AudioManager.Instance.StopSoundtrack(AudioManager.SoundType.Tank1Move);
 
         gameEvents.RaiseGameOver();
         audioEvents.RaiseGameOver();
