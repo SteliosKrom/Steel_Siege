@@ -1,20 +1,36 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAIController : MonoBehaviour
 {
     [SerializeField] private string bulletTag;
 
+    private float reachThreshold = 0.1f;
     private float changeDirectionDelay;
     private float changeDirectionDelayVariation;
     private float shootDelay;
     private float shootDelayVariation;
 
+    private NavMeshAgent navMeshAgent;
+    private Transform player;
+
     [SerializeField] private Rigidbody2D enemyRb;
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private Transform shootingPoint;
 
+    [SerializeField] private MovementType movementType;
+
     private Vector2 moveDirection;
+    private Vector2 lastPlayerPosition;
+
+    private void Awake()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+
+        navMeshAgent.updateRotation = false;
+        navMeshAgent.updateUpAxis = false;
+    }
 
     private void OnEnable()
     {
@@ -22,8 +38,18 @@ public class EnemyAIController : MonoBehaviour
         shootDelay = 1.5f;
         moveDirection = Vector3.zero;
 
-        ChooseDirection();
-        StartCoroutine(ChangeDirectionDelay());
+        if (movementType == MovementType.Pathfinding)
+        {
+            player = GameObject.FindGameObjectWithTag("Player1").transform;
+            navMeshAgent.SetDestination(player.position);
+            lastPlayerPosition = player.position;
+        }
+        else
+        {
+            ChooseDirection();
+            StartCoroutine(ChangeDirectionDelay());
+        }
+
         StartCoroutine(ShootDelay());
     }
 
@@ -36,14 +62,63 @@ public class EnemyAIController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ApplyMovement();
+        if (movementType == MovementType.Random)
+        {
+            ApplyMovement();
+        }
+        else if (movementType == MovementType.Pathfinding)
+        {
+            float distanceToPlayer = Vector2.Distance(player.position, lastPlayerPosition);
+
+            if (distanceToPlayer > reachThreshold)
+            {
+                navMeshAgent.SetDestination(player.position);
+                lastPlayerPosition = player.position;
+            }
+            UpdatePathDirection();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Wall") ||
-            other.gameObject.CompareTag("Obstacle"))
+        if (movementType == MovementType.Random &&
+            (other.gameObject.CompareTag("Wall") ||
+            other.gameObject.CompareTag("Obstacle")))
+        {
             ChooseDirection();
+        }
+    }
+
+    public void UpdatePathDirection()
+    {
+        Vector2 direction = navMeshAgent.desiredVelocity.normalized;
+
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        {
+            if (direction.x > 0)
+            {
+                moveDirection = Vector2.right;
+                enemyRb.SetRotation(-90f);
+            }
+            else
+            {
+                moveDirection = Vector2.left;
+                enemyRb.SetRotation(-270f);
+            }
+        }
+        else
+        {
+            if (direction.y > 0)
+            {
+                moveDirection = Vector2.up;
+                enemyRb.SetRotation(0f);
+            }
+            else
+            {
+                moveDirection = Vector2.down;
+                enemyRb.SetRotation(-180f);
+            }
+        }   
     }
 
     public void ChooseDirection()
