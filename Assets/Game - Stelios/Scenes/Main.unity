@@ -9242,6 +9242,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &891235434 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8680498476084842929, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+  m_PrefabInstance: {fileID: 6195269278291155432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &902447906
 GameObject:
   m_ObjectHideFlags: 0
@@ -12813,6 +12818,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5973654646885573090, guid: f9a505d0e93cd3c43ba92579adb809b1, type: 3}
+      propertyPath: m_TagString
+      value: NormalEnemyTank
+      objectReference: {fileID: 0}
     - target: {fileID: 7013816266567348257, guid: f9a505d0e93cd3c43ba92579adb809b1, type: 3}
       propertyPath: poolID
       value: EnemyTank
@@ -13772,6 +13781,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpeedEnemyTank
       objectReference: {fileID: 0}
+    - target: {fileID: 2133181293742428787, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
+      propertyPath: m_TagString
+      value: SpeedEnemyTank
+      objectReference: {fileID: 0}
     - target: {fileID: 8689559802853280804, guid: 0d3eb3dfd1318c04680a193157156b00, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.25405
@@ -13834,6 +13847,10 @@ PrefabInstance:
       propertyPath: VFXParent
       value: 
       objectReference: {fileID: 1616031746}
+    - target: {fileID: 1410293861934657135, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+      propertyPath: playerShield
+      value: 
+      objectReference: {fileID: 4318519486472910262}
     - target: {fileID: 1410293861934657135, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
       propertyPath: explosionPrefab
       value: 
@@ -13932,6 +13949,9 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7652540464277978568, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 4318519486472910262}
+    - targetCorrespondingSourceObject: {fileID: 7652540464277978568, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 4318519486472910255}
     - targetCorrespondingSourceObject: {fileID: 7652540464277978568, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
       insertIndex: -1
@@ -13964,6 +13984,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2730b8fce3c7841876c156c303d37f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3478434357855649889 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4251089725762805980, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+  m_PrefabInstance: {fileID: 3478434357855649885}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3936021661369293692
 GameObject:
   m_ObjectHideFlags: 0
@@ -14024,6 +14049,21 @@ MonoBehaviour:
   OnAnimationFinished:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4318519486472910262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3478434357855649886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68703895a9465d5418406ab05c999bf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShield
+  hasShield: 0
+  shieldAura: {fileID: 3478434357855649889}
+  shieldData: {fileID: 11400000, guid: 083247477f5df834c9195d23eaadfc2a, type: 2}
 --- !u!4 &4318519487339209146 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1775459107618490435, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
@@ -14222,9 +14262,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1616031746}
     - target: {fileID: 7693422991407813053, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+      propertyPath: playerShield
+      value: 
+      objectReference: {fileID: 6195269278291155438}
+    - target: {fileID: 7693422991407813053, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
       propertyPath: explosionPrefab
       value: 
       objectReference: {fileID: 1793590991912330357, guid: 3502b913409dd964fad39a1e26c471d7, type: 3}
+    - target: {fileID: 8680498476084842929, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9206897240742351648, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
       propertyPath: m_Name
       value: Player_2
@@ -14241,6 +14289,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9206897240742351648, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6195269278291155438}
     - targetCorrespondingSourceObject: {fileID: 9206897240742351648, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6195269278291155434}
@@ -14301,6 +14352,21 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 1875325603205140224, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
   m_PrefabInstance: {fileID: 6195269278291155432}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6195269278291155438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6195269278291155433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68703895a9465d5418406ab05c999bf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShield
+  hasShield: 0
+  shieldAura: {fileID: 891235434}
+  shieldData: {fileID: 11400000, guid: 083247477f5df834c9195d23eaadfc2a, type: 2}
 --- !u!224 &7269278022835426804
 RectTransform:
   m_ObjectHideFlags: 0
