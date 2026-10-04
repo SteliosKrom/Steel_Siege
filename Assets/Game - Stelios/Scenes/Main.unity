@@ -10178,6 +10178,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1050114625}
   m_CullTransparentMesh: 1
+--- !u!1 &1055077654 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8475882048474376844, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+  m_PrefabInstance: {fileID: 6195269278291155432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1094009842
 GameObject:
   m_ObjectHideFlags: 0
@@ -13943,6 +13948,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9113841196242130850, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+      propertyPath: powerUpData
+      value: 
+      objectReference: {fileID: 11400000, guid: 26d40e6f758d3014f9d5e2836a625760, type: 2}
+    - target: {fileID: 9113841196242130850, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+      propertyPath: staminaAura
+      value: 
+      objectReference: {fileID: 3478434357855649890}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13987,6 +14000,11 @@ MonoBehaviour:
 --- !u!1 &3478434357855649889 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4251089725762805980, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
+  m_PrefabInstance: {fileID: 3478434357855649885}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3478434357855649890 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1893843138618637738, guid: 7d706ec6b6392b845a31828cc3f90cb6, type: 3}
   m_PrefabInstance: {fileID: 3478434357855649885}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &3936021661369293692
@@ -14189,6 +14207,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 442738793}
     m_Modifications:
+    - target: {fileID: -3975423996616727512, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+      propertyPath: powerUpData
+      value: 
+      objectReference: {fileID: 11400000, guid: 26d40e6f758d3014f9d5e2836a625760, type: 2}
+    - target: {fileID: -3975423996616727512, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
+      propertyPath: staminaAura
+      value: 
+      objectReference: {fileID: 1055077654}
     - target: {fileID: 1400494690727555144, guid: 8b153bbdd61f2e749b0faec03a9e6239, type: 3}
       propertyPath: source
       value: 
