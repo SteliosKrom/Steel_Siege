@@ -6,6 +6,11 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField] private int currentLives;
     private const string LIVE_TAG = "Live";
 
+    #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
+    [SerializeField] private PlayerShield playerShield;
+    #endregion
+
     #region OBJECTS
     [Header("OBJECTS")]
     [SerializeField] private GameObject explosionPrefab;
@@ -40,6 +45,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage()
     {
+        if (playerShield.HasShield)
+            return;
+
         currentLives--;
         DecreaseLives();
 

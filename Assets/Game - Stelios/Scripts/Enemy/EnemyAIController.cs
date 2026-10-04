@@ -28,8 +28,11 @@ public class EnemyAIController : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        navMeshAgent.updateRotation = false;
-        navMeshAgent.updateUpAxis = false;
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.updateRotation = false;
+            navMeshAgent.updateUpAxis = false;
+        }
     }
 
     private void OnEnable()
@@ -41,7 +44,12 @@ public class EnemyAIController : MonoBehaviour
         if (movementType == MovementType.Pathfinding)
         {
             player = GameObject.FindGameObjectWithTag("Player1").transform;
-            navMeshAgent.SetDestination(player.position);
+
+            if (navMeshAgent != null)
+            {
+                navMeshAgent.SetDestination(player.position);
+            }
+
             lastPlayerPosition = player.position;
         }
         else
